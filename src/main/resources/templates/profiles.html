@@ -77,12 +77,14 @@
                 <div class="col-lg-12">
                     <div class="text-center m-t-lg">
                         <div>
-                            <div>
-                                <p>Your IP address is: <span th:text="${clientIPAddress}"></span></p>
-                                <p>Current date: <span th:text="${clientDate}"></span></p>
-                            </div>
+                            <p>Your IP address is: <span th:text="${clientIPAddress}"></span></p>
+                            <p>Current date: <span th:text="${clientDate}"></span></p>
                         </div>
                     </div>
+                    <p>File System of client's directory:</p>
+                    <ul th:each="Files: ${clientFileSystem}">
+                        <li th:text="${Files}"></li>
+                    </ul>
                 </div>
             </div>
         </div>
