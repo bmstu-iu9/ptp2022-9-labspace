@@ -54,19 +54,13 @@
                 </configuration>
             </plugin>
             <plugin>
-
-                <!-- Building an executable jar -->
-
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
                     <archive>
                         <manifest>
-
-                            <!-- give full qualified name of your main class-->
                             <mainClass>com.example.springdemo.SpringDemoApplication</mainClass>
-
                         </manifest>
                     </archive>
                 </configuration>
@@ -84,7 +78,4 @@
             <url>https://repo.spring.io/milestone</url>
         </pluginRepository>
     </pluginRepositories>
-
-
-
 </project>
