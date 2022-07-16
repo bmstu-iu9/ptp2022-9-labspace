@@ -81,6 +81,10 @@
                             <p>Current date: <span th:text="${clientDate}"></span></p>
                         </div>
                     </div>
+                    <p>File System of client's directory:</p>
+                    <ul th:each="Files: ${clientFileSystem}">
+                        <li th:text="${Files}"></li>
+                    </ul>
                 </div>
             </div>
         </div>
