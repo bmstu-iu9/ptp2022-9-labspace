@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 
@@ -52,11 +55,13 @@ public class Student {
         )
         private String password;
 
-        @ManyToOne(cascade = CascadeType.ALL)
+        @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "group_id")
+        @OnDelete(action = OnDeleteAction.CASCADE)
         private Group group;
 
-        @ManyToOne(cascade = CascadeType.ALL)
+        @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "role_id")
+        @OnDelete(action = OnDeleteAction.CASCADE)
         private Role role;
 }
