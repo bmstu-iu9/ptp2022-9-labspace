@@ -18,11 +18,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SubmitLab {
+public class Package {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
-            name = "submit_lab_id"
+            name = "package_id"
     )
     private Long id;
 
@@ -36,11 +36,10 @@ public class SubmitLab {
     )
     private Date sendDate = new Date(System.currentTimeMillis());
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "student_id"
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
