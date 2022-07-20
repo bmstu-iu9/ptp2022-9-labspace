@@ -36,4 +36,28 @@ public class GradesList {
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private SubmitLab submitLab;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
+
+    public SubmitLab getSubmitLab() {
+        return submitLab;
+    }
+
+    public void setSubmitLab(SubmitLab submitLab) {
+        this.submitLab = submitLab;
+    }
 }
