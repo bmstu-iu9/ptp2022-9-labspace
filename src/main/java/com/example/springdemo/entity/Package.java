@@ -20,18 +20,11 @@ import java.util.Date;
 @Builder
 public class Package {
     @Id
-    @SequenceGenerator(
-            name = "package_sequence",
-            sequenceName = "package_sequence"
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "package_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
             name = "package_id"
     )
-    private Long packageId;
+    private Long id;
 
     @Column(
             name = "source"

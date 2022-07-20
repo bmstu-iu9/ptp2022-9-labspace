@@ -20,18 +20,11 @@ import java.util.Date;
 @Builder
 public class LabInfo {
     @Id
-    @SequenceGenerator(
-            name = "lab_info_sequence",
-            sequenceName = "lab_info_sequence"
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "lab_info_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
             name = "lab_info_id"
     )
-    private Long labInfoId;
+    private Long id;
 
     @Column(
             name = "department",

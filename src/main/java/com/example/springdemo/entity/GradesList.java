@@ -19,18 +19,11 @@ import javax.persistence.*;
 @Builder
 public class GradesList {
     @Id
-    @SequenceGenerator(
-            name = "grades_list_sequence",
-            sequenceName = "grades_list_sequence"
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "grades_list_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
             name = "grades_list_id"
     )
-    private Long gradesListId;
+    private Long id;
 
     @Column(
             name = "mark"

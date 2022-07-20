@@ -1,5 +1,6 @@
 package com.example.springdemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(
         name = "student"
@@ -20,18 +22,11 @@ import javax.validation.constraints.Email;
 @Builder
 public class Student {
         @Id
-        @SequenceGenerator(
-                name = "student_sequence",
-                sequenceName = "student_sequence"
-        )
-        @GeneratedValue(
-                strategy = GenerationType.SEQUENCE,
-                generator = "student_sequence"
-        )
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(
                 name = "student_id"
         )
-        private Long studentId;
+        private Long id;
 
         @Column(
                 name = "email",
@@ -56,9 +51,9 @@ public class Student {
         private String password;
 
         @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "group_id")
+        @JoinColumn(name = "groupp_id")
         @OnDelete(action = OnDeleteAction.CASCADE)
-        private Group group;
+        private Groupp groupp;
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "role_id")

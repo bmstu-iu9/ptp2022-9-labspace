@@ -16,18 +16,11 @@ import javax.persistence.*;
 @Builder
 public class Role {
     @Id
-    @SequenceGenerator(
-            name = "role_sequence",
-            sequenceName = "role_sequence"
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "role_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
             name = "role_id"
     )
-    private Long roleId;
+    private Long id;
 
     @Column(
             name = "role",

@@ -1,28 +1,33 @@
 package com.example.springdemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(
-        name = "course"
+        name = "groupp"
 )
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Course {
+public class Groupp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "course_id")
+    @Column(
+            name = "groupp_id"
+    )
     private Long id;
 
-    @Column(
-            name = "course_name",
-            length = 30
-    )
-    private String courseName;
+    private String faculty;
+
+    private String department;
+
+    private String name;
 }
