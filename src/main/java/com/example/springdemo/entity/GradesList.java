@@ -30,16 +30,10 @@ public class GradesList {
     )
     private int mark;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(
-            name = "student_id"
-    )
-    private Student student;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "lab_info_id"
+            name = "submit_lab_id"
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private LabInfo labInfo;
+    private SubmitLab submitLab;
 }
