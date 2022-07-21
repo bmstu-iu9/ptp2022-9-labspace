@@ -24,5 +24,5 @@ public class Course {
             name = "course_name",
             length = 30
     )
-    private String courseName;
+    private String name;
 }
