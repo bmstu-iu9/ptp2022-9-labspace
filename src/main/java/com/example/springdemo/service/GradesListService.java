@@ -12,7 +12,7 @@ public class GradesListService {
     private GradesListRepository gradesListRepository;
 
     public int getTotalPointsByStudentId(Long id) {
-        Optional<Integer> totalPoints = gradesListRepository.getTotalPointsByStudentId(id);
+        Optional<Integer> totalPoints = Optional.of(gradesListRepository.getTotalPointsByStudentId(id));
         return totalPoints.orElse(0);
     }
 }

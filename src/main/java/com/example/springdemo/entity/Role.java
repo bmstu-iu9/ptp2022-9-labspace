@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(
@@ -16,15 +17,13 @@ import javax.persistence.*;
 @Builder
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(
-            name = "role_id"
-    )
     private Long id;
-
-    @Column(
-            name = "role",
-            length = 30
-    )
-    private String role;
+    private String name;
+    @Transient
+    //@ManyToMany(mappedBy = "roles")
+    private Set<Student> users;
+    public Role(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
