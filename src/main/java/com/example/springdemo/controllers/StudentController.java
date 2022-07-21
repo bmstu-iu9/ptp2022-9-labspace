@@ -29,6 +29,6 @@ public class StudentController {
 
     @PostMapping
     public Student getStudent(@RequestBody String email){
-        return studentService.getStudent(email);
+        return studentService.getByEmail(email);
     }
 }
