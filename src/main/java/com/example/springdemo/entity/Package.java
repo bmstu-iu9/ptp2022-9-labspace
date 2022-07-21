@@ -48,44 +48,4 @@ public class Package {
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private LabInfo labInfo;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public Date getSendDate() {
-        return sendDate;
-    }
-
-    public void setSendDate(Date sendDate) {
-        this.sendDate = sendDate;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public LabInfo getLabInfo() {
-        return labInfo;
-    }
-
-    public void setLabInfo(LabInfo labInfo) {
-        this.labInfo = labInfo;
-    }
 }
