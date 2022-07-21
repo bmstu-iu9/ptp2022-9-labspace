@@ -18,7 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Package {
+public class SubmitLab {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
