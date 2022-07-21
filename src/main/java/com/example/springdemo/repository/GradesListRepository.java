@@ -5,8 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface GradesListRepository extends JpaRepository<GradesList, Long> {
     @Query("select sum (grades.mark) from GradesList grades where grades.submitLab.student.id = ?1")

@@ -1,17 +1,15 @@
 package com.example.springdemo.service;
 
 import com.example.springdemo.repository.GradesListRepository;
-import com.example.springdemo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GradesListService {
-    private final GradesListRepository gradesListRepository;
-@Autowired
-    public GradesListService(GradesListRepository gradesListRepository) {
-        this.gradesListRepository = gradesListRepository;
-    }
+    @Autowired
+    private GradesListRepository gradesListRepository;
 
-    public int getTotalPointsbyStudentId(Long id) {
+    public int getTotalPointsByStudentId(Long id) {
         return gradesListRepository.getTotalPointsByStudentId(id);
     }
 }
