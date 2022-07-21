@@ -28,7 +28,7 @@ public class GradesList {
     @Column(
             name = "mark"
     )
-    private int mark;
+    private Integer mark;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
