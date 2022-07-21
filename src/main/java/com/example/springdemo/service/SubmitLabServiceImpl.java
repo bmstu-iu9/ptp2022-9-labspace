@@ -1,0 +1,36 @@
+package com.example.springdemo.service;
+
+import com.example.springdemo.entity.LabInfo;
+import com.example.springdemo.entity.SubmitLab;
+import com.example.springdemo.repository.SubmitLabRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class SubmitLabServiceImpl implements SubmitLabService {
+    @Autowired
+    private SubmitLabRepository submitLabRepository;
+
+    @Override
+    public List<LabInfo> getCompleteLabsByEmail(String email) {
+        List<SubmitLab> submitLabs = submitLabRepository.findByStudentEmail(email);
+        List<LabInfo> labs = new ArrayList<>();
+        for(SubmitLab submitLab : submitLabs) {
+            labs.add(submitLab.getLabInfo());
+        }
+        return labs;
+    }
+
+    @Override
+    public List<LabInfo> getCompleteLabsByStudentId(Long id) {
+        List<SubmitLab> submitLabs = submitLabRepository.findByStudentId(id);
+        List<LabInfo> labs = new ArrayList<>();
+        for(SubmitLab submitLab : submitLabs) {
+            labs.add(submitLab.getLabInfo());
+        }
+        return labs;
+    }
+}

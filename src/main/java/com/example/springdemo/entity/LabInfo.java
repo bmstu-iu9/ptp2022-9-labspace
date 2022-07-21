@@ -46,53 +46,9 @@ public class LabInfo {
     @JoinColumn(name = "course_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Course course;
-    private boolean isVisible;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public Date getUploadDate() {
-        return uploadDate;
-    }
-
-    public void setUploadDate(Date uploadDate) {
-        this.uploadDate = uploadDate;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public boolean isVisible() {
-        return isVisible;
-    }
-
-    public void setVisible(boolean visible) {
-        isVisible = visible;
-    }
+    @Column(
+            name = "is_visible"
+    )
+    private Boolean isVisible;
 }
