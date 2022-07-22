@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Entity
 @Table(
-        name = "package"
+        name = "submit_lab"
 )
 @Data
 @AllArgsConstructor
@@ -22,7 +22,7 @@ public class SubmitLab {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
-            name = "package_id"
+            name = "submit_lab_id"
     )
     private Long id;
 
