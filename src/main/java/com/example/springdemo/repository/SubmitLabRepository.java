@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface SubmitLabRepository extends JpaRepository<SubmitLab, Long> {
-    List<SubmitLab> findByStudentEmail(String email);
-    List<SubmitLab> findByStudentId(Long id);
+    List<SubmitLab> findByUserEmail(String email);
+    List<SubmitLab> findByUserId(Long id);
 }

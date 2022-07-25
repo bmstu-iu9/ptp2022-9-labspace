@@ -7,5 +7,5 @@ import java.util.List;
 public interface SubmitLabService {
     List<LabInfo> getCompleteLabsByEmail(String email);
 
-    List<LabInfo> getCompleteLabsByStudentId(Long id);
+    List<LabInfo> getCompleteLabsByUserId(Long id);
 }

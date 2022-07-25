@@ -16,7 +16,7 @@ public class SubmitLabServiceImpl implements SubmitLabService {
 
     @Override
     public List<LabInfo> getCompleteLabsByEmail(String email) {
-        List<SubmitLab> submitLabs = submitLabRepository.findByStudentEmail(email);
+        List<SubmitLab> submitLabs = submitLabRepository.findByUserEmail(email);
         List<LabInfo> labs = new ArrayList<>();
         for(SubmitLab submitLab : submitLabs) {
             labs.add(submitLab.getLabInfo());
@@ -25,8 +25,8 @@ public class SubmitLabServiceImpl implements SubmitLabService {
     }
 
     @Override
-    public List<LabInfo> getCompleteLabsByStudentId(Long id) {
-        List<SubmitLab> submitLabs = submitLabRepository.findByStudentId(id);
+    public List<LabInfo> getCompleteLabsByUserId(Long id) {
+        List<SubmitLab> submitLabs = submitLabRepository.findByUserId(id);
         List<LabInfo> labs = new ArrayList<>();
         for(SubmitLab submitLab : submitLabs) {
             labs.add(submitLab.getLabInfo());

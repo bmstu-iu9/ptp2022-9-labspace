@@ -20,11 +20,11 @@ import javax.validation.constraints.Email;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Student {
+public class User {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(
-                name = "student_id"
+                name = "user_id"
         )
         private Long id;
 
