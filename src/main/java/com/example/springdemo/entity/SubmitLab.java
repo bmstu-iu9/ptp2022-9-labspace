@@ -40,7 +40,7 @@ public class SubmitLab {
     @JoinColumn(
             name = "student_id"
     )
-    private Student student;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
