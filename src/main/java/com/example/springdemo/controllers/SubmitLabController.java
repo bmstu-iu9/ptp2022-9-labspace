@@ -1,6 +1,6 @@
 package com.example.springdemo.controllers;
 
-import com.example.springdemo.service.StudentService;
+import com.example.springdemo.service.UserService;
 import com.example.springdemo.service.SubmitLabServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +19,6 @@ public class SubmitLabController {
     }
     @GetMapping(path = "id{student_id}/labs")
     public int GetCompleteLabsbyId(@PathVariable("student_id") Long id){
-      return  submitLabService.getCompleteLabsByStudentId(id).size();
+      return  submitLabService.getCompleteLabsByUserId(id).size();
     }
 }
