@@ -35,12 +35,12 @@
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -75,9 +75,18 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-web:5.3.21" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.3.21" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:5.3.21" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.3.21" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.3.21" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.3.21" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-security:2.7.1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.3.21" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:5.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:5.7.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework.security:spring-security-test:5.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:5.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-crypto:5.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-core:5.3.21" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.3.21" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:5.3.21" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.springframework.boot:spring-boot-devtools:2.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.7.1" level="project" />
@@ -135,9 +144,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-junit-jupiter:4.5.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.skyscreamer:jsonassert:1.5.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-core:5.3.21" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.3.21" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:5.3.21" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.xmlunit:xmlunit-core:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.24" level="project" />
   </component>

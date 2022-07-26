@@ -1,11 +1,12 @@
+
 package com.example.springdemo.service;
 
 import com.example.springdemo.entity.Role;
 import com.example.springdemo.entity.User;
-import com.example.springdemo.model.UserModel;
+//import com.example.springdemo.model.UserModel;
 import com.example.springdemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+   // @Autowired
+    //private PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getUsers(){
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
+   /* @Override
     public User registerUser(UserModel userModel) {
         User user = new User();
         user.setEmail(userModel.getEmail());
@@ -56,4 +57,9 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return user;
     }
+
+    */
 }
+
+
+

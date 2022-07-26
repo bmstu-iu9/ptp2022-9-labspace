@@ -13,7 +13,7 @@ public class GradesListServiceImpl implements GradesListService {
 
     @Override
     public int getTotalPointsByStudentId(Long id) {
-        Optional<Integer> totalPoints = Optional.of(gradesListRepository.getTotalPointsByStudentId(id));
+        Optional<Integer> totalPoints = gradesListRepository.getTotalPointsByStudentId(id);
         return totalPoints.orElse(0);
     }
 }
