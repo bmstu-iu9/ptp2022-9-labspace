@@ -10,17 +10,18 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(
-        name = "student"
+        name = "users"
 )
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User {
+public class User  {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(
@@ -29,7 +30,7 @@ public class User {
         private Long id;
 
         @Column(
-                name = "email",
+                name = "username",
                 unique = true
         )
         @Email
@@ -49,14 +50,18 @@ public class User {
                 name = "password"
         )
         private String password;
+        private boolean active;
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "groupp_id")
         @OnDelete(action = OnDeleteAction.CASCADE)
         private Groupp groupp;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "role_id")
-        @OnDelete(action = OnDeleteAction.CASCADE)
-        private Role role;
+     @ElementCollection(targetClass =  Role.class,fetch = FetchType.EAGER)
+     @CollectionTable(name = "role",joinColumns = @JoinColumn(name = "user_id"))
+     @Enumerated(EnumType.STRING)
+        private Set<Role> roles;
+
+
+
 }
