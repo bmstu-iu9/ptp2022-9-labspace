@@ -6,8 +6,10 @@ import com.example.springdemo.entity.User;
 import java.util.List;
 
 public interface UserService {
-    public List<User> getUsers();
-    public User getByEmail(String email);
-    public User getById(Long id);
+    List<User> getUsers();
+     User getByEmail(String email);
+     User getById(Long id);
+     void registerUser(User user);
+     boolean isAlreadyPresent(User user);
    // public User registerUser(UserModel userModel);
 }
