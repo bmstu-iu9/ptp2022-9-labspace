@@ -23,49 +23,49 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User  {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(
-                name = "user_id"
-        )
-        private Long id;
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(
+            name = "user_id"
+    )
+    private Long id;
 
-        @Column(
-                name = "email",
-                unique = true
-        )
-        @Email
-        private String email;
-        @Column(
-                name = "first_name"
-        )
-        @NotNull(message = "FirstName is compulsory!")
+    @Column(
+            name = "email",
+            unique = true
+    )
+    @Email
+    private String email;
+    @Column(
+            name = "first_name"
+    )
+    @NotNull(message = "FirstName is compulsory!")
 
-        private String firstName;
+    private String firstName;
 
-        @Column(
-                name = "last_name"
-        )
-        @NotNull(message = "LastName is compulsory!")
-        private String lastName;
+    @Column(
+            name = "last_name"
+    )
+    @NotNull(message = "LastName is compulsory!")
+    private String lastName;
 
-        @Column(
-                name = "password"
-        )
-        @Length(min = 5,message = "Password should be at least 5 characters!")
-        private String password;
-        private boolean active;
+    @Column(
+            name = "password"
+    )
+    @Length(min = 5, message = "Password should be at least 5 characters!")
+    private String password;
+    private boolean active;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "groupp_id")
-        @OnDelete(action = OnDeleteAction.CASCADE)
-        private Groupp groupp;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "groupp_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Groupp groupp;
 
-     @ElementCollection(targetClass =  Role.class,fetch = FetchType.EAGER)
-     @CollectionTable(name = "role",joinColumns = @JoinColumn(name = "user_id"))
-     @Enumerated(EnumType.STRING)
-        private Set<Role> roles;
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
 
 }

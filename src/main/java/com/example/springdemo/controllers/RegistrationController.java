@@ -18,25 +18,31 @@ import javax.validation.Valid;
 public class RegistrationController {
     @Autowired
     UserService userService;
+
     @GetMapping(value = "/register")
-    public String registerUser(Model model){
-        User user= new User();
-       model.addAttribute("user", user);
+    public String registerUser(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
         return "register";
     }
+
     @PostMapping(value = "/register")
-    public String regUser(@Valid User user, BindingResult bindingResult, Model model, HttpServletRequest request, HttpServletResponse response) throws ServletException {
-        if (bindingResult.hasErrors()){
-            model.addAttribute("bindingResult",bindingResult);
+    public String regUser(@Valid User user,
+                          BindingResult bindingResult,
+                          Model model,
+                          HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("bindingResult", bindingResult);
             return "/register";
-        }else if (userService.isAlreadyPresent(user)){
-           bindingResult.rejectValue("email","user.email","An account already exists for this email.");
-           model.addAttribute("bindingResult",bindingResult);
+        } else if (userService.isAlreadyPresent(user)) {
+            bindingResult.rejectValue("email", "user.email", "An account already exists for this email.");
+            model.addAttribute("bindingResult", bindingResult);
             return "/register";
-        }else{
-            String pass=user.getPassword();
+        } else {
+            String pass = user.getPassword();
             userService.registerUser(user);
-            request.login(user.getEmail(),pass);
+            request.login(user.getEmail(), pass);
             return "redirect:/";
         }
     }

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 public class StudentConfig {
     @Bean
     CommandLineRunner commandLineRunner(
-            UserRepository repository){
+            UserRepository repository) {
         return args -> {
 
         };

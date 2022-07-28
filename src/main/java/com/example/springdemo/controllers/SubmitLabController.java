@@ -17,8 +17,9 @@ public class SubmitLabController {
     public SubmitLabController(SubmitLabServiceImpl submitLabService) {
         this.submitLabService = submitLabService;
     }
+
     @GetMapping(path = "id{student_id}/labs")
-    public int GetCompleteLabsbyId(@PathVariable("student_id") Long id){
-      return  submitLabService.getCompleteLabsByUserId(id).size();
+    public int GetCompleteLabsbyId(@PathVariable("student_id") Long id) {
+        return submitLabService.getCompleteLabsByUserId(id).size();
     }
 }

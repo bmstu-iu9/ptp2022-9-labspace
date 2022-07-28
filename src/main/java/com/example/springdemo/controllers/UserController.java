@@ -7,18 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping(path = "student")
 public class UserController {
     private final UserService userService;
+
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping
-    public List<User> getStudents(){
+    public List<User> getStudents() {
         return userService.getUsers();
     }
+
     @GetMapping(path = "id{student_id}")
     public User getStudent(@PathVariable("student_id") Long id) {
         return userService.getById(id);
@@ -26,7 +30,7 @@ public class UserController {
 
 
     @PostMapping
-    public User getStudent(@RequestBody String email){
+    public User getStudent(@RequestBody String email) {
         return userService.getByEmail(email);
     }
 }
