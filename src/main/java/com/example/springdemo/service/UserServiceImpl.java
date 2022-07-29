@@ -58,11 +58,11 @@ public class UserServiceImpl implements UserService {
 
         String message = String.format(
                 "Hello, %s!\n" +
+                        "\n" +
                         "We are glad to welcome you to the LabSpace!\n" +
                         "\n" +
                         "Please, follow the link to verify your profile:\n" +
-                        "\n" +
-                        "http://iu9.yss.su:8080/activate/%s",
+                        "http://localhost:8080/activate/%s",  // CHANGE TO "iu9.yss.su:8080/activate/%s"
                 user.getFirstName(),
                 user.getActivationCode()
         );
