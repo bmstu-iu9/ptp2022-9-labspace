@@ -31,6 +31,7 @@
         <p>
             Login in. To see it.
         </p>
+        ${message?ifExists}
         <form class="m-t" role="form" th:action="@{/login}"  method="post" >
             <div >
                 <input type="email" class="form-control" name="email" placeholder="Email" required="">

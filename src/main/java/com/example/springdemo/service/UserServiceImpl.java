@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,12 +22,11 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private BCryptPasswordEncoder encoder;
-
-   // @Autowired
-    //private PasswordEncoder passwordEncoder;
+    @Autowired
+    private MailSender mailSender;
 
     @Override
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
 
@@ -49,26 +50,41 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-   /* @Override
-    public User registerUser(UserModel userModel) {
-        User user = new User();
-        user.setEmail(userModel.getEmail());
-        user.setGroupp(userModel.getGroupp());
-        user.setFirstName(userModel.getFirstName());
-        user.setLastName(userModel.getLastName());
-        user.setPassword(passwordEncoder.encode(userModel.getPassword()));
-        user.setRole(new Role(1L, "USER"));
-        userRepository.save(user);
-        return user;
-    }
-
-    */
-    public void registerUser(User user){
+    public void registerUser(User user) {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(encoder.encode(user.getPassword()));
+        user.setActivationCode(UUID.randomUUID().toString());
+
+        String message = String.format(
+                "Hello, %s!\n" +
+                        "We are glad to welcome you to the LabSpace!\n" +
+                        "\n" +
+                        "Please, follow the link to verify your profile:\n" +
+                        "\n" +
+                        "http://iu9.yss.su:8080/activate/%s",
+                user.getFirstName(),
+                user.getActivationCode()
+        );
+        mailSender.send(user.getEmail(), "Activation code", message);
+
         userRepository.save(user);
     }
+
+    @Override
+    public boolean activateUser(String code) {
+        User user = userRepository.findByActivationCode(code);
+        if (user == null) {
+            return false;
+        }
+
+        user.setActivationCode(null);
+
+        userRepository.save(user);
+
+        return true;
+    }
+
     @Override
     public boolean isAlreadyPresent(User user) {
         return userRepository.existsUserByEmail(user.getEmail());
