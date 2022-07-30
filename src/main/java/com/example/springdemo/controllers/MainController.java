@@ -108,20 +108,4 @@ public class MainController {
         }
         return "profiles";
     }
-
-    @GetMapping("/login.html")
-    public String login( Model model) {
-        return "login";
-    }
-
-    @GetMapping("/")
-    public String login2( Model model) {
-        return "login";
-    }
-
-    @GetMapping("/register.html")
-    public String register( Model model) {
-        return "register";
-    }
-
 }
