@@ -35,7 +35,7 @@ public class User {
             name = "email",
             unique = true
     )
-    @Email
+    @Email(message = "Email is not correct!")
     private String email;
     @Column(
             name = "first_name"

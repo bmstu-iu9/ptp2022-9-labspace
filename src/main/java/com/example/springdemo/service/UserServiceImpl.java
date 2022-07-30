@@ -1,6 +1,7 @@
 
 package com.example.springdemo.service;
 
+import com.example.springdemo.entity.Groupp;
 import com.example.springdemo.entity.Role;
 import com.example.springdemo.entity.User;
 //import com.example.springdemo.model.UserModel;
@@ -51,7 +52,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public void registerUser(User user) {
-        user.setActive(true);
+        user.setActive(false);
+        user.setGroupp(user.getGroupp());
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(encoder.encode(user.getPassword()));
         user.setActivationCode(UUID.randomUUID().toString());
@@ -79,6 +81,7 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setActivationCode(null);
+        user.setActive(true);
 
         userRepository.save(user);
 

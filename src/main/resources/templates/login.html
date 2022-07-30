@@ -31,7 +31,8 @@
         <p>
             Login in. To see it.
         </p>
-        ${message?ifExists}
+        <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+        <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
         <form class="m-t" role="form" th:action="@{/login}"  method="post" >
             <div >
                 <input type="email" class="form-control" name="email" placeholder="Email" required="">
