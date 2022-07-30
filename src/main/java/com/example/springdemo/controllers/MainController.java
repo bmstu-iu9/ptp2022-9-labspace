@@ -108,13 +108,4 @@ public class MainController {
         }
         return "profiles";
     }
-
-
-
-    @GetMapping("/")
-    public String login2( Model model) {
-        return "index";
-    }
-
-
 }
