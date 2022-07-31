@@ -110,10 +110,5 @@ public class MainController {
     }
 
 
-    @GetMapping("/")
-    public String login2(Model model) {
-        return "index";
-    }
-
 
 }

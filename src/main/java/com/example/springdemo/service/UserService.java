@@ -1,7 +1,6 @@
 package com.example.springdemo.service;
 
 import com.example.springdemo.entity.User;
-//import com.example.springdemo.model.UserModel;
 
 import java.util.List;
 
