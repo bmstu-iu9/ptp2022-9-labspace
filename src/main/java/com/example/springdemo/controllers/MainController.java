@@ -39,7 +39,7 @@ public class MainController {
         List<File> files = files("C:\\Users\\1\\Desktop\\GitHub"); //Later... Take user's directory
         int n = files.size();
         String[] directory = new String[n];
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             directory[i] = files.get(i).getName();
         }
 
@@ -65,7 +65,7 @@ public class MainController {
         List<File> files = files("C:\\Users\\1\\Desktop\\GitHub"); //Later... Take user's directory
         int n = files.size();
         String[] directory = new String[n];
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             directory[i] = files.get(i).getName();
         }
 
@@ -91,7 +91,7 @@ public class MainController {
         List<File> files = files("C:\\Users\\1\\Desktop\\GitHub"); //Later... Take user's directory
         int n = files.size();
         String[] directory = new String[n];
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             directory[i] = files.get(i).getName();
         }
 
@@ -108,4 +108,7 @@ public class MainController {
         }
         return "profiles";
     }
+
+
+
 }
