@@ -8,9 +8,17 @@
   <link th:href="@{/css/animate.css}" rel="stylesheet">
   <link th:href="@{/css/style.css}" rel="stylesheet">
 
-  <!-- Mainly scripts -->
   <script th:src="@{/js/jquery-2.1.1.js}"></script>
   <script th:src="@{/js/bootstrap.min.js}"></script>
+  <script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
+  <script>
+    $(document).ready(function(){
+      $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+      });
+    });
+  </script>
 </head>
 <body style="background-color: #ededed;">
 <div style="background-color: #337ab7; height: 50px;"></div>
