@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 
     <meta charset="utf-8">
@@ -64,9 +64,9 @@
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
-                        <a href="#">
-                            <i class="fa fa-sign-out"></i> Log out
-                        </a>
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit" value="Sign Out"/>
+                        </form>
                     </li>
                 </ul>
 
@@ -95,7 +95,7 @@
 
                     <!--<div class="text-center m-t-lg">
                         <div>
-                            <p>Your IP address is: <span th:text="${clientIPAddress}"></span></p>
+                            <p>Your IP address is: <span th:text="${#httpServletRequest.remoteUser}"></span></p>
                             <p>Current date: <span th:text="${clientDate}"></span></p>
                         </div>
                     </div>

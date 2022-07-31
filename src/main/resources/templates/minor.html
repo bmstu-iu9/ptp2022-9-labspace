@@ -59,9 +59,9 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
           <li>
-            <a href="#">
-              <i class="fa fa-sign-out"></i> Log out
-            </a>
+            <form th:action="@{/logout}" method="post">
+              <input type="submit" value="Sign Out"/>
+            </form>
           </li>
         </ul>
 

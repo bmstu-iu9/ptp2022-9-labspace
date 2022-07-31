@@ -47,7 +47,7 @@ public class MainController {
         List<File> files = files("C:\\Users\\1\\Desktop\\GitHub"); //Later... Take user's directory
         int n = files.size();
         String[] directory = new String[n];
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             directory[i] = files.get(i).getName();
         }
 
@@ -69,7 +69,7 @@ public class MainController {
         List<File> files = files("C:\\Users\\1\\Desktop\\GitHub"); //Later... Take user's directory
         int n = files.size();
         String[] directory = new String[n];
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             directory[i] = files.get(i).getName();
         }
 
@@ -79,19 +79,30 @@ public class MainController {
         return "minor";
     }
 
-    @GetMapping("/login.html")
-    public String login( Model model) {
-        return "login";
-    }
+    @GetMapping("/profiles.html")
+    public String profile(Model model) {
+        Date date = new Date(System.currentTimeMillis());
 
-    @GetMapping("/")
-    public String login2( Model model) {
-        return "login";
-    }
+        //Get all files from directory
+        List<File> files = files("C:\\Users\\1\\Desktop\\GitHub"); //Later... Take user's directory
+        int n = files.size();
+        String[] directory = new String[n];
+        for (int i = 0; i < n; i++) {
+            directory[i] = files.get(i).getName();
+        }
 
-    @GetMapping("/register.html")
-    public String register( Model model) {
-        return "register";
+        //Try to get IP
+        try {
+            InetAddress clientIPAddress = InetAddress.getLocalHost();
+            model.addAttribute("clientFileSystem", directory);
+            model.addAttribute("clientIPAddress", clientIPAddress.getHostAddress());
+            model.addAttribute("clientDate", date);
+        } catch (Exception ex) {
+            model.addAttribute("clientFileSystem", directory);
+            model.addAttribute("clientDate", date);
+            System.out.println(ex.getMessage());
+        }
+        return "profiles";
     }
 
 }
