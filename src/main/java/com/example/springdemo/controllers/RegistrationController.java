@@ -46,6 +46,10 @@ public class RegistrationController {
             bindingResult.rejectValue("email", "user.email", "An account already exists for this email.");
             model.addAttribute("bindingResult", bindingResult);
             return "/register";
+        }else if (!user.getPassword().equals(user.getPasswordConfirm())){
+            bindingResult.rejectValue("password", "user.getPasswordConfirm", "Passwords are not equal");
+            model.addAttribute("bindingResult", bindingResult);
+            return "/register";
         } else {
             Optional<Groupp> tmpgroup = grouppRepository.findByName(request.getParameter("groupp_name"));
             tmpgroup.ifPresent(user::setGroupp);
