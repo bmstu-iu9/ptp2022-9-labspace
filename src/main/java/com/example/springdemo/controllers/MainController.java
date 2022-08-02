@@ -1,7 +1,14 @@
 package com.example.springdemo.controllers;
 
+import com.example.springdemo.entity.Groupp;
+import com.example.springdemo.entity.User;
+import com.example.springdemo.repository.GrouppRepository;
 import com.example.springdemo.service.RequestService;
+import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +23,13 @@ import java.util.stream.Collectors;
 @Controller
 public class MainController {
     //function of getting directory
+    public String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return authentication.getName();
+        }
+        return "guest";
+    }
     public static List<File> files(String dirname) {
         if (dirname == null) {
             return Collections.emptyList();
@@ -37,8 +51,9 @@ public class MainController {
     @Autowired
     private RequestService requestService;
 
+    @Autowired
+    UserService userService;
     @GetMapping("/")
-
     public String view(){
         return "redirect:/index";
     }
@@ -61,6 +76,17 @@ public class MainController {
         model.addAttribute("clientDate", date);
         model.addAttribute("clientIPAddress", clientIp);
 
+        String username;
+        username = getCurrentUsername();
+       if (!Objects.equals(username, "guest")) {
+            User user = userService.getByEmail(username);
+            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+            model.addAttribute("groupp",user.getGroupp().getName());
+        }
+       else{
+           model.addAttribute("name", "guest");
+           model.addAttribute("groupp", "");
+       }
         return "index";
     }
 
