@@ -17,7 +17,7 @@
 <div class="container-fluid" style="margin-top: 30px;">
 
   <div class="row col-lg-4 col-lg-offset-4" style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
-    <form th:action="@{/register}" th:object="${user}" method="post"  class="form-signin" role="form">
+    <form th:action="@{/register.html}" th:object="${user}" method="post"  class="form-signin" role="form">
       <h3 class="form-signin-heading">Registration Form</h3>
       <div class="form-group">
           <input type="text" th:field="*{firstName}" placeholder="Name" class="form-control" required="" />
