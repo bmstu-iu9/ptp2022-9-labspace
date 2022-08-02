@@ -1,8 +1,6 @@
 package com.example.springdemo.controllers;
 
-import com.example.springdemo.entity.Groupp;
 import com.example.springdemo.entity.User;
-import com.example.springdemo.repository.GrouppRepository;
 import com.example.springdemo.service.RequestService;
 import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +21,6 @@ import java.util.stream.Collectors;
 @Controller
 public class MainController {
     //function of getting directory
-    public String getCurrentUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            return authentication.getName();
-        }
-        return "guest";
-    }
     public static List<File> files(String dirname) {
         if (dirname == null) {
             return Collections.emptyList();
@@ -46,6 +37,13 @@ public class MainController {
 
         return Arrays.stream(Objects.requireNonNull(dir.listFiles()))
                 .collect(Collectors.toList());
+    }
+    public String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return authentication.getName();
+        }
+        return "guest";
     }
 
     @Autowired
@@ -136,5 +134,4 @@ public class MainController {
         }
         return "profiles";
     }
-
 }
