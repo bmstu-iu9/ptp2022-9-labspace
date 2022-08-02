@@ -1,7 +1,14 @@
 package com.example.springdemo.controllers;
 
+import com.example.springdemo.entity.Groupp;
+import com.example.springdemo.entity.User;
+import com.example.springdemo.repository.GrouppRepository;
 import com.example.springdemo.service.RequestService;
+import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +40,21 @@ public class MainController {
         return Arrays.stream(Objects.requireNonNull(dir.listFiles()))
                 .collect(Collectors.toList());
     }
+    public String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return authentication.getName();
+        }
+        return "guest";
+    }
 
     @Autowired
     private RequestService requestService;
+
+    @Autowired
+    UserService userService;
+    GrouppRepository grouppRepository;
+
 
     @GetMapping("/")
 
@@ -60,6 +79,20 @@ public class MainController {
         model.addAttribute("clientFileSystem", directory);
         model.addAttribute("clientDate", date);
         model.addAttribute("clientIPAddress", clientIp);
+
+        String username;
+        username = getCurrentUsername();
+        if (!Objects.equals(username, "guest")) {
+            User user = userService.getByEmail(username);
+            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+
+            Groupp groupp = user.getGroupp();
+            model.addAttribute("groupp", groupp.getName());
+        }
+        else{
+            model.addAttribute("name", "guest");
+            model.addAttribute("groupp", "");
+        }
 
         return "index";
     }
