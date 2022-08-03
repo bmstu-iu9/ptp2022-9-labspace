@@ -38,7 +38,7 @@ public class FileStorageService {
         return fileNameParts[fileNameParts.length - 1];
     }
 
-    public String storeFile(MultipartFile file) {
+    public String storeFile(MultipartFile file, String path) {
         // Normalize file name
         String fileName =
                 new Date().getTime() + "-file." + getFileExtension(file.getOriginalFilename());
@@ -49,8 +49,8 @@ public class FileStorageService {
                 throw new RuntimeException(
                         "Sorry! Filename contains invalid path sequence " + fileName);
             }
-
-            Path targetLocation = this.fileStorageLocation.resolve(fileName);
+            Files.createDirectories(this.fileStorageLocation.resolve(path));
+            Path targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             return fileName;
