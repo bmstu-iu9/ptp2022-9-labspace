@@ -59,12 +59,11 @@
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
-                        <form th:action="@{/logout}" method="post">
-                            <input type="submit" value="Sign Out"/>
-                        </form>
+                        <a th:action="@{/logout}" method="post">
+                            <i type="submit"></i> Log out
+                        </a>
                     </li>
                 </ul>
-
             </nav>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -73,17 +72,22 @@
                     <div class="text-center dashboard-header">
                         <h1>Доступные лабы</h1>
                     </div>
-
                     <div class="lab-space">
-                        <h2><b>Шаблоны С++</b></h2>
+                        <a href="/lab1">
+                            <h2><b>Шаблоны С++ (1)</b></h2>
+                        </a>
                     </div>
                     <div class="skip-row"></div>
                     <div class="lab-space">
-                        <h2><b>Шаблоны С++</b></h2>
+                        <a href="/lab2">
+                            <h2><b>Шаблоны С++ (2)</b></h2>
+                        </a>
                     </div>
                     <div class="skip-row"></div>
                     <div class="lab-space">
-                        <h2><b>Шаблоны С++</b></h2>
+                        <a href="/lab3">
+                            <h2><b>Шаблоны С++ (3)</b></h2>
+                        </a>
                     </div>
                     <div class="skip-row"></div>
                 </div>

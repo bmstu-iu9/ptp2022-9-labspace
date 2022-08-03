@@ -106,32 +106,33 @@ public class MainController {
         model.addAttribute("clientFileSystem", directory);
         model.addAttribute("clientDate", date);
         model.addAttribute("clientIPAddress", clientIp);
+
+        String username;
+        username = getCurrentUsername();
+        if (!Objects.equals(username, "guest")) {
+            User user = userService.getByEmail(username);
+            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+            model.addAttribute("groupp",user.getGroupp().getName());
+        }
+        else{
+            model.addAttribute("name", "guest");
+            model.addAttribute("groupp", "");
+        }
         return "minor";
     }
 
-    @GetMapping("/profiles")
-    public String profile(Model model) {
-        Date date = new Date(System.currentTimeMillis());
+    @GetMapping("/lab1")
+    public String lab1(HttpServletRequest request, Model model){
+        return "lab1";
+    }
 
-        //Get all files from directory
-        List<File> files = files("C:\\Users\\1\\Desktop\\GitHub"); //Later... Take user's directory
-        int n = files.size();
-        String[] directory = new String[n];
-        for (int i = 0; i < n; i++) {
-            directory[i] = files.get(i).getName();
-        }
+    @GetMapping("/lab2")
+    public String lab2(HttpServletRequest request, Model model){
+        return "lab2";
+    }
 
-        //Try to get IP
-        try {
-            InetAddress clientIPAddress = InetAddress.getLocalHost();
-            model.addAttribute("clientFileSystem", directory);
-            model.addAttribute("clientIPAddress", clientIPAddress.getHostAddress());
-            model.addAttribute("clientDate", date);
-        } catch (Exception ex) {
-            model.addAttribute("clientFileSystem", directory);
-            model.addAttribute("clientDate", date);
-            System.out.println(ex.getMessage());
-        }
-        return "profiles";
+    @GetMapping("/lab3")
+    public String lab3(HttpServletRequest request, Model model){
+        return "lab3";
     }
 }
