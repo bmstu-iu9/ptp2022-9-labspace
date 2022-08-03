@@ -51,7 +51,18 @@ public class FileStorageServiceImpl implements FileStorageService {
                         "Sorry! Filename contains invalid path sequence " + fileName);
             }
 
+            String contentType = file.getContentType();
+
+            // Check if the filetype is not correct
+            if(contentType == null ||
+                        !(contentType.equals("application/msword") ||
+                        contentType.equals("application/pdf") ||
+                        contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))) {
+                throw new RuntimeException("Allowed filetypes: doc, docx, pdf");
+            }
+
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
+
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             return fileName;
