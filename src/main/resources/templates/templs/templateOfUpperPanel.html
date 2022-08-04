@@ -30,11 +30,12 @@
       </div>
       <ul class="nav navbar-top-links navbar-right">
         <li>
-          <a th:action="@{/logout}" method="post">
-            <i type="submit"></i> Log out
-          </a>
+          <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+          </form>
         </li>
       </ul>
+
     </nav>
   </div>
 </div>
