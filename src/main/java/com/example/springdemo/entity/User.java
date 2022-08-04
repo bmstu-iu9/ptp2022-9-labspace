@@ -55,6 +55,9 @@ public class User {
     )
     @Length(min = 5, message = "Password should be at least 5 characters!")
     private String password;
+    @Transient
+    private String passwordConfirm;
+
     private boolean active;
 
     @ManyToOne(fetch = FetchType.LAZY)
