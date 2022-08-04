@@ -1,5 +1,7 @@
 package com.example.springdemo.service;
 
+import com.example.springdemo.entity.SubmitLab;
+import com.example.springdemo.repository.SubmitLabRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,8 @@ import java.util.Date;
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
     private final Path fileStorageLocation;
-
+    @Autowired
+    SubmitLabRepository submitLabRepository;
     @Autowired
     public FileStorageServiceImpl(Environment env) {
         this.fileStorageLocation = Paths.get(env.getProperty("app.file.upload-dir", "./uploads/files"))
@@ -38,7 +41,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public void storeFile(MultipartFile file,String path) {
+    public void storeFile(MultipartFile file, SubmitLab lab) {
         // Normalize file name
         String fileName =
                 new Date().getTime() + "-file." + getFileExtension(file.getOriginalFilename());
@@ -59,8 +62,10 @@ public class FileStorageServiceImpl implements FileStorageService {
                         contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))) {
                 throw new RuntimeException("Allowed filetypes: doc, docx, pdf");
             }
-            Files.createDirectories(this.fileStorageLocation.resolve(path));
-            Path targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
+            Files.createDirectories(this.fileStorageLocation.resolve(lab.getSource()));
+            lab.setSource(lab.getSource() + "/" + fileName);
+            submitLabRepository.save(lab);
+            Path targetLocation = this.fileStorageLocation.resolve(lab.getSource());
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);

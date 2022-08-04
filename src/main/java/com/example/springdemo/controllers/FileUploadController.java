@@ -44,7 +44,7 @@ public class FileUploadController {
             Model model) {
         SubmitLab submitLab=labService.submitLab(getCurrentUser(),labInfoRepository.getReferenceById(lab_id));
         model.addAttribute("id",lab_id);
-         fileStorageService.storeFile(file,submitLab.getSource());
+         fileStorageService.storeFile(file,submitLab);
 
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");

@@ -1,5 +1,6 @@
 package com.example.springdemo.service;
 
+import com.example.springdemo.entity.SubmitLab;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
 public interface FileStorageService {
-     void storeFile(MultipartFile file, String path);
+     void storeFile(MultipartFile file, SubmitLab lab);
 
 }
