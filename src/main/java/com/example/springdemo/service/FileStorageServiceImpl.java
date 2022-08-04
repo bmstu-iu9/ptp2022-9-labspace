@@ -28,8 +28,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                     "Could not create the directory where the uploaded files will be stored.", ex);
         }
     }
-    @Override
-    public String getFileExtension(String fileName) {
+    private String getFileExtension(String fileName) {
         if (fileName == null) {
             return null;
         }

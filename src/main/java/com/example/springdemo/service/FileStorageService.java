@@ -13,7 +13,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
 public interface FileStorageService {
-    String getFileExtension(String fileName);
      void storeFile(MultipartFile file, String path);
 
 }
