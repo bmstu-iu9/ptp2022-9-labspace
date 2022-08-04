@@ -28,8 +28,8 @@ public class FileStorageServiceImpl implements FileStorageService {
                     "Could not create the directory where the uploaded files will be stored.", ex);
         }
     }
-
-    private String getFileExtension(String fileName) {
+    @Override
+    public String getFileExtension(String fileName) {
         if (fileName == null) {
             return null;
         }
@@ -39,7 +39,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public String storeFile(MultipartFile file) {
+    public void storeFile(MultipartFile file,String path) {
         // Normalize file name
         String fileName =
                 new Date().getTime() + "-file." + getFileExtension(file.getOriginalFilename());
@@ -60,12 +60,9 @@ public class FileStorageServiceImpl implements FileStorageService {
                         contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))) {
                 throw new RuntimeException("Allowed filetypes: doc, docx, pdf");
             }
-
-            Path targetLocation = this.fileStorageLocation.resolve(fileName);
-
+            Files.createDirectories(this.fileStorageLocation.resolve(path));
+            Path targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
-            return fileName;
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
         }

@@ -12,50 +12,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
-@Service
-public class FileStorageService {
-    private final Path fileStorageLocation;
+public interface FileStorageService {
+    String getFileExtension(String fileName);
+     void storeFile(MultipartFile file, String path);
 
-    @Autowired
-    public FileStorageService(Environment env) {
-        this.fileStorageLocation = Paths.get(env.getProperty("app.file.upload-dir", "./uploads/files"))
-                .toAbsolutePath().normalize();
-
-        try {
-            Files.createDirectories(this.fileStorageLocation);
-        } catch (Exception ex) {
-            throw new RuntimeException(
-                    "Could not create the directory where the uploaded files will be stored.", ex);
-        }
-    }
-
-    private String getFileExtension(String fileName) {
-        if (fileName == null) {
-            return null;
-        }
-        String[] fileNameParts = fileName.split("\\.");
-
-        return fileNameParts[fileNameParts.length - 1];
-    }
-
-    public String storeFile(MultipartFile file, String path) {
-        // Normalize file name
-        String fileName =
-                new Date().getTime() + "-file." + getFileExtension(file.getOriginalFilename());
-
-        try {
-            // Check if the filename contains invalid characters
-            if (fileName.contains("..")) {
-                throw new RuntimeException(
-                        "Sorry! Filename contains invalid path sequence " + fileName);
-            }
-            Files.createDirectories(this.fileStorageLocation.resolve(path));
-            Path targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
-            return fileName;
-        } catch (IOException ex) {
-            throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
-        }
-    }
 }
