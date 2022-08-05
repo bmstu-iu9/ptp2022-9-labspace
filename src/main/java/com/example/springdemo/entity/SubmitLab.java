@@ -34,7 +34,7 @@ public class SubmitLab {
     @Column(
             name = "send_date"
     )
-    private Date sendDate = new Date(System.currentTimeMillis());
+    private Date sendDate;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
