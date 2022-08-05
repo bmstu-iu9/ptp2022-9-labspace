@@ -21,36 +21,22 @@
   <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
 
 </head>
-
 <body>
-
-<div id="wrapper">
-  <div th:insert="~{templs/templateOfSideMenu2 :: copy}"></div>
-  <div id="page-wrapper" class="gray-bg">
-    <div th:insert="~{templs/templateOfUpperPanel :: copy}"></div>
-
-    <div class="wrapper wrapper-content animated fadeInRight">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="text-center dashboard-header">
-            <h1>Выполненные лабы</h1>
-          </div>
-
-          <div class="lab-space" href="lab1">
-            <h2><b>Шаблоны С++</b></h2>
-          </div>
-          <div class="skip-row"></div>
-          <div class="lab-space" href="lab2">
-            <h2><b>Шаблоны С++</b></h2>
-          </div>
-          <div class="skip-row"></div>
-          <div class="lab-space" href="lab3">
-            <h2><b>Шаблоны С++</b></h2>
-          </div>
-          <div class="skip-row"></div>
-        </div>
+<div th:fragment="copy">
+  <div class="row border-bottom">
+    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+      <div class="navbar-header">
+        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
       </div>
-    </div>
+      <ul class="nav navbar-top-links navbar-right">
+        <li>
+          <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-link navbar-btn navbar-link">Sign out</button>
+          </form>
+        </li>
+      </ul>
+
+    </nav>
   </div>
 </div>
 </body>
