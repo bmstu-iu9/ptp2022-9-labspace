@@ -70,6 +70,6 @@ public class RegistrationController {
             model.addAttribute("error", "Activation code is not found!");
         }
 
-       return "/login";
+       return "login";
     }
 }
