@@ -38,7 +38,7 @@ public class SubmitLab {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
-            name = "student_id"
+            name = "user_id"
     )
     private User user;
 

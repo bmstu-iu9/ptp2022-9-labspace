@@ -46,6 +46,20 @@ public class MainController {
         return "guest";
     }
 
+    public void addNameAndGroupToModel(Model model){
+        String username;
+        username = getCurrentUsername();
+        if (!Objects.equals(username, "guest")) {
+            User user = userService.getByEmail(username);
+            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+            model.addAttribute("groupp",user.getGroupp().getName());
+        }
+        else{
+            model.addAttribute("name", "guest");
+            model.addAttribute("groupp", "");
+        }
+    }
+
     @Autowired
     private RequestService requestService;
 
@@ -57,81 +71,18 @@ public class MainController {
     }
     @GetMapping("/index")
     public String index(HttpServletRequest request, Model model) {
-        //get Date
-        Date date = new Date(System.currentTimeMillis());
-        //get IP
-        String clientIp = requestService.getClientIp(request);
-
-        //Get all files from directory
-        List<File> files = files("C:\\Users\\1\\Desktop\\GitHub"); //Later... Take user's directory
-        int n = files.size();
-        String[] directory = new String[n];
-        for (int i = 0; i < n; i++) {
-            directory[i] = files.get(i).getName();
-        }
-
-        model.addAttribute("clientFileSystem", directory);
-        model.addAttribute("clientDate", date);
-        model.addAttribute("clientIPAddress", clientIp);
-
-        String username;
-        username = getCurrentUsername();
-       if (!Objects.equals(username, "guest")) {
-            User user = userService.getByEmail(username);
-            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
-            model.addAttribute("groupp",user.getGroupp().getName());
-        }
-       else{
-           model.addAttribute("name", "guest");
-           model.addAttribute("groupp", "");
-       }
+        addNameAndGroupToModel(model);
         return "index";
     }
 
     @GetMapping("/minor")
     public String home2(HttpServletRequest request, Model model) {
-        //get Date
-        Date date = new Date(System.currentTimeMillis());
-        //get IP
-        String clientIp = requestService.getClientIp(request);
-
-        //Get all files from directory
-        List<File> files = files("C:\\Users\\1\\Desktop\\GitHub"); //Later... Take user's directory
-        int n = files.size();
-        String[] directory = new String[n];
-        for (int i = 0; i < n; i++) {
-            directory[i] = files.get(i).getName();
-        }
-
-        model.addAttribute("clientFileSystem", directory);
-        model.addAttribute("clientDate", date);
-        model.addAttribute("clientIPAddress", clientIp);
+        addNameAndGroupToModel(model);
         return "minor";
     }
 
-    @GetMapping("/profiles")
-    public String profile(Model model) {
-        Date date = new Date(System.currentTimeMillis());
-
-        //Get all files from directory
-        List<File> files = files("C:\\Users\\1\\Desktop\\GitHub"); //Later... Take user's directory
-        int n = files.size();
-        String[] directory = new String[n];
-        for (int i = 0; i < n; i++) {
-            directory[i] = files.get(i).getName();
-        }
-
-        //Try to get IP
-        try {
-            InetAddress clientIPAddress = InetAddress.getLocalHost();
-            model.addAttribute("clientFileSystem", directory);
-            model.addAttribute("clientIPAddress", clientIPAddress.getHostAddress());
-            model.addAttribute("clientDate", date);
-        } catch (Exception ex) {
-            model.addAttribute("clientFileSystem", directory);
-            model.addAttribute("clientDate", date);
-            System.out.println(ex.getMessage());
-        }
-        return "profiles";
+    @GetMapping("/lab")
+    public String lab(HttpServletRequest request, Model model){
+        return "lab";
     }
 }
