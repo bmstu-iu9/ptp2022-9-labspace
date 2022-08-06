@@ -25,65 +25,31 @@
 <body>
 
 <div id="wrapper">
-
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav metismenu" id="side-menu">
-                <li class="nav-header">
-                    <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" th:src="@{/img/logo.jpg}"/>
-                             </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><span th:text="${name}"></span></strong>
-                             </span> <span class="text-xs block"><span th:text="${groupp}"></span></span> </span> </a>
-                    </div>
-                    <div class="logo-element">
-                        LS
-                    </div>
-                </li>
-                <li class="active">
-                    <a href="/index"><i class="fa fa-th-large"></i> <span class="nav-label">Доступные лабы</span></a>
-                </li>
-                <li>
-                    <a href="/minor"><i class="fa fa-th-large"></i> <span class="nav-label">Выполненные лабы</span> </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
+    <div th:insert="~{templs/templateOfSideMenu1 :: copy}"></div>
     <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-                <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                </div>
-                <ul class="nav navbar-top-links navbar-right">
-                    <li>
-                        <form th:action="@{/logout}" method="post">
-                            <input type="submit" value="Sign Out"/>
-                        </form>
-                    </li>
-                </ul>
-
-            </nav>
-        </div>
+        <div th:insert="~{templs/templateOfUpperPanel :: copy}"></div>
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="text-center dashboard-header">
                         <h1>Доступные лабы</h1>
                     </div>
-
                     <div class="lab-space">
-                        <h2><b>Шаблоны С++</b></h2>
+                        <a href="/lab">
+                            <h2><b>Шаблоны С++ (1)</b></h2>
+                        </a>
                     </div>
                     <div class="skip-row"></div>
                     <div class="lab-space">
-                        <h2><b>Шаблоны С++</b></h2>
+                        <a href="/lab">
+                            <h2><b>Шаблоны С++ (2)</b></h2>
+                        </a>
                     </div>
                     <div class="skip-row"></div>
                     <div class="lab-space">
-                        <h2><b>Шаблоны С++</b></h2>
+                        <a href="/lab">
+                            <h2><b>Шаблоны С++ (3)</b></h2>
+                        </a>
                     </div>
                     <div class="skip-row"></div>
                 </div>
