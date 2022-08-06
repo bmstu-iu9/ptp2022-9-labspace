@@ -33,6 +33,11 @@ public class RegistrationController {
         return "register";
     }
 
+    @GetMapping(value = "/error")
+    public String errorPage() {
+        return "register";
+    }
+
     @PostMapping(value = "/register")
     public String regUser(@Valid User user,
                           BindingResult bindingResult,
