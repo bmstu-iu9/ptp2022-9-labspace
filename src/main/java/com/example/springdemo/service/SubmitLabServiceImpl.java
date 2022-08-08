@@ -45,8 +45,7 @@ public class SubmitLabServiceImpl implements SubmitLabService {
         submitLab.setUser(user);
         Date date = new Date();
         submitLab.setSendDate(date);
-        submitLab.setSource(labInfo.getCourse().getName() + "/labid" + labInfo.getId() );
-        submitLabRepository.save(submitLab);
+        submitLab.setSource(labInfo.getCourse().getName() + "/labid" + labInfo.getId());
         return submitLab;
     }
 }
