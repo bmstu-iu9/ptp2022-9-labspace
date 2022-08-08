@@ -41,15 +41,15 @@ public class RegistrationController {
                           HttpServletResponse response) throws ServletException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("bindingResult", bindingResult);
-            return "/register";
+            return "register";
         } else if (userService.isAlreadyPresent(user)) {
             bindingResult.rejectValue("email", "user.email", "An account already exists for this email.");
             model.addAttribute("bindingResult", bindingResult);
-            return "/register";
+            return "register";
         }else if (!user.getPassword().equals(user.getPasswordConfirm())){
             bindingResult.rejectValue("password", "user.getPasswordConfirm", "Passwords are not equal");
             model.addAttribute("bindingResult", bindingResult);
-            return "/register";
+            return "register";
         } else {
             Optional<Groupp> tmpgroup = grouppRepository.findByName(request.getParameter("groupp_name"));
             tmpgroup.ifPresent(user::setGroupp);
@@ -70,6 +70,6 @@ public class RegistrationController {
             model.addAttribute("error", "Activation code is not found!");
         }
 
-       return "/login";
+       return "login";
     }
 }
