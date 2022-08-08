@@ -5,10 +5,13 @@ import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.repository.SubmitLabRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -76,7 +79,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             SubmitLab submitLab = SubmitLab.builder()
                     .user(authenticationService.getCurrentUser())
-                    .source(path + "/" + fileName)
+                    .source(targetLocation.toString())
                     .labInfo(labInfoRepository.getReferenceById(labId))
                     .sendDate(new Date(System.currentTimeMillis()))
                     .build();
@@ -84,6 +87,26 @@ public class FileStorageServiceImpl implements FileStorageService {
             submitLabRepository.saveAndFlush(submitLab);
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
+        }
+    }
+
+    @Override
+    public Resource loadAsResource(Long labId, Long userId) {
+        try {
+            String path = submitLabRepository.findByUserIdAndLabInfoId(userId, labId).get().getSource();
+            Path file = Paths.get(path);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            }
+            else {
+                throw new RuntimeException(
+                        "Could not read file");
+
+            }
+        }
+        catch (MalformedURLException e) {
+            throw new RuntimeException("Could not read file", e);
         }
     }
 }
