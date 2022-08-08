@@ -52,7 +52,8 @@ public class FileUploadController {
         return "redirect:/labid"+lab_id;
     }
     @GetMapping(path="labid{lab_info_id}")
-    public String view(){
+    public String view(Model model, @PathVariable("lab_info_id") Long lab_id){
+        model.addAttribute("link",labInfoRepository.getReferenceById(lab_id).getSource());
         return "lab";
     }
 }
