@@ -4,6 +4,7 @@ import com.example.springdemo.entity.User;
 import com.example.springdemo.exceptions.UserNotFoundException;
 import com.example.springdemo.service.MailSender;
 import com.example.springdemo.service.UserService;
+import com.sun.mail.smtp.SMTPSendFailedException;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -52,7 +53,7 @@ public class ForgotPasswordController {
 
             mailSender.send(email, "Reset password link", message);
             model.addAttribute("message", "A reset password link have sent to your email.");
-        } catch (UserNotFoundException  | IllegalStateException ex){
+        } catch (UserNotFoundException | IllegalStateException ex){
             model.addAttribute("error", ex.getMessage());
         }
 
@@ -69,6 +70,7 @@ public class ForgotPasswordController {
             return "success_reset";
         }
 
+
         return "reset_password";
     }
 
@@ -76,8 +78,9 @@ public class ForgotPasswordController {
     public String processResetPassword(HttpServletRequest request, Model model) {
         String token = request.getParameter("token");
         String password = request.getParameter("password");
-
+        System.out.println(token);
         User user = userService.getByResetPasswordToken(token);
+        System.out.println("user: " + user);
         model.addAttribute("title", "Reset your password");
 
         if (user == null) {
