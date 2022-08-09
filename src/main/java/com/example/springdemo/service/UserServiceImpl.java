@@ -1,16 +1,15 @@
 
 package com.example.springdemo.service;
 
-import com.example.springdemo.entity.Groupp;
 import com.example.springdemo.entity.Role;
 import com.example.springdemo.entity.User;
 //import com.example.springdemo.model.UserModel;
+import com.example.springdemo.exceptions.UserNotFoundException;
 import com.example.springdemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public User getByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         if (!user.isPresent()) {
-            throw new IllegalStateException("this user doesn't exist");
+            throw new IllegalStateException("This user doesn't exist");
         } else {
             return user.get();
         }
@@ -45,7 +44,7 @@ public class UserServiceImpl implements UserService {
     public User getById(Long id) {
         Optional<User> user = userRepository.findById(id);
         if (!user.isPresent()) {
-            throw new IllegalStateException("this student doesn't exist");
+            throw new IllegalStateException("This student doesn't exist");
         } else {
             return user.get();
         }
@@ -86,6 +85,30 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return true;
+    }
+
+    @Override
+    public void updateResetPasswordToken(String token, String email) throws UserNotFoundException{
+        User user = getByEmail(email);
+        if (user != null) {
+            user.setResetPasswordToken(token);
+            userRepository.save(user);
+        } else {
+            throw new UserNotFoundException(email);
+        }
+    }
+
+    public User getByResetPasswordToken(String token) {
+        return userRepository.findByResetPasswordToken(token);
+    }
+
+    public void updatePassword(User user, String newPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+
+        user.setResetPasswordToken(null);
+        userRepository.save(user);
     }
 
     @Override
