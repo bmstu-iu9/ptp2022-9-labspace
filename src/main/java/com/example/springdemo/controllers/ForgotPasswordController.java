@@ -1,0 +1,90 @@
+package com.example.springdemo.controllers;
+
+import com.example.springdemo.entity.User;
+import com.example.springdemo.service.MailSender;
+import com.example.springdemo.service.UserService;
+import net.bytebuddy.utility.RandomString;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Controller;
+
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+
+@Controller
+public class ForgotPasswordController {
+
+    @Autowired
+    private MailSender mailSender;
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/forgot_password")
+    public String showForgotPasswordForm() {
+        return "forgot_password";
+    }
+
+    @PostMapping("/forgot_password")
+    public String processForgotPassword(HttpServletRequest request, Model model) {
+        String email = request.getParameter("email");
+        String token = RandomString.make(30);
+
+        userService.updateResetPasswordToken(token, email);
+        String resetPasswordLink = "http://localhost:8080/reset_password?token=" + token; // iu9.yss.su
+
+        String message = String.format(
+                "Hello!\n" +
+                        "\n" +
+                        "You have requested to reset your password.\n" +
+                        "\n" +
+                        "Click the link below to change your password:\n" +
+                        resetPasswordLink + "%s",
+                token
+        );
+
+        mailSender.send(email, "Reset password link", message);
+        model.addAttribute("message", "A reset password link have sent to your email.");
+
+        return "forgot_password";
+    }
+
+    @GetMapping("/reset_password")
+    public String showResetPasswordForm(@Param(value = "token") String token, Model model) {
+        User user = userService.getByResetPasswordToken(token);
+        model.addAttribute("token", token);
+
+        if (user == null) {
+            model.addAttribute("error", "Invalid Token");
+            return "success_reset";
+        }
+
+        return "reset_password";
+    }
+
+    @PostMapping("/reset_password")
+    public String processResetPassword(HttpServletRequest request, Model model) {
+        String token = request.getParameter("token");
+        String password = request.getParameter("password");
+
+        User user = userService.getByResetPasswordToken(token);
+        model.addAttribute("title", "Reset your password");
+
+        if (user == null) {
+            model.addAttribute("error", "Invalid Token");
+            return "success_reset";
+        } else {
+            userService.updatePassword(user, password);
+
+            model.addAttribute("success", "You have successfully changed your password.");
+        }
+
+        return "success_reset";
+    }
+}

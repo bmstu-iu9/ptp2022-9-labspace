@@ -72,5 +72,8 @@ public class User {
 
     private String activationCode;
 
+    private String resetPasswordToken;
+
+
 
 }

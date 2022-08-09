@@ -1,7 +1,6 @@
 
 package com.example.springdemo.service;
 
-import com.example.springdemo.entity.Groupp;
 import com.example.springdemo.entity.Role;
 import com.example.springdemo.entity.User;
 //import com.example.springdemo.model.UserModel;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -64,7 +62,7 @@ public class UserServiceImpl implements UserService {
                         "We are glad to welcome you to the LabSpace!\n" +
                         "\n" +
                         "Please, follow the link to verify your profile:\n" +
-                        "http://iu9.yss.su/activate/%s",
+                        "http://localhost:8080/activate/%s", // iu9.yss.su
                 user.getFirstName(),
                 user.getActivationCode()
         );
@@ -86,6 +84,31 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return true;
+    }
+
+    @Override
+    public void updateResetPasswordToken(String token, String email) {
+        User user = getByEmail(email);
+        if (user == null) {
+            return;
+        }
+
+        user.setResetPasswordToken(token);
+        userRepository.save(user);
+
+    }
+
+    public User getByResetPasswordToken(String token) {
+        return userRepository.findByResetPasswordToken(token);
+    }
+
+    public void updatePassword(User user, String newPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+
+        user.setResetPasswordToken(null);
+        userRepository.save(user);
     }
 
     @Override

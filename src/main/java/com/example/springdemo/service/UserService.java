@@ -16,4 +16,10 @@ public interface UserService {
     boolean isAlreadyPresent(User user);
 
     boolean activateUser(String code);
+
+    void updateResetPasswordToken(String token, String email);
+
+    User getByResetPasswordToken(String token);
+
+    void updatePassword(User user, String newPassword);
 }
