@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.UnsupportedEncodingException;
 
 @Controller
@@ -47,8 +48,7 @@ public class ForgotPasswordController {
                             "You have requested to reset your password.\n" +
                             "\n" +
                             "Click the link below to change your password:\n" +
-                            resetPasswordLink + "%s",
-                    token
+                            resetPasswordLink
             );
 
             mailSender.send(email, "Reset password link", message);
@@ -70,17 +70,18 @@ public class ForgotPasswordController {
             return "success_reset";
         }
 
-
         return "reset_password";
     }
 
     @PostMapping("/reset_password")
     public String processResetPassword(HttpServletRequest request, Model model) {
-        String token = request.getParameter("token");
+        HttpServletRequestWrapper httpServletRequestWrapper = (HttpServletRequestWrapper) request;
+        String token = httpServletRequestWrapper.getRequest().getParameter("token");
+        //String token = request.getParameter("token");
         String password = request.getParameter("password");
-        System.out.println(token);
         User user = userService.getByResetPasswordToken(token);
         System.out.println("user: " + user);
+
         model.addAttribute("title", "Reset your password");
 
         if (user == null) {
@@ -88,7 +89,7 @@ public class ForgotPasswordController {
             return "success_reset";
         } else {
             userService.updatePassword(user, password);
-
+            user.setResetPasswordToken(null);
             model.addAttribute("success", "You have successfully changed your password.");
         }
 
