@@ -40,7 +40,7 @@ public class ForgotPasswordController {
         String token = RandomString.make(30);
         try {
             userService.updateResetPasswordToken(token, email);
-            String resetPasswordLink = "http://localhost:8080/reset_password?token=" + token; // iu9.yss.su
+            String resetPasswordLink = "http://iu9.yss.su/reset_password?token=" + token;
 
             String message = String.format(
                     "Hello!\n" +
@@ -77,7 +77,6 @@ public class ForgotPasswordController {
     public String processResetPassword(HttpServletRequest request, Model model) {
         HttpServletRequestWrapper httpServletRequestWrapper = (HttpServletRequestWrapper) request;
         String token = httpServletRequestWrapper.getRequest().getParameter("token");
-        //String token = request.getParameter("token");
         String password = request.getParameter("password");
         User user = userService.getByResetPasswordToken(token);
         System.out.println("user: " + user);
