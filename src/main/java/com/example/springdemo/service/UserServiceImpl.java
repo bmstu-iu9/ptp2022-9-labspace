@@ -4,6 +4,7 @@ package com.example.springdemo.service;
 import com.example.springdemo.entity.Role;
 import com.example.springdemo.entity.User;
 //import com.example.springdemo.model.UserModel;
+import com.example.springdemo.exceptions.UserNotFoundException;
 import com.example.springdemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public User getByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         if (!user.isPresent()) {
-            throw new IllegalStateException("this user doesn't exist");
+            throw new IllegalStateException("This user doesn't exist");
         } else {
             return user.get();
         }
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
     public User getById(Long id) {
         Optional<User> user = userRepository.findById(id);
         if (!user.isPresent()) {
-            throw new IllegalStateException("this student doesn't exist");
+            throw new IllegalStateException("This student doesn't exist");
         } else {
             return user.get();
         }
@@ -87,15 +88,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateResetPasswordToken(String token, String email) {
+    public void updateResetPasswordToken(String token, String email) throws UserNotFoundException{
         User user = getByEmail(email);
-        if (user == null) {
-            return;
+        if (user != null) {
+            user.setResetPasswordToken(token);
+            userRepository.save(user);
+        } else {
+            throw new UserNotFoundException(email);
         }
-
-        user.setResetPasswordToken(token);
-        userRepository.save(user);
-
     }
 
     public User getByResetPasswordToken(String token) {

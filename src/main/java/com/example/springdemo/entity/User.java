@@ -71,7 +71,9 @@ public class User {
     private Set<Role> roles;
 
     private String activationCode;
-
+    @Column(
+            name = "reset_password_token"
+    )
     private String resetPasswordToken;
 
 

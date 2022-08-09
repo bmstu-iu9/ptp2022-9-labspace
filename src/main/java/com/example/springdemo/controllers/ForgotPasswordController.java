@@ -1,6 +1,7 @@
 package com.example.springdemo.controllers;
 
 import com.example.springdemo.entity.User;
+import com.example.springdemo.exceptions.UserNotFoundException;
 import com.example.springdemo.service.MailSender;
 import com.example.springdemo.service.UserService;
 import net.bytebuddy.utility.RandomString;
@@ -32,25 +33,28 @@ public class ForgotPasswordController {
     }
 
     @PostMapping("/forgot_password")
-    public String processForgotPassword(HttpServletRequest request, Model model) {
+    public String processForgotPassword(HttpServletRequest request, Model model) throws UserNotFoundException {
         String email = request.getParameter("email");
         String token = RandomString.make(30);
+        try {
+            userService.updateResetPasswordToken(token, email);
+            String resetPasswordLink = "http://localhost:8080/reset_password?token=" + token; // iu9.yss.su
 
-        userService.updateResetPasswordToken(token, email);
-        String resetPasswordLink = "http://localhost:8080/reset_password?token=" + token; // iu9.yss.su
+            String message = String.format(
+                    "Hello!\n" +
+                            "\n" +
+                            "You have requested to reset your password.\n" +
+                            "\n" +
+                            "Click the link below to change your password:\n" +
+                            resetPasswordLink + "%s",
+                    token
+            );
 
-        String message = String.format(
-                "Hello!\n" +
-                        "\n" +
-                        "You have requested to reset your password.\n" +
-                        "\n" +
-                        "Click the link below to change your password:\n" +
-                        resetPasswordLink + "%s",
-                token
-        );
-
-        mailSender.send(email, "Reset password link", message);
-        model.addAttribute("message", "A reset password link have sent to your email.");
+            mailSender.send(email, "Reset password link", message);
+            model.addAttribute("message", "A reset password link have sent to your email.");
+        } catch (UserNotFoundException  | IllegalStateException ex){
+            model.addAttribute("error", ex.getMessage());
+        }
 
         return "forgot_password";
     }

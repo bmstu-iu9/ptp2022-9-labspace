@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>LABSPACE | Forgot password</title>
+  <title>LABSPACE | New password</title>
 
   <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
   <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
@@ -23,22 +23,12 @@
 <body class="gray-bg">
 
 <div class="middle-box text-center loginscreen animated fadeInDown">
-  <div>
-    <div th:if="${error != null}">
-      <p class="alert alert-danger" role="alert">[[${error}]]</p>
-    </div>
-    <div class="alert alert-info" role="alert" th:text="${message}" th:if="${message}"></div>
-    <form class="m-t" role="form" th:action="@{/forgot_password}"  method="post" >
-      <div >
-        <input type="email" class="form-control" name="email" placeholder="Email" required="">
-      </div>
-      <div> <input type="submit" class="btn btn-primary block full-width m-b" value="Send"/></div>
-      <p class="text-muted text-center"><small>Don't have an account?</small></p>
-      <p class="btn btn-sm btn-white btn-block" href="/register">Sign up</p>
-    </form>
-  </div>
+  <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+  <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+  <a class="btn btn-sm btn-white btn-block" href="/login">Sign in</a>
 </div>
 
 </body>
 
 </html>
+
