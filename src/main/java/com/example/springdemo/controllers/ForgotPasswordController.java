@@ -40,7 +40,7 @@ public class ForgotPasswordController {
         String token = RandomString.make(30);
         try {
             userService.updateResetPasswordToken(token, email);
-            String resetPasswordLink = "http://iu9.yss.su/reset_password?token=" + token;
+            String resetPasswordLink = "http://localhost:8080/reset_password?token=" + token;
 
             String message = String.format(
                     "Hello!\n" +
