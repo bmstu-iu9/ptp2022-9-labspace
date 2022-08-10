@@ -1,16 +1,12 @@
 package com.example.springdemo.controllers;
 
-import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.SubmitLab;
 import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.LabInfoRepository;
-import com.example.springdemo.response.UploadResponse;
 import com.example.springdemo.service.FileStorageService;
 import com.example.springdemo.service.SubmitLabService;
 import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;

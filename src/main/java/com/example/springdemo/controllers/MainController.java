@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.net.InetAddress;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -83,6 +82,7 @@ public class MainController {
 
     @GetMapping("/lab")
     public String lab(HttpServletRequest request, Model model){
-        return "lab";
+        addNameAndGroupToModel(model);
+        return "templs/lab";
     }
 }

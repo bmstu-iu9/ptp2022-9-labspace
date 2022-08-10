@@ -3441,6 +3441,8 @@ video {
 }
 .wrapper {
   padding: 0 20px;
+  height: 700px;
+  width: 100%;
 }
 .wrapper-content {
   padding: 20px 10px 40px;
@@ -8242,3 +8244,113 @@ body.md-skin {
   height: 20px;
 }
 
+.labInfo{
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  height: 600px;
+}
+
+.space{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+#informationOfLab{
+  width: 100%;
+  height: 60%;
+}
+
+#borderOfLabInfo {
+  border: 3px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+  height: 80%;
+  width: 60%;
+}
+
+#usefulFiles{
+  width: 100%;
+  height: 40%;
+}
+
+#borderOfUsefulFiles{
+  border: 3px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+  height: 50%;
+  width: 60%;
+}
+
+#resultOfLab{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 40%;
+  height: 600px;
+}
+
+#row{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 30%;
+}
+
+#done{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 60%;
+}
+
+#grade{
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
+}
+
+#deadline{
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
+}
+
+#gradeSpace{
+  border: 3px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+  height: 70%;
+  width: 60%;
+}
+
+#deadlineSpace{
+  border: 3px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+  height: 70%;
+  width: 60%;
+}
+
+#doneSpace{
+  border: 3px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+  height: 80%;
+  width: 80%;
+}
+
+.sticky{
+  position: sticky;
+}
