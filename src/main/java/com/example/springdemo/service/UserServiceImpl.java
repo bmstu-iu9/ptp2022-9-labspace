@@ -51,12 +51,40 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    private String capitalize(String str) {
+        int k = 0;
+        String res = "";
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) >= 'A' && str.charAt(i) <= 'Z' ||
+                    str.charAt(i) >= 'a' && str.charAt(i) <= 'z' ||
+                    str.charAt(i) >= 'А' && str.charAt(i) <= 'Я' ||
+                    str.charAt(i) >= 'а' && str.charAt(i) <= 'я' ||
+                    str.charAt(i) == 'ё' || str.charAt(i) == 'Ё') {
+
+                if (k == 0) {
+                    res += str.substring(i, i+1).toUpperCase();
+                } else {
+                    res += str.substring(i, i+1).toLowerCase();
+                }
+                k += 1;
+            } else {
+                res += str.substring(i, i+1);
+                k = 0;
+            }
+        }
+
+        return res;
+    }
+
+    @Override
     public void registerUser(User user) {
         user.setActive(false);
         user.setGroupp(user.getGroupp());
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(encoder.encode(user.getPassword()));
         user.setActivationCode(UUID.randomUUID().toString());
+        user.setFirstName(capitalize(user.getFirstName()));
+        user.setLastName(capitalize(user.getLastName()));
 
         String message = String.format(
                 "Hello, %s!\n" +
