@@ -75,6 +75,7 @@ public class MainController {
         return "index";
     }
 
+
     @GetMapping("/minor")
     public String home2(HttpServletRequest request, Model model) {
         addNameAndGroupToModel(model);
