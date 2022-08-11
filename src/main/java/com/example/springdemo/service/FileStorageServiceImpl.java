@@ -1,5 +1,6 @@
 package com.example.springdemo.service;
 
+import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.SubmitLab;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.repository.SubmitLabRepository;
@@ -85,6 +86,38 @@ public class FileStorageServiceImpl implements FileStorageService {
                     .build();
 
             submitLabRepository.saveAndFlush(submitLab);
+        } catch (IOException ex) {
+            throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
+        }
+    }
+
+    @Override
+    public void storeFile(MultipartFile file, LabInfo labInfo) {
+        // Normalize file name
+        String fileName =
+                new Date().getTime() + "-file." + getFileExtension(file.getOriginalFilename());
+
+        try {
+            // Check if the filename contains invalid characters
+            if (fileName.contains("..")) {
+                throw new RuntimeException(
+                        "Sorry! Filename contains invalid path sequence " + fileName);
+            }
+
+            String contentType = file.getContentType();
+
+            // Check if the filetype is not correct
+            if(contentType == null ||
+                    !(contentType.equals("application/msword") ||
+                            contentType.equals("application/pdf") ||
+                            contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))) {
+                throw new RuntimeException("Allowed filetypes: doc, docx, pdf");
+            }
+            Files.createDirectories(this.fileStorageLocation.resolve(labInfo.getSource()));
+            labInfo.setSource(labInfo.getSource()+fileName);
+            Path targetLocation = this.fileStorageLocation.resolve(labInfo.getSource());
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            labInfoRepository.saveAndFlush(labInfo);
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
         }

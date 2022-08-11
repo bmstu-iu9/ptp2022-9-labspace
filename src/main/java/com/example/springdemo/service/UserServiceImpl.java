@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService {
 
     public void registerUser(User user) {
         user.setActive(false);
-        user.setGroupp(user.getGroupp());
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(encoder.encode(user.getPassword()));
         user.setActivationCode(UUID.randomUUID().toString());
