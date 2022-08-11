@@ -52,6 +52,6 @@ public class LabInfoUploadController {
             fileStorageService.storeFile(file,labInfo);
             tmpcourse.ifPresent(labInfo::setCourse);
             labInfoService.uploadLab(labInfo);
-        return "/uploadLab";
+        return "uploadLab";
     }
 }
