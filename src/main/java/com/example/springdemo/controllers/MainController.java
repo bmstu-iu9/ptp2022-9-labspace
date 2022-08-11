@@ -81,6 +81,8 @@ public class MainController {
         return "minor";
     }
 
+
+
     @GetMapping("/lab")
     public String lab(HttpServletRequest request, Model model){
         return "lab";
