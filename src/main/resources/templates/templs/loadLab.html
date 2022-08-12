@@ -19,21 +19,22 @@
 </head>
 
 <body class="gray-bg">
-<div th:if="${message}">
-  <h2 th:text="${message}"/>
-</div>
-<div class="middle-box text-center loginscreen animated fadeInDown">
-  <div>
-    <h3>Welcome to LabSpace</h3>
-    <form class="m-t" role="form"  enctype="multipart/form-data" method="post" >
-      <div >
-        <input type="file" class="form-control" name="file">
-      </div>
-      <div> <input type="submit" class="btn btn-primary block full-width m-b" value="Sign In"/></div>
-    </form>
+<div th:fragment="copy">
+  <div th:if="${message}">
+    <h2 th:text="${message}"/>
+  </div>
+  <div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+      <h3>Welcome to LabSpace</h3>
+      <form class="m-t" role="form"  enctype="multipart/form-data" method="post" >
+        <div >
+          <input type="file" class="form-control" name="file">
+        </div>
+        <div> <input type="submit" class="btn btn-primary block full-width m-b" value="Sign In"/></div>
+      </form>
+    </div>
   </div>
 </div>
-
 </body>
 
 </html>
