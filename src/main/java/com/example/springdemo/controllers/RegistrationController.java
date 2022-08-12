@@ -50,6 +50,14 @@ public class RegistrationController {
             bindingResult.rejectValue("password", "user.getPasswordConfirm", "Passwords are not equal");
             model.addAttribute("bindingResult", bindingResult);
             return "register";
+        } else if (userService.firstNameContainsIllegalChars(user)) {
+            bindingResult.rejectValue("firstName", "user.containsIllegalChar", "Имя может содержать только буквы и символ \"-\"");
+            model.addAttribute("bindingResult", bindingResult);
+            return "register";
+        } else if (userService.lastNameContainsIllegalChars(user)) {
+            bindingResult.rejectValue("lastName", "user.containsIllegalChar", "Фамилия может содержать только буквы и символ \"-\"");
+            model.addAttribute("bindingResult", bindingResult);
+            return "register";
         } else {
             Optional<Groupp> tmpgroup = grouppRepository.findByName(request.getParameter("groupp_name"));
             tmpgroup.ifPresent(user::setGroupp);

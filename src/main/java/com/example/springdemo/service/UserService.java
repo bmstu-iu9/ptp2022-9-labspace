@@ -16,4 +16,7 @@ public interface UserService {
     boolean isAlreadyPresent(User user);
 
     boolean activateUser(String code);
+
+    boolean firstNameContainsIllegalChars(User user);
+    boolean lastNameContainsIllegalChars(User user);
 }
