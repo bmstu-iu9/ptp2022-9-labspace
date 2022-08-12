@@ -82,8 +82,8 @@ public class MainController {
         return "minor";
     }
     @GetMapping("/login")
-        public String login(HttpServletRequest request){
-        if (getCurrentUsername()== "guest"){
+    public String login(HttpServletRequest request){
+        if (Objects.equals(getCurrentUsername(), "guest")){
             return "login";
         }else {
             return "redirect:/";
