@@ -4,48 +4,38 @@ import com.example.springdemo.entity.SubmitLab;
 import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.service.FileStorageService;
-import com.example.springdemo.service.SubmitLabService;
-import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class FileUploadController {
-    private final FileStorageService fileStorageService;
     @Autowired
-    private UserService userService;
-    @Autowired
-    private SubmitLabService labService;
+    private FileStorageService fileStorageService;
+
     @Autowired
     private LabInfoRepository labInfoRepository;
 
-    public FileUploadController(FileStorageService fileStorageService) {
-        this.fileStorageService = fileStorageService;
-    }
-    public User getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-            return userService.getByEmail(authentication.getName());
-    }
-
     @PostMapping(path = "labid{lab_info_id}")
     public String uploadFile(
-            @RequestParam(name = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes, @PathVariable("lab_info_id") Long lab_id,
+            @RequestParam(name = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes, @PathVariable("lab_info_id") Long labId,
             Model model) {
-        SubmitLab submitLab=labService.submitLab(getCurrentUser(),labInfoRepository.getReferenceById(lab_id));
-        model.addAttribute("id",lab_id);
-         fileStorageService.storeFile(file,submitLab.getSource());
+        String path = labInfoRepository.getReferenceById(labId).getCourse().getName() + "/labid" + labId;
+        model.addAttribute("id",labId);
+        fileStorageService.storeFile(file, path, labId);
 
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return "redirect:/labid"+lab_id;
+        return "redirect:/labid"+labId;
     }
     @GetMapping(path="labid{lab_info_id}")
     public String view(){

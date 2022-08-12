@@ -31,8 +31,6 @@
         <p>
             Login in. To see it.
         </p>
-        <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
-        <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
         <form class="m-t" role="form" th:action="@{/login}"  method="post" >
             <div >
                 <input type="email" class="form-control" name="email" placeholder="Email" required="">
@@ -41,6 +39,7 @@
                 <input type="password" class="form-control" name="password" placeholder="Password" required="">
             </div>
             <div> <input type="submit" class="btn btn-primary block full-width m-b" value="Sign In"/></div>
+            <a class="caption-link" href="/forgot_password">Forgot password?</a>
 
             <p class="text-muted text-center"><small>Do not have an account?</small></p>
             <a class="btn btn-sm btn-white btn-block" href="/register">Create an account</a>
