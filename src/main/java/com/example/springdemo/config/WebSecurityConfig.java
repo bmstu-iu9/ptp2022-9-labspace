@@ -30,21 +30,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers( "/register", "/activate/*", "/forgot_password", "/reset_password**", "/login").not().fullyAuthenticated()
+                    .antMatchers( "/auth/**").not().fullyAuthenticated()
+                    //.antMatchers( "/auth/register", "/auth/activate/*", "/auth/forgot_password", "/auth/reset_password**", "/auth/login").not().fullyAuthenticated()
                     .antMatchers("/admin/**").hasRole("ADMIN") //здесь прописать доступ для админа
                     .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") // тут - для юзера
                     //.antMatchers( "/index", "/minor", "/lab**").authenticated()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                    .loginPage("/login")
+                    .loginPage("/auth/login")
                     .usernameParameter("email")
                     .defaultSuccessUrl("/")
                     .permitAll()
                 .and()
                     .logout()
                     .permitAll()
-                    .logoutSuccessUrl("/login")
+                    .logoutSuccessUrl("/auth/login")
                 .and()
                     .cors()
                 .and()

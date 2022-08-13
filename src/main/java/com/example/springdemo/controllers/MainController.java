@@ -80,7 +80,7 @@ public class MainController {
         addNameAndGroupToModel(model);
         return "minor";
     }
-    @GetMapping("/login")
+    @GetMapping("/auth/login")
     public String login(HttpServletRequest request){
         if (Objects.equals(getCurrentUsername(), "guest")){
             return "login";
