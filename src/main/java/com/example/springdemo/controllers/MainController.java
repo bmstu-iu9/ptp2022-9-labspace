@@ -66,16 +66,16 @@ public class MainController {
     UserService userService;
     @GetMapping("/")
     public String view(){
-        return "redirect:/index";
+        return "redirect:/main/index";
     }
-    @GetMapping("/index")
+    @GetMapping("/main/index")
     public String index(HttpServletRequest request, Model model) {
         addNameAndGroupToModel(model);
         return "index";
     }
 
 
-    @GetMapping("/minor")
+    @GetMapping("/main/minor")
     public String home2(HttpServletRequest request, Model model) {
         addNameAndGroupToModel(model);
         return "minor";
@@ -88,7 +88,7 @@ public class MainController {
             return "redirect:/";
         }
 }
-    @GetMapping("/lab")
+    @GetMapping("/main/lab")
     public String lab(HttpServletRequest request, Model model){
         addNameAndGroupToModel(model);
         return "templs/lab";

@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/admin/**").hasRole("ADMIN") //здесь прописать доступ для админа
                     .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") // тут - для юзера
                     //.antMatchers( "/index", "/minor", "/lab**").authenticated()
-                    .anyRequest().authenticated()
+                    .antMatchers( "/main/**").authenticated()
                 .and()
                     .formLogin()
                     .loginPage("/auth/login")
