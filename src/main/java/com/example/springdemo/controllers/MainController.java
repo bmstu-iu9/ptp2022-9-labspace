@@ -79,9 +79,14 @@ public class MainController {
         addNameAndGroupToModel(model);
         return "minor";
     }
-
-
-
+    @GetMapping("/login")
+    public String login(HttpServletRequest request){
+        if (Objects.equals(getCurrentUsername(), "guest")){
+            return "login";
+        }else {
+            return "redirect:/";
+        }
+}
     @GetMapping("/lab")
     public String lab(HttpServletRequest request, Model model){
         addNameAndGroupToModel(model);
