@@ -68,6 +68,7 @@ public class User {
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
     private String activationCode;
