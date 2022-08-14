@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LABSPACE | Login</title>
+
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+  <link th:href="@{/css/animate.css}" rel="stylesheet">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+
+  <script th:src="@{/js/jquery-2.1.1.js}"></script>
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+
+<body class="gray-bg">
+<div th:fragment="copy">
+  <div th:if="${message}">
+    <h2 th:text="${message}"/>
+  </div>
+  <div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+      <h3>Welcome to LabSpace</h3>
+      <form class="m-t" role="form"  enctype="multipart/form-data" method="post" >
+        <div >
+          <input type="file" class="form-control" name="file">
+        </div>
+        <div> <input type="submit" class="btn btn-primary block full-width m-b" value="Sign In"/></div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>
