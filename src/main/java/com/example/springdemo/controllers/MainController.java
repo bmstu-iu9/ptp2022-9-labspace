@@ -100,6 +100,10 @@ public class MainController {
         return "templs/lab";
     }
 
+    @GetMapping("/main/teacher_lab")
+    public String teacher_lab(HttpServletRequest request, Model model) {
+        addNameAndGroupToModel(model);
+        return "teacher_lab";
     @RequestMapping(value = "/accessDenied")
     public String accessDenied() {
         return "accessDenied"; // logical view name
