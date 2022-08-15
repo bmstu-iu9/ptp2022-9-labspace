@@ -29,18 +29,18 @@ public class ForgotPasswordController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/forgot_password")
+    @GetMapping("/auth/forgot_password")
     public String showForgotPasswordForm() {
         return "forgot_password";
     }
 
-    @PostMapping("/forgot_password")
+    @PostMapping("/auth/forgot_password")
     public String processForgotPassword(HttpServletRequest request, Model model) throws UserNotFoundException {
         String email = request.getParameter("email");
         String token = RandomString.make(30);
         try {
             userService.updateResetPasswordToken(token, email);
-            String resetPasswordLink = "http://iu9.yss.su/reset_password?token=" + token;
+            String resetPasswordLink = "http://iu9.yss.su/auth/reset_password?token=" + token;
 
             String message = String.format(
                     "Hello!\n" +
@@ -60,7 +60,7 @@ public class ForgotPasswordController {
         return "forgot_password";
     }
 
-    @GetMapping("/reset_password")
+    @GetMapping("/auth/reset_password")
     public String showResetPasswordForm(@Param(value = "token") String token, Model model) {
         User user = userService.getByResetPasswordToken(token);
         model.addAttribute("token", token);
@@ -73,7 +73,7 @@ public class ForgotPasswordController {
         return "reset_password";
     }
 
-    @PostMapping("/reset_password")
+    @PostMapping("/auth/reset_password")
     public String processResetPassword(HttpServletRequest request, Model model) {
         HttpServletRequestWrapper httpServletRequestWrapper = (HttpServletRequestWrapper) request;
         String token = httpServletRequestWrapper.getRequest().getParameter("token");

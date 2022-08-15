@@ -36,7 +36,7 @@ public class RegistrationController {
     @Autowired
     GrouppRepository grouppRepository;
 
-    @GetMapping(value = "/register")
+    @GetMapping(value = "/auth/register")
     public String registerUser(Model model) {
             if (Objects.equals(getCurrentUsername(), "guest")){
                 User user = new User();
@@ -44,11 +44,11 @@ public class RegistrationController {
                 model.addAttribute("grouppRepository", grouppRepository);
                 return "register";
             }else {
-                return "redirect:/index";
+                return "redirect:/";
             }
     }
 
-    @PostMapping(value = "/register")
+    @PostMapping(value = "/auth/register")
     public String regUser(@Valid User user,
                           BindingResult bindingResult,
                           Model model,
@@ -75,7 +75,7 @@ public class RegistrationController {
         }
     }
 
-    @GetMapping("/activate/{code}")
+    @GetMapping("/auth/activate/{code}")
     public String activate(Model model, @PathVariable String code) {
         boolean isActivated = userService.activateUser(code);
 

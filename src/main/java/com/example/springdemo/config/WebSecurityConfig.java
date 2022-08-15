@@ -1,5 +1,6 @@
 package com.example.springdemo.config;
 
+import com.example.springdemo.exceptions.CustomAccessDeniedHandler;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.util.ClassUtils;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,21 +35,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers( "/register", "/activate/*", "/forgot_password", "/reset_password**", "/login").not().fullyAuthenticated()
+                    .antMatchers( "/auth/**").not().fullyAuthenticated()
+                    //.antMatchers( "/auth/register", "/auth/activate/*", "/auth/forgot_password", "/auth/reset_password**", "/auth/login").not().fullyAuthenticated()
                     .antMatchers("/admin/**").hasRole("ADMIN") //здесь прописать доступ для админа
                     .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") // тут - для юзера
                     //.antMatchers( "/index", "/minor", "/lab**").authenticated()
-                    .anyRequest().authenticated()
+                    .antMatchers( "/main/**").authenticated()
+                    .antMatchers( "/error").permitAll()
+                .and()
+                    .exceptionHandling().accessDeniedPage("/accessDenied.html")
                 .and()
                     .formLogin()
-                    .loginPage("/login")
+                    .loginPage("/auth/login")
                     .usernameParameter("email")
-                    .defaultSuccessUrl("/")
+                    .defaultSuccessUrl("/", true)
                     .permitAll()
                 .and()
                     .logout()
                     .permitAll()
-                    .logoutSuccessUrl("/login")
+                    .logoutSuccessUrl("/auth/login")
                 .and()
                     .cors()
                 .and()
@@ -69,5 +78,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usersByUsernameQuery("select email,password,active from users where email=?")
                 .authoritiesByUsernameQuery("select users.email,role.roles from users  inner join role  on users.user_id=role.user_id where users.email=?");
     }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
+    }
+
+    @ExceptionHandler(Throwable.class)
+    public String handleAnyException(Throwable ex, HttpServletRequest request) {
+        return ClassUtils.getShortName(ex.getClass());
+    }
+
 }
 

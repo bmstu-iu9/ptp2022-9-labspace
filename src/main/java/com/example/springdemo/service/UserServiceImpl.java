@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
                         "We are glad to welcome you to the LabSpace!\n" +
                         "\n" +
                         "Please, follow the link to verify your profile:\n" +
-                        "http://iu9.yss.su/activate/%s",
+                        "http://iu9.yss.su/auth/activate/%s",
                 user.getFirstName(),
                 user.getActivationCode()
         );
