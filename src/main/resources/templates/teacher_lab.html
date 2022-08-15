@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/teacher_lab.css">
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/js/jquery-2.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+    <script th:src="@{/js/inspinia.js}"></script>
+    <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+</head>
+<body><div id="wrapper">
+    <div th:insert="~{templs/templateOfSideMenu1 :: copy}"></div>
+    <div id="page-wrapper" class="gray-bg">
+        <div th:insert="~{templs/templateOfUpperPanel :: copy}"></div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="teacher_container">
+                        <span class="teacher_title">New labwork</span>
+                        <div class="teacher_form">
+                            <div class="teacher_row">
+
+                                <div class="teacher_left_form">
+                                    <span class="teacher_title_text">Subject</span>
+                                    <select class="teacher_select" required>
+                                        <option disabled value="" selected>Select the subject</option>
+                                        <option value="Че то там" style="color: #202020">Че то там1</option>
+                                        <option value="Че то там" style="color: #202020">Че то там2</option>
+                                        <option value="Че то там" style="color: #202020">Че то там3</option>
+                                    </select>
+                                </div>
+
+                                <div class="teacher_right_form">
+                                    <span class="teacher_title_text">Group</span>
+                                    <!--            <input class="input group_input" list="group_list" placeholder="Select the group">-->
+                                    <select class="teacher_select" required>
+                                        <option disabled value="" selected="selected">Select the group</option>
+                                        <option value="Че то там" style="color: #202020">Че то там1</option>
+                                        <option value="Че то там" style="color: #202020">Че то там2</option>
+                                        <option value="Че то там" style="color: #202020">Че то там3</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="teacher_row">
+                                <div class="teacher_left_form">
+                                    <span class="teacher_title_text">Title</span>
+                                    <input class="teacher_input" placeholder="Name of labwork">
+                                </div>
+
+
+                                <div class="teacher_right_form">
+                                    <span class="teacher_title_text">Useful files</span>
+                                    <div class="teacher_file_import">
+                                        <span class="teacher_text_import">file file</span>
+                                        <button class="teacher_button_import">Upload</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div style="margin-top: 35px">
+                                <span class="teacher_title_text">General information</span>
+                                <textarea class="teacher_input teacher_input_inf" rows="5" cols="1" placeholder="information"></textarea>
+                            </div>
+
+                            <div class="teacher_criterias">
+                                <div class="teacher_criteria">
+                                    <div>
+                                        <span class="teacher_title_text">Deadline</span>
+                                        <div class="teacher_block">
+                                            <p style="display: block; text-align: center">
+                                                <span>07.09.</span>
+                                                <span>2022</span>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                    <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
+                                    <div>
+                                        <span class="teacher_title_text">Mark</span>
+                                        <div class="teacher_block">
+                                            <p style="display: block; text-align: center; font-size: 60px">
+                                                <span>3</span>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="teacher_criteria">
+                                    <div>
+                                        <span class="teacher_title_text">Deadline</span>
+                                        <div class="teacher_block">
+                                            <p style="display: block; text-align: center">
+                                                <span>08.09.</span>
+                                                <span>2022</span>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                    <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
+                                    <div>
+                                        <span class="teacher_title_text">Mark</span>
+                                        <div class="teacher_block">
+                                            <p style="display: block; text-align: center; font-size: 60px">
+                                                <span>3</span>
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="teacher_criteria">
+                                    <div>
+                                        <span class="teacher_title_text">Deadline</span>
+                                        <div class="teacher_block">
+                                            <p style="display: block; text-align: center">
+                                                <span>09.09.</span>
+                                                <span>2022</span>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                    <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
+                                    <div>
+                                        <span class="teacher_title_text">Mark</span>
+                                        <div class="teacher_block">
+                                            <p style="display: block; text-align: center; font-size: 60px">
+                                                <span>3</span>
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

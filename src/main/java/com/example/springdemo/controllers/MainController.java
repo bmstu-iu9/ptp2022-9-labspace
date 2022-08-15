@@ -93,4 +93,10 @@ public class MainController {
         addNameAndGroupToModel(model);
         return "templs/lab";
     }
+
+    @GetMapping("/teacher_lab")
+    public String teacher_lab(HttpServletRequest request, Model model) {
+        addNameAndGroupToModel(model);
+        return "teacher_lab";
+    }
 }
