@@ -4,13 +4,19 @@ import com.example.springdemo.entity.User;
 import com.example.springdemo.service.RequestService;
 import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ClassUtils;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.*;
@@ -66,21 +72,21 @@ public class MainController {
     UserService userService;
     @GetMapping("/")
     public String view(){
-        return "redirect:/index";
+        return "redirect:/main/index";
     }
-    @GetMapping("/index")
+    @GetMapping("/main/index")
     public String index(HttpServletRequest request, Model model) {
         addNameAndGroupToModel(model);
         return "index";
     }
 
 
-    @GetMapping("/minor")
+    @GetMapping("/main/minor")
     public String home2(HttpServletRequest request, Model model) {
         addNameAndGroupToModel(model);
         return "minor";
     }
-    @GetMapping("/login")
+    @GetMapping("/auth/login")
     public String login(HttpServletRequest request){
         if (Objects.equals(getCurrentUsername(), "guest")){
             return "login";
@@ -88,9 +94,23 @@ public class MainController {
             return "redirect:/";
         }
 }
-    @GetMapping("/lab")
+    @GetMapping("/main/lab")
     public String lab(HttpServletRequest request, Model model){
         addNameAndGroupToModel(model);
         return "templs/lab";
+    }
+
+    @RequestMapping(value = "/accessDenied")
+    public String accessDenied() {
+        return "accessDenied"; // logical view name
+    }
+
+    @Controller
+    public static class MyErrorController implements ErrorController {
+        @RequestMapping("/error")
+        public String handleError() {
+            //do something like logging
+            return "error";
+        }
     }
 }
