@@ -36,11 +36,12 @@ public class LabInfo {
             name = "upload_date"
     )
     private Date uploadDate = new Date(System.currentTimeMillis());
-
+    private String description;
     @Column(
             name = "source"
     )
     private String source;
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")

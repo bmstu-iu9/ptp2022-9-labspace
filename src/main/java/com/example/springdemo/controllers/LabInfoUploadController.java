@@ -43,7 +43,7 @@ public class LabInfoUploadController {
 
     @PostMapping(value = "/uploadLab")
     public String regUser( @Valid LabInfo labInfo,
-                          @RequestParam(name = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes,
+                          @RequestParam(name = "filee") MultipartFile file, RedirectAttributes redirectAttributes,
                           Model model,
                           HttpServletRequest request) throws ServletException {
             labInfo.setUploadDate(new Date(System.currentTimeMillis()));

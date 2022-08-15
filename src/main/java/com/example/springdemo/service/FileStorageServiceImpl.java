@@ -117,6 +117,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             labInfo.setSource(labInfo.getSource()+fileName);
             Path targetLocation = this.fileStorageLocation.resolve(labInfo.getSource());
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            labInfo.setSource(targetLocation.toString());
             labInfoRepository.saveAndFlush(labInfo);
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
@@ -127,6 +128,25 @@ public class FileStorageServiceImpl implements FileStorageService {
     public Resource loadAsResource(Long labId, Long userId) {
         try {
             String path = submitLabRepository.findByUserIdAndLabInfoId(userId, labId).get().getSource();
+            Path file = Paths.get(path);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            }
+            else {
+                throw new RuntimeException(
+                        "Could not read file");
+
+            }
+        }
+        catch (MalformedURLException e) {
+            throw new RuntimeException("Could not read file", e);
+        }
+    }
+    @Override
+    public Resource loadAsResource(Long labId) {
+        try {
+            String path = labInfoRepository.findById(labId).get().getSource();
             Path file = Paths.get(path);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {

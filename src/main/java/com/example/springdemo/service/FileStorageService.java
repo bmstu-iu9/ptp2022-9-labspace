@@ -9,4 +9,5 @@ public interface FileStorageService {
      void storeFile(MultipartFile file, LabInfo labInfo);
      Resource loadAsResource(Long userId, Long labId);
 
+     Resource loadAsResource(Long labId);
 }

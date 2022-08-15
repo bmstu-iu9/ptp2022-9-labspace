@@ -29,7 +29,9 @@
       <h3 class="form-signin-heading" style="text-align: center">Upload Lab Form</h3>
       <div class="form-group">
         <div class="">
-          <input type="text" th:field="*{department}" placeholder="Description" class="form-control" required="" />
+          <input type="text" th:field="*{name}" placeholder="Lab Name" class="form-control"required=""/>
+          <input type="text" th:field="*{department}" placeholder="Department" class="form-control" required="" />
+          <input type="text" th:field="*{description}" placeholder="Write your description" class="form-control"required=""/>
         </div>
       </div>
 
@@ -47,14 +49,14 @@
         <div class="form-group">
           <div class="">
             <label for="exampleFormControlFile1">Загрузить файл:</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1" style= "display: inline-block; margin-left: 15px;">
+            <input type="file" name="filee" class="form-control-file" id="exampleFormControlFile1" style= "display: inline-block; margin-left: 15px;">
           </div>
         </div>
 
 
       <div class="form-group">
         <div class="">
-          <select class="form-select" aria-label="Default select example">
+          <select class="form-select" aria-label="Default select example" name="course_id">
             <option selected>Выбрать предмет</option>
             <option value="1">ЯиМП</option>
           </select>
