@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") // тут - для юзера
                     //.antMatchers( "/index", "/minor", "/lab**").authenticated()
                     .antMatchers( "/main/**").authenticated()
+                    .antMatchers( "/error").permitAll()
                 .and()
                     .exceptionHandling().accessDeniedPage("/accessDenied.html")
                 .and()
