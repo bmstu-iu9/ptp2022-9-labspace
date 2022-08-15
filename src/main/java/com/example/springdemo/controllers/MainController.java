@@ -4,12 +4,16 @@ import com.example.springdemo.entity.User;
 import com.example.springdemo.service.RequestService;
 import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ClassUtils;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -92,5 +96,19 @@ public class MainController {
     public String lab(HttpServletRequest request, Model model){
         addNameAndGroupToModel(model);
         return "templs/lab";
+    }
+
+    @RequestMapping(value = "/accessDenied")
+    public String accessDenied() {
+        return "accessDenied"; // logical view name
+    }
+
+    @Controller
+    public class MyErrorController implements ErrorController {
+        @RequestMapping("/error")
+        public String handleError() {
+            //do something like logging
+            return "error";
+        }
     }
 }
