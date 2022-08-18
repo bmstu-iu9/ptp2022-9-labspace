@@ -2,6 +2,7 @@ package com.example.springdemo.controllers;
 
 import com.example.springdemo.entity.User;
 import com.example.springdemo.exceptions.UserNotFoundException;
+import com.example.springdemo.service.AuthenticationService;
 import com.example.springdemo.service.MailSender;
 import com.example.springdemo.service.UserService;
 import com.sun.mail.smtp.SMTPSendFailedException;
@@ -19,9 +20,13 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.UnsupportedEncodingException;
+import java.util.Objects;
 
 @Controller
 public class ForgotPasswordController {
+
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @Autowired
     private MailSender mailSender;
@@ -31,6 +36,9 @@ public class ForgotPasswordController {
 
     @GetMapping("/auth/forgot_password")
     public String showForgotPasswordForm() {
+        if (!Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
+            return "redirect:/";
+        }
         return "forgot_password";
     }
 
@@ -62,6 +70,9 @@ public class ForgotPasswordController {
 
     @GetMapping("/auth/reset_password")
     public String showResetPasswordForm(@Param(value = "token") String token, Model model) {
+        if (!Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
+            return "redirect:/";
+        }
         User user = userService.getByResetPasswordToken(token);
         model.addAttribute("token", token);
 

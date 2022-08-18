@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +73,7 @@ public class RegistrationController {
 
     @GetMapping("/auth/login")
     public String login(HttpServletRequest request){
-        if (Objects.equals(authenticationService.getCurrentUsername(), "guest")){
+        if (Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
             return "login";
         } else {
             return "redirect:/";
@@ -81,6 +82,9 @@ public class RegistrationController {
 
     @GetMapping("/auth/activate/{code}")
     public String activate(Model model, @PathVariable String code) {
+        if (!Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
+            return "redirect:/";
+        }
         boolean isActivated = userService.activateUser(code);
 
         if (isActivated) {
