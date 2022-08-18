@@ -75,6 +75,15 @@ public class RegistrationController {
         }
     }
 
+    @GetMapping("/auth/login")
+    public String login(HttpServletRequest request){
+        if (Objects.equals(getCurrentUsername(), "guest")){
+            return "login";
+        } else {
+            return "redirect:/";
+        }
+    }
+
     @GetMapping("/auth/activate/{code}")
     public String activate(Model model, @PathVariable String code) {
         boolean isActivated = userService.activateUser(code);
