@@ -38,14 +38,15 @@ public class RegistrationController {
 
     @GetMapping(value = "/auth/register")
     public String registerUser(Model model) {
-            if (Objects.equals(getCurrentUsername(), "guest")){
-                User user = new User();
-                model.addAttribute("user", user);
-                model.addAttribute("grouppRepository", grouppRepository);
-                return "register";
-            }else {
-                return "redirect:/";
-            }
+        System.out.println(getCurrentUsername());
+        if (Objects.equals(getCurrentUsername(), "guest")){
+            User user = new User();
+            model.addAttribute("user", user);
+            model.addAttribute("grouppRepository", grouppRepository);
+            return "register";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @PostMapping(value = "/auth/register")
@@ -77,6 +78,7 @@ public class RegistrationController {
 
     @GetMapping("/auth/login")
     public String login(HttpServletRequest request){
+        System.out.println(getCurrentUsername());
         if (Objects.equals(getCurrentUsername(), "guest")){
             return "login";
         } else {
