@@ -3,11 +3,9 @@ package com.example.springdemo.controllers;
 import com.example.springdemo.entity.Groupp;
 import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.GrouppRepository;
+import com.example.springdemo.service.AuthenticationService;
 import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,22 +22,18 @@ import java.util.Optional;
 
 @Controller
 public class RegistrationController {
-    public String getCurrentUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            return authentication.getName();
-        }
-        return "guest";
-    }
     @Autowired
-    UserService userService;
+    private AuthenticationService authenticationService;
+
+    @Autowired
+    private UserService userService;
+
     @Autowired
     GrouppRepository grouppRepository;
 
     @GetMapping(value = "/auth/register")
     public String registerUser(Model model) {
-        System.out.println(getCurrentUsername());
-        if (Objects.equals(getCurrentUsername(), "guest")){
+        if (Objects.equals(authenticationService.getCurrentUsername(), "guest")){
             User user = new User();
             model.addAttribute("user", user);
             model.addAttribute("grouppRepository", grouppRepository);
@@ -78,8 +72,7 @@ public class RegistrationController {
 
     @GetMapping("/auth/login")
     public String login(HttpServletRequest request){
-        System.out.println(getCurrentUsername());
-        if (Objects.equals(getCurrentUsername(), "guest")){
+        if (Objects.equals(authenticationService.getCurrentUsername(), "guest")){
             return "login";
         } else {
             return "redirect:/";
