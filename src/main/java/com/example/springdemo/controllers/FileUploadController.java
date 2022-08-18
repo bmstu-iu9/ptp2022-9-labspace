@@ -39,6 +39,6 @@ public class FileUploadController {
     }
     @GetMapping(path="labid{lab_info_id}")
     public String view(){
-        return "lab";
+        return "templs/lab";
     }
 }
