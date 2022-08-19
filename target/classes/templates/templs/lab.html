@@ -38,23 +38,29 @@
             <div class="labInfo">
               <div id="informationOfLab">
                 <h2 class="text-center">Общая информация</h2>
-                <div th:text="*{description}"></div>
+                <div id="borderOfLabInfo">
+                  <div th:text="*{description}" id="valueOfLabInfo"></div>
+                </div>
               </div>
               <div id="usefulFiles">
                 <h2 class="text-center">Полезные файлы</h2>
-                <a th:href="@{labid{id}/download(id=*{id})}">Скачать</a>
+                <a th:href="@{labid{id}/download(id=*{id})}" id="borderOfUsefulFiles"><i class="fa fa-download"></i>Скачать</a>
               </div>
             </div>
 
             <div id="resultOfLab">
               <div id="row">
                 <div id="grade">
-                  <h3 class="text-center">Оценка</h3>
-                  <div id="gradeSpace" th:text="${grade}" class="text-center"></div>
+                  <h2 class="text-center">Оценка</h2>
+                  <div id="gradeSpace">
+                    <div id="gradeValue" th:text="${grade}"></div>
+                  </div>
                 </div>
                 <div id="deadline">
-                  <h3 class="text-center">Дедлайн</h3>
-                  <div id="deadlineSpace" th:text="${deadlines}"></div>
+                  <h2 class="text-center">Дедлайн</h2>
+                  <div id="deadlineSpace">
+                    <div id="deadlineValue" th:text="${deadlines}"></div>
+                  </div>
                 </div>
               </div>
               <div id="done">
