@@ -17,6 +17,11 @@ public interface UserService {
 
     boolean activateUser(String code);
 
+    void updateResetPasswordToken(String token, String email) throws UserNotFoundException;
+
+    User getByResetPasswordToken(String token);
+
+    void updatePassword(User user, String newPassword);
     boolean firstNameContainsIllegalChars(User user);
     boolean lastNameContainsIllegalChars(User user);
 }
