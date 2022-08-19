@@ -23,4 +23,6 @@ public interface UserService {
     User getByResetPasswordToken(String token);
 
     void updatePassword(User user, String newPassword);
+    boolean firstNameContainsIllegalChars(User user);
+    boolean lastNameContainsIllegalChars(User user);
 }
