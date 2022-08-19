@@ -37,11 +37,11 @@ public class User {
     )
     @Email(message = "Email is not correct!")
     private String email;
+
     @Column(
             name = "first_name"
     )
     @NotNull(message = "FirstName is compulsory!")
-
     private String firstName;
 
     @Column(
@@ -49,6 +49,21 @@ public class User {
     )
     @NotNull(message = "LastName is compulsory!")
     private String lastName;
+
+    @Column(
+            name = "patronymic"
+    )
+    private String patronymic;
+
+    @Column(
+            name = "tg_account"
+    )
+    private String tgAccount;
+
+    @Column(
+            name = "phone_number"
+    )
+    private String phoneNumber;
 
     @Column(
             name = "password"
@@ -71,6 +86,7 @@ public class User {
     private Set<Role> roles;
 
     private String activationCode;
+
     @Column(
             name = "reset_password_token"
     )
