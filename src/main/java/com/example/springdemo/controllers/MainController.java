@@ -83,12 +83,6 @@ public class MainController {
         return "minor";
     }
 
-    @GetMapping("/main/lab")
-    public String lab(HttpServletRequest request, Model model){
-        addNameAndGroupToModel(model);
-        return "templs/lab";
-    }
-
     @GetMapping("/main/teacher_lab")
     public String teacher_lab(HttpServletRequest request, Model model) {
         addNameAndGroupToModel(model);

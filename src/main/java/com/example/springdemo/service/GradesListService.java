@@ -1,5 +1,6 @@
 package com.example.springdemo.service;
 
 public interface GradesListService {
-    public int getTotalPointsByStudentId(Long id);
+    int getTotalPointsByStudentId(Long id);
+    int getPointsByStudentAndLab(String email, Long labInfoId);
 }

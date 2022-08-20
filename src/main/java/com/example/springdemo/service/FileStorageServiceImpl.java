@@ -1,5 +1,6 @@
 package com.example.springdemo.service;
 
+import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.SubmitLab;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.repository.SubmitLabRepository;
@@ -91,9 +92,61 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
+    public void storeFile(MultipartFile file, LabInfo labInfo) {
+        // Normalize file name
+        String fileName =
+                new Date().getTime() + "-file." + getFileExtension(file.getOriginalFilename());
+
+        try {
+            // Check if the filename contains invalid characters
+            if (fileName.contains("..")) {
+                throw new RuntimeException(
+                        "Sorry! Filename contains invalid path sequence " + fileName);
+            }
+
+            String contentType = file.getContentType();
+
+            // Check if the filetype is not correct
+            if(contentType == null ||
+                    !(contentType.equals("application/msword") ||
+                            contentType.equals("application/pdf") ||
+                            contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))) {
+                throw new RuntimeException("Allowed filetypes: doc, docx, pdf");
+            }
+            Files.createDirectories(this.fileStorageLocation.resolve(labInfo.getSource()));
+            labInfo.setSource(labInfo.getSource()+fileName);
+            Path targetLocation = this.fileStorageLocation.resolve(labInfo.getSource());
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            labInfo.setSource(targetLocation.toString());
+            labInfoRepository.saveAndFlush(labInfo);
+        } catch (IOException ex) {
+            throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
+        }
+    }
+
+    @Override
     public Resource loadAsResource(Long labId, Long userId) {
         try {
             String path = submitLabRepository.findByUserIdAndLabInfoId(userId, labId).get().getSource();
+            Path file = Paths.get(path);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            }
+            else {
+                throw new RuntimeException(
+                        "Could not read file");
+
+            }
+        }
+        catch (MalformedURLException e) {
+            throw new RuntimeException("Could not read file", e);
+        }
+    }
+    @Override
+    public Resource loadAsResource(Long labId) {
+        try {
+            String path = labInfoRepository.findById(labId).get().getSource();
             Path file = Paths.get(path);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
