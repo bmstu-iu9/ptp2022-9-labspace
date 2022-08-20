@@ -3,11 +3,9 @@ package com.example.springdemo.service;
 
 import com.example.springdemo.entity.Role;
 import com.example.springdemo.entity.User;
-//import com.example.springdemo.model.UserModel;
 import com.example.springdemo.exceptions.UserNotFoundException;
 import com.example.springdemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -50,12 +48,39 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    private String capitalize(String str) {
+        int k = 0;
+        String res = "";
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) >= 'A' && str.charAt(i) <= 'Z' ||
+                    str.charAt(i) >= 'a' && str.charAt(i) <= 'z' ||
+                    str.charAt(i) >= 'А' && str.charAt(i) <= 'Я' ||
+                    str.charAt(i) >= 'а' && str.charAt(i) <= 'я' ||
+                    str.charAt(i) == 'ё' || str.charAt(i) == 'Ё') {
+
+                if (k == 0) {
+                    res += str.substring(i, i+1).toUpperCase();
+                } else {
+                    res += str.substring(i, i+1).toLowerCase();
+                }
+                k += 1;
+            } else {
+                res += str.substring(i, i+1);
+                k = 0;
+            }
+        }
+
+        return res;
+    }
+
+    @Override
     public void registerUser(User user) {
         user.setActive(false);
-        user.setGroupp(user.getGroupp());
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(encoder.encode(user.getPassword()));
         user.setActivationCode(UUID.randomUUID().toString());
+        user.setFirstName(capitalize(user.getFirstName()));
+        user.setLastName(capitalize(user.getLastName()));
 
         String message = String.format(
                 "Hello, %s!\n" +
@@ -114,6 +139,42 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isAlreadyPresent(User user) {
         return userRepository.existsUserByEmail(user.getEmail());
+    }
+
+    @Override
+    public boolean firstNameContainsIllegalChars(User user) {
+        boolean res = false;
+        for (int i = 0; i < user.getFirstName().length(); i++) {
+            if (!(user.getFirstName().charAt(i) >= 'A' && user.getFirstName().charAt(i) <= 'Z' ||
+                    user.getFirstName().charAt(i) >= 'a' && user.getFirstName().charAt(i) <= 'z' ||
+                    user.getFirstName().charAt(i) >= 'А' && user.getFirstName().charAt(i) <= 'Я' ||
+                    user.getFirstName().charAt(i) >= 'а' && user.getFirstName().charAt(i) <= 'я' ||
+                    user.getFirstName().charAt(i) == 'ё' || user.getFirstName().charAt(i) == 'Ё' ||
+                    user.getFirstName().charAt(i) == '-')) {
+                res = true;
+                break;
+            }
+        }
+
+        return res;
+    }
+
+    @Override
+    public boolean lastNameContainsIllegalChars(User user) {
+        boolean res = false;
+        for (int i = 0; i < user.getLastName().length(); i++) {
+            if (!(user.getLastName().charAt(i) >= 'A' && user.getLastName().charAt(i) <= 'Z' ||
+                    user.getLastName().charAt(i) >= 'a' && user.getLastName().charAt(i) <= 'z' ||
+                    user.getLastName().charAt(i) >= 'А' && user.getLastName().charAt(i) <= 'Я' ||
+                    user.getLastName().charAt(i) >= 'а' && user.getLastName().charAt(i) <= 'я' ||
+                    user.getLastName().charAt(i) == 'ё' || user.getLastName().charAt(i) == 'Ё' ||
+                    user.getLastName().charAt(i) == '-')) {
+                res = true;
+                break;
+            }
+        }
+
+        return res;
     }
 }
 

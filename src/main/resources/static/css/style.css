@@ -6,6 +6,11 @@
  *   version 2.4
  *
 */
+@font-face {
+  font-family: Comfortaa;
+  src: url("../fonts/Comfortaa-VariableFont_wght.ttf");
+}
+
 h1,
 h2,
 h3,
@@ -587,9 +592,11 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
     display: block !important;
   }
 }
-.btn {
+
+.btn{
   border-radius: 3px;
 }
+
 .float-e-margins .btn {
   margin-bottom: 5px;
 }
@@ -1037,7 +1044,7 @@ button.dim:active:before {
 .label {
   background-color: #d1dade;
   color: #5e5e5e;
-  font-family: 'Open Sans';
+  font-family: Comfortaa, 'Open Sans';
   font-size: 10px;
   font-weight: 600;
   padding: 3px 8px;
@@ -1046,7 +1053,7 @@ button.dim:active:before {
 .badge {
   background-color: #d1dade;
   color: #5e5e5e;
-  font-family: 'Open Sans';
+  font-family: Comfortaa, 'Open Sans';
   font-size: 11px;
   font-weight: 600;
   padding-bottom: 4px;
@@ -1134,7 +1141,7 @@ button.dim:active:before {
   line-height: 20px;
   font-size: 12px;
   color: white;
-  font-family: Trebuchet, Arial, sans-serif;
+  font-family: Comfortaa, Trebuchet, Arial, sans-serif;
   font-weight: bold;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -1810,7 +1817,7 @@ div.dt-button-info {
   margin-bottom: 0;
 }
 .glyphicon.fa {
-  font-family: "FontAwesome";
+  font-family: Comfortaa, "FontAwesome";
 }
 /* INPUTS */
 .inline {
@@ -1937,7 +1944,7 @@ div.dt-button-info {
   line-height: 16px;
   font-size: 10px;
   color: white;
-  font-family: Trebuchet, Arial, sans-serif;
+  font-family: Comfortaa, Trebuchet, Arial, sans-serif;
   font-weight: bold;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -2252,7 +2259,7 @@ div.dt-button-info {
   content: '-';
 }
 #nestable2 .dd-item > button {
-  font-family: FontAwesome;
+  font-family: Comfortaa, FontAwesome;
   height: 34px;
   width: 33px;
   color: #c1c1c1;
@@ -2316,7 +2323,7 @@ div.dt-button-info {
   width: 100%;
   font-size: 0.75em;
   line-height: 1.333333em;
-  font-family: open sans, lucida grande, lucida sans unicode, helvetica, arial, sans-serif;
+  font-family: Comfortaa, open sans, lucida grande, lucida sans unicode, helvetica, arial, sans-serif;
   padding: 5px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -2404,7 +2411,7 @@ label.error {
 }
 #toast-container > .toast:before {
   position: fixed;
-  font-family: FontAwesome;
+  font-family: Comfortaa, FontAwesome;
   font-size: 24px;
   line-height: 24px;
   float: left;
@@ -2983,7 +2990,7 @@ a.forum-item-title:hover {
   border-radius: 3px;
   background: #292929;
   color: white;
-  font-family: sans-serif, Verdana;
+  font-family: Comfortaa, sans-serif, Verdana;
   font-size: smaller;
   padding: 5px;
 }
@@ -3299,7 +3306,7 @@ body.tour-open .animated {
   border-bottom: 1px solid #e7eaec;
 }
 body {
-  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Comfortaa, "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #2f4050;
   font-size: 13px;
   color: #676a6c;
@@ -6538,7 +6545,7 @@ body.body-small .vote-icon {
 }
 body.landing-page {
   color: #676a6c;
-  font-family: 'Open Sans', helvetica, arial, sans-serif;
+  font-family: Comfortaa, 'Open Sans', helvetica, arial, sans-serif;
   background-color: #fff;
 }
 .landing-page {
@@ -6617,7 +6624,7 @@ body.landing-page {
 }
 .landing-page .navbar-default .nav li a {
   color: #fff;
-  font-family: 'Open Sans', helvetica, arial, sans-serif;
+  font-family: Comfortaa, 'Open Sans', helvetica, arial, sans-serif;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -7802,7 +7809,7 @@ body.skin-3 {
   background: transparent;
 }
 body.md-skin {
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Comfortaa, "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #ffffff;
 }
 .md-skin .nav-header {
@@ -7810,7 +7817,7 @@ body.md-skin {
 }
 .md-skin .label,
 .md-skin .badge {
-  font-family: 'Roboto';
+  font-family: Comfortaa, 'Roboto';
 }
 .md-skin .font-bold {
   font-weight: 500;
@@ -7865,10 +7872,10 @@ body.md-skin {
 }
 .md-skin #nestable-output,
 .md-skin #nestable2-output {
-  font-family: 'Roboto', lucida grande, lucida sans unicode, helvetica, arial, sans-serif;
+  font-family: Comfortaa, 'Roboto', lucida grande, lucida sans unicode, helvetica, arial, sans-serif;
 }
 .md-skin .landing-page {
-  font-family: 'Roboto', helvetica, arial, sans-serif;
+  font-family: Comfortaa, 'Roboto', helvetica, arial, sans-serif;
 }
 .md-skin .landing-page.navbar-default.navbar-scroll {
   background-color: #fff !important;
@@ -7878,7 +7885,7 @@ body.md-skin {
   box-shadow: none;
 }
 .md-skin .landing-page.navbar-default .nav li a {
-  font-family: 'Roboto', helvetica, arial, sans-serif;
+  font-family: Comfortaa, 'Roboto', helvetica, arial, sans-serif;
 }
 .md-skin .nav > li > a {
   color: #676a6c;
@@ -8046,7 +8053,7 @@ body.md-skin {
   padding: 20px 10px;
 }
 .md-skin.landing-page .navbar-default .nav li a {
-  font-family: 'Roboto', helvetica, arial, sans-serif;
+  font-family: Comfortaa, 'Roboto', helvetica, arial, sans-serif;
 }
 .md-skin.landing-page .nav > li > a {
   padding: 25px 10px 15px 10px;
@@ -8270,18 +8277,27 @@ body.md-skin {
   width: 60%;
 }
 
+#valueOfLabInfo{
+  display: block;
+  text-align: center;
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  top: 30%;
+  font-size: medium;
+}
+
 #usefulFiles{
   width: 100%;
   height: 40%;
 }
 
 #borderOfUsefulFiles{
-  border: 3px solid black;
+  display: block;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 20px;
-  height: 50%;
-  width: 60%;
+  text-align: center;
+  font-size: x-large;
 }
 
 #resultOfLab{
@@ -8324,12 +8340,20 @@ body.md-skin {
 }
 
 #gradeSpace{
+  position: relative;
   border: 3px solid black;
   margin-left: auto;
   margin-right: auto;
   border-radius: 20px;
   height: 70%;
   width: 60%;
+  text-align: center;
+  vertical-align: center;
+  font-size: xx-large;
+}
+#gradeValue{
+  position: relative;
+  top: 30%;
 }
 
 #deadlineSpace{
@@ -8339,6 +8363,13 @@ body.md-skin {
   border-radius: 20px;
   height: 70%;
   width: 60%;
+}
+
+#deadlineValue{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 #doneSpace{
@@ -8352,4 +8383,61 @@ body.md-skin {
 
 .sticky{
   position: sticky;
+}
+
+.student_upload{
+  font-size: 35px;
+  margin-right: 20px;
+  width: 100%;
+  height: 80px;
+  border-radius: 20px;
+  background-color: black;
+  color: white;
+}
+
+.student_left_form{
+  display: flex;
+  flex-direction: column;
+  width: 447.5px;
+}
+
+.student_right_form{
+  display: flex;
+  flex-direction: column;
+  width: 447.5px;
+}
+
+.submit_button{
+  margin-top: 30px;
+  font-size: 35px;
+  width: 920px;
+  height: 80px;
+  border-radius: 20px;
+  background-color: black;
+  color: white;
+}
+
+.student_select{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: #202020 4px solid;
+  height: 120px;
+  width: 120px;
+  border-radius: 10px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.mark_val{
+  color: #202020;
+  display: block;
+  text-align: center;
+  font-size: 20px
+}
+
+.upload_criterias{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }

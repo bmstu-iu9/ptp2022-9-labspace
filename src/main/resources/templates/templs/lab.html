@@ -32,34 +32,45 @@
       <div class="row">
         <div class="col-lg-12 labSpace">
           <div class="text-center">
-            <h1>Шаблоны С++ (1)</h1>
+            <h1 th:text="*{lab_info.name}"></h1>
           </div>
-          <div class="space">
+          <div class="space" th:object="${lab_info}">
             <div class="labInfo">
               <div id="informationOfLab">
                 <h2 class="text-center">Общая информация</h2>
-                <div id="borderOfLabInfo"></div>
+                <div id="borderOfLabInfo">
+                  <div th:text="*{description}" id="valueOfLabInfo"></div>
+                </div>
               </div>
               <div id="usefulFiles">
                 <h2 class="text-center">Полезные файлы</h2>
-                <div id="borderOfUsefulFiles"></div>
+                <a th:href="@{labid{id}/download(id=*{id})}" id="borderOfUsefulFiles"><i class="fa fa-download"></i>Скачать</a>
               </div>
             </div>
 
             <div id="resultOfLab">
               <div id="row">
                 <div id="grade">
-                  <h3 class="text-center">Оценка</h3>
-                  <div id="gradeSpace"></div>
+                  <h2 class="text-center">Оценка</h2>
+                  <div id="gradeSpace">
+                    <div id="gradeValue" th:text="${grade}"></div>
+                  </div>
                 </div>
                 <div id="deadline">
-                  <h3 class="text-center">Дедлайн</h3>
-                  <div id="deadlineSpace"></div>
+                  <h2 class="text-center">Дедлайн</h2>
+                  <div id="deadlineSpace">
+                    <div id="deadlineValue" th:text="${deadlines}"></div>
+                  </div>
                 </div>
               </div>
               <div id="done">
                 <h2 class="text-center">Сдача</h2>
-                <div id="doneSpace"></div>
+                <form class="m-t" role="form"  enctype="multipart/form-data" method="post" >
+                  <div >
+                    <input type="file" class="form-control" name="file">
+                  </div>
+                  <div> <input type="submit" class="btn btn-primary block full-width m-b" value="Отправить"/></div>
+                </form>
               </div>
             </div>
           </div>

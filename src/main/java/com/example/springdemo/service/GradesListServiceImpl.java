@@ -16,4 +16,10 @@ public class GradesListServiceImpl implements GradesListService {
         Optional<Integer> totalPoints = gradesListRepository.getTotalPointsByStudentId(id);
         return totalPoints.orElse(0);
     }
+
+
+    @Override
+    public int getPointsByStudentAndLab(String email, Long labInfoId) {
+        return gradesListRepository.findBySubmitLab_User_EmailAndSubmitLab_LabInfo_Id(email, labInfoId).orElse(0);
+    }
 }

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface DeadlineRepository extends JpaRepository<Deadline, Long> {
-    List<Deadline> findByLabInfoId(Long id);
+    List<Deadline> findAllByLabInfoId(Long id);
 }
