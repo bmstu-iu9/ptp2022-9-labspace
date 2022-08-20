@@ -87,9 +87,4 @@ public class MainController {
             return "redirect:/";
         }
 }
-    @GetMapping("/lab")
-    public String lab(HttpServletRequest request, Model model){
-        addNameAndGroupToModel(model);
-        return "templs/lab";
-    }
 }
