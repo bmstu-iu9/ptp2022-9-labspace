@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: Comfortaa;
+    font-family: Comfortaa, serif;
     box-sizing: border-box;
 }
 
@@ -16,7 +16,7 @@
 
 @font-face {
     font-family: Comfortaa;
-    src: url("../fonts/Comfortaa/Comfortaa/Comfortaa-VariableFont_wght.ttf");
+    src: url("../fonts/Comfortaa-VariableFont_wght.ttf");
 }
 
 .teacher_title {
