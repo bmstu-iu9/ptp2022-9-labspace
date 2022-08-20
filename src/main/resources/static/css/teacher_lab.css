@@ -153,7 +153,25 @@
     font-size: 30px;
     font-weight: bold;
 }
-.teacher_block
+.teacher_submit_button {
+    font-size: 35px;
+    color: white;
+    background-color: black;
+    width: 100%;
+    height: 60px;
+    margin-top: 25px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.teacher_calendar, .teacher_mark_input {
+    margin-top: 5px;
+    font-size: 16px;
+    width: 120px;
+    border-radius: 10px;
+    font-weight: bold;
+    border: black 4px solid;
+}
 
 
 
