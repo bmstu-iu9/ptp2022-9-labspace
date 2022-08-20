@@ -88,4 +88,10 @@ public class MainController {
         addNameAndGroupToModel(model);
         return "teacher_lab";
     }
+
+    @GetMapping("/main/upload_lab")
+    public String upload_lab(HttpServletRequest request, Model model) {
+        addNameAndGroupToModel(model);
+        return "templs/templateOfUploadLab";
+    }
 }
