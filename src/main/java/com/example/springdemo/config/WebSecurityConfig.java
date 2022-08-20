@@ -1,8 +1,6 @@
 package com.example.springdemo.config;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,13 +8,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
-
-import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
 
 @Configuration
 @EnableWebSecurity
@@ -30,21 +23,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers( "/register", "/activate/*", "/forgot_password", "/reset_password**", "/login").not().fullyAuthenticated()
                     .antMatchers("/admin/**").hasRole("ADMIN") //здесь прописать доступ для админа
                     .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") // тут - для юзера
-                    //.antMatchers( "/index", "/minor", "/lab**").authenticated()
-                    .anyRequest().authenticated()
+                    .antMatchers( "/main/**").authenticated()
+                    .antMatchers( "/error").permitAll()
                 .and()
                     .formLogin()
-                    .loginPage("/login")
+                    .loginPage("/auth/login")
                     .usernameParameter("email")
-                    .defaultSuccessUrl("/")
+                    .defaultSuccessUrl("/", true)
                     .permitAll()
                 .and()
                     .logout()
                     .permitAll()
-                    .logoutSuccessUrl("/login")
+                    .logoutSuccessUrl("/auth/login")
                 .and()
                     .cors()
                 .and()
