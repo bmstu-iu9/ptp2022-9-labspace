@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers(
                         "/css/**", "/fonts/**", "/font-awesome/**", "/js/**",
-                        "/img/**","/lab12_my.pdf");
+                        "/img/**");
     }
 
     @Override

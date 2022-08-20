@@ -36,7 +36,7 @@ public class SubmitLabController {
         return "guest";
     }
 
-    @PostMapping(path = "main/labid{lab_info_id}")
+    @PostMapping(path = "main/lab_id{lab_info_id}")
     public String uploadFile(
             @RequestParam(name = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes, @PathVariable("lab_info_id") Long labId,
             Model model) {
@@ -47,9 +47,9 @@ public class SubmitLabController {
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return "redirect:/main/labid"+labId;
+        return "redirect:/main/lab_id"+labId;
     }
-    @GetMapping(path="main/labid{lab_info_id}")
+    @GetMapping(path="main/lab_id{lab_info_id}")
     public String view(Model model, @PathVariable("lab_info_id") Long lab_id){
         model.addAttribute("lab_info",labInfoRepository.getReferenceById(lab_id));
         model.addAttribute("grade",gradesListService.getPointsByStudentAndLab(getCurrentUsername(),lab_id));
@@ -57,7 +57,7 @@ public class SubmitLabController {
         return "templs/lab";
     }
 
-    @GetMapping(path="main/labid{lab_info_id}/download")
+    @GetMapping(path="main/lab_id{lab_info_id}/download")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable Long lab_info_id) {
         Resource file = fileStorageService.loadAsResource(lab_info_id);
