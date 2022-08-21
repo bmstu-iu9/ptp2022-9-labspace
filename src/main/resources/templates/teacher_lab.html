@@ -32,14 +32,15 @@
                 <div class="col-lg-12">
                     <div class="teacher_container">
                         <span class="teacher_title">New labwork</span>
-                        <div class="teacher_form">
+                        <form th:object="${labInfo}" method="post" class="m-t"   enctype="multipart/form-data">
+                        <div class="teacher_form" >
                             <div class="teacher_row">
 
                                 <div class="teacher_left_form">
                                     <span class="teacher_title_text">Subject</span>
-                                    <select class="teacher_select" required>
+                                    <select class="teacher_select" name="course_id" required>
                                         <option disabled value="" selected>Select the subject</option>
-                                        <option value="Че то там" style="color: #202020">Че то там1</option>
+                                        <option th:value="1" style="color: #202020">ЯиМП</option>
                                         <option value="Че то там" style="color: #202020">Че то там2</option>
                                         <option value="Че то там" style="color: #202020">Че то там3</option>
                                     </select>
@@ -50,7 +51,7 @@
                                     <!--            <input class="input group_input" list="group_list" placeholder="Select the group">-->
                                     <select class="teacher_select" required>
                                         <option disabled value="" selected="selected">Select the group</option>
-                                        <option value="Че то там" style="color: #202020">Че то там1</option>
+                                        <option value="1" style="color: #202020">Че то там1</option>
                                         <option value="Че то там" style="color: #202020">Че то там2</option>
                                         <option value="Че то там" style="color: #202020">Че то там3</option>
                                     </select>
@@ -61,15 +62,16 @@
                             <div class="teacher_row">
                                 <div class="teacher_left_form">
                                     <span class="teacher_title_text">Title</span>
-                                    <input class="teacher_input" placeholder="Name of labwork">
+                                    <input class="teacher_input"  th:field="*{name}" placeholder="Name of labwork">
                                 </div>
 
 
                                 <div class="teacher_right_form">
                                     <span class="teacher_title_text">Useful files</span>
                                     <div class="teacher_file_import">
-                                        <span class="teacher_text_import">file file</span>
-                                        <button class="teacher_button_import">Upload</button>
+                                        <span class="teacher_text_import" id="filename">file file</span>
+                                        <input type="file" name="filee" class="input_file" id="file"  />
+                                        <label for="file" class="teacher_button_import">Upload</label>
                                     </div>
                                 </div>
 
@@ -77,7 +79,7 @@
 
                             <div style="margin-top: 35px">
                                 <span class="teacher_title_text">General information</span>
-                                <textarea class="teacher_input teacher_input_inf" rows="5" cols="1" placeholder="information"></textarea>
+                                <textarea th:field="*{description}" class="teacher_input teacher_input_inf" rows="5" cols="1" placeholder="information"></textarea>
                             </div>
 
                             <div class="teacher_criterias">
@@ -90,7 +92,7 @@
                                                 <span class="teacher_year">2022</span>
                                             </p>
                                         </div>
-                                        <input style="display: none" class="teacher_calendar" type="date">
+                                        <input style="display: none" class="teacher_calendar" type="date" name="date1">
                                     </div>
                                     <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
                                     <div style="display: block">
@@ -100,7 +102,7 @@
                                                 <span class="teacher_mark">3</span>
                                             </p>
                                         </div>
-                                        <input style="display: none" class="teacher_mark_input">
+                                        <input style="display: none" class="teacher_mark_input" name="mark1">
                                     </div>
                                 </div>
 
@@ -114,7 +116,7 @@
                                             </p>
 
                                         </div>
-                                        <input style="display: none" class="teacher_calendar" type="date">
+                                        <input style="display: none" class="teacher_calendar" type="date" name="date2" >
                                     </div>
                                     <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
                                     <div style="display: block">
@@ -124,11 +126,11 @@
                                                 <span class="teacher_mark">3</span>
                                             </p>
                                         </div>
-                                        <input style="display: none" class="teacher_mark_input">
+                                        <input style="display: none" class="teacher_mark_input" name="mark2">
                                     </div>
 
                                 </div>
-                                <div class="teacher_criteria">
+                                <div class="teacher_criteria" th:object="${dl3}">
                                     <div style="display: block">
                                         <span class="teacher_title_text">Deadline</span>
                                         <div class="teacher_block teacher_date">
@@ -137,7 +139,7 @@
                                                 <span class="teacher_year">2022</span>
                                             </p>
                                         </div>
-                                        <input style="display: none" class="teacher_calendar" type="date">
+                                        <input style="display: none" class="teacher_calendar" type="date" name="date3">
                                     </div>
                                     <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
                                     <div style="display: block">
@@ -147,13 +149,14 @@
                                                 <span class="teacher_mark">3</span>
                                             </p>
                                         </div>
-                                        <input style="display: none" class="teacher_mark_input">
+                                        <input style="display: none" class="teacher_mark_input" name="mark3">
                                     </div>
 
                                 </div>
                             </div>
                             <button class="teacher_submit_button" type="submit">Submit</button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
