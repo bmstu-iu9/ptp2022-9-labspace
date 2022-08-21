@@ -34,9 +34,17 @@
                     <div class="text-center dashboard-header">
                         <h1>Доступные лабы</h1>
                     </div>
-                    <div class="lab-space" th:each="el: ${labs}">
-                            <h2 th:text="${el.id}" />
-                            <div class="skip-row"></div>
+                    <div class="lab-space" th:each="lab : ${labs}" >
+
+                        <a th:href="@{'/main/lab_id' + ${lab.getId()}}" style="display: inline-block; text-align: center">
+                            <h2 th:text="${lab.name}" />
+                        </a>
+                        <div style="display: inline-block; text-align: right">
+                            <div th:each="dead : ${deadlineRepository.findAllByLabInfoId(lab.getId())}" >
+                                <h3 th:text="${dead.getDeadlineDate()}" style=""/>
+                            </div>
+                        </div>
+                        <div class="skip-row"></div>
                     </div>
                     <div class="skip-row"></div>
                     <div class="lab-space">

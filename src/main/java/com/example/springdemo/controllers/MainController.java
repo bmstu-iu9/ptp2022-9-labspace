@@ -2,6 +2,7 @@ package com.example.springdemo.controllers;
 
 import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.User;
+import com.example.springdemo.repository.DeadlineRepository;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.service.RequestService;
 import com.example.springdemo.service.UserService;
@@ -81,6 +82,9 @@ public class MainController {
         return "minor";
     }
 
+    @Autowired
+    private DeadlineRepository deadlineRepository;
+
 
     @GetMapping("/main/index")
     public String home2(HttpServletRequest request, Model model) {
@@ -91,8 +95,9 @@ public class MainController {
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp",user.getGroupp().getName());
             //List<LabInfo> labs = labInfoRepository.findByIsVisible(Boolean.TRUE);
-            List<LabInfo> labs = labInfoRepository.findByGroupId(user.getGroupp().getId());
+            List<LabInfo> labs = labInfoRepository.findByIsVisibleAndGroupId(Boolean.TRUE, user.getGroupp().getId());
             model.addAttribute("labs", labs);
+            model.addAttribute("deadlineRepository", deadlineRepository);
         }
         else{
             model.addAttribute("name", "guest");
