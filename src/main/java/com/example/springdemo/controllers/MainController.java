@@ -1,6 +1,8 @@
 package com.example.springdemo.controllers;
 
+import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.User;
+import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.service.RequestService;
 import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,22 +67,38 @@ public class MainController {
     private RequestService requestService;
 
     @Autowired
+    private LabInfoRepository labInfoRepository;
+
+    @Autowired
     UserService userService;
     @GetMapping("/")
     public String view(){
         return "redirect:/main/index";
     }
-    @GetMapping("/main/index")
+    @GetMapping("/main/minor")
     public String index(HttpServletRequest request, Model model) {
         addNameAndGroupToModel(model);
-        return "index";
+        return "minor";
     }
 
 
-    @GetMapping("/main/minor")
+    @GetMapping("/main/index")
     public String home2(HttpServletRequest request, Model model) {
-        addNameAndGroupToModel(model);
-        return "minor";
+        String username;
+        username = getCurrentUsername();
+        if (!Objects.equals(username, "guest")) {
+            User user = userService.getByEmail(username);
+            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+            model.addAttribute("groupp",user.getGroupp().getName());
+            //List<LabInfo> labs = labInfoRepository.findByIsVisible(Boolean.TRUE);
+            List<LabInfo> labs = labInfoRepository.findByGroupId(user.getGroupp().getId());
+            model.addAttribute("labs", labs);
+        }
+        else{
+            model.addAttribute("name", "guest");
+            model.addAttribute("groupp", "");
+        }
+        return "index";
     }
 
     @GetMapping("/main/teacher_lab")

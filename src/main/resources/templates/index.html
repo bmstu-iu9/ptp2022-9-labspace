@@ -34,10 +34,9 @@
                     <div class="text-center dashboard-header">
                         <h1>Доступные лабы</h1>
                     </div>
-                    <div class="lab-space">
-                        <a href="/main/lab_id1">
-                            <h2><b>Шаблоны С++ (1)</b></h2>
-                        </a>
+                    <div class="lab-space" th:each="el: ${labs}">
+                            <h2 th:text="${el.id}" />
+                            <div class="skip-row"></div>
                     </div>
                     <div class="skip-row"></div>
                     <div class="lab-space">

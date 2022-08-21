@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface LabInfoRepository extends JpaRepository<LabInfo, Long> {
     List<LabInfo> findByIsVisible(Boolean isVisible);
+    List<LabInfo> findByGroupId (Long group_id);
 }

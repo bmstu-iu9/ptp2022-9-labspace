@@ -52,4 +52,9 @@ public class LabInfo {
             name = "is_visible"
     )
     private Boolean isVisible;
+
+    @Column(
+            name = "groupp_id"
+    )
+    private Long groupId;
 }
