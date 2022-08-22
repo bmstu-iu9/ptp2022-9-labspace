@@ -35,18 +35,13 @@
           <div class="text-center dashboard-header">
             <h1>Выполненные лабы</h1>
           </div>
-
-          <div class="lab-space" href="main/lab_id1">
-            <h2><b>Шаблоны С++</b></h2>
-          </div>
-          <div class="skip-row"></div>
-          <div class="lab-space" href="main/lab_id2">
-            <h2><b>Шаблоны С++</b></h2>
-          </div>
-          <div class="skip-row"></div>
-          <div class="lab-space" href="main/lab_id3">
-            <h2><b>Шаблоны С++</b></h2>
-          </div>
+          <div class="lab-space" th:each="submit_lab : ${submit_labs}">
+            <a style="display: inline-block; text-align: center">
+              <h2 th:text="${submit_lab.getLabInfo().getName()}" />
+            </a>
+            <h2 th:text="'сдано: ' + ${submit_lab.getSendDate()}" style="display: inline-block; text-align: right; margin-left:20%"/>
+            <h2 th:text="'mark: ' + ${submit_lab.mark}" style="display: inline-block; text-align: right; margin-left:20%"/>
+          </div>  
           <div class="skip-row"></div>
         </div>
       </div>
