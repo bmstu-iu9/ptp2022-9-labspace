@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -30,4 +31,10 @@ public class Groupp {
     private String department;
 
     private String name;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lab")
+    private LabInfo labInfo;
+
 }
