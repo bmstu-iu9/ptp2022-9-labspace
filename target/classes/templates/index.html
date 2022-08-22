@@ -39,11 +39,13 @@
                         <a th:href="@{'/main/lab_id' + ${lab.getId()}}" style="display: inline-block; text-align: center">
                             <h2 th:text="${lab.name}" />
                         </a>
-                        <div style="display: inline-block; text-align: right">
+                        <h2 th:text="'couse ' + ${lab.getCourse().name}" style="display: inline-block; text-align: right; margin-left:20%"/>
+                        <div style="display: inline-block; text-align: right; margin-left:20%">
                             <div th:each="dead : ${deadlineRepository.findAllByLabInfoId(lab.getId())}" >
                                 <h3 th:text="${dead.getMaxMark()} + ' балл(ов) - ' + ${dead.getDeadlineDate()}" style=""/>
                             </div>
                         </div>
+
                         <div class="skip-row"></div>
                     </div>
                     <div class="skip-row"></div>
