@@ -40,23 +40,18 @@
                             <h2 th:text="${lab.name}" />
                         </a>
                         <div style="display: inline-block; text-align: right">
+                            <div >
+                                <h3 style="">3 балла - </h3>
+                                <h3 style="">2 балла - </h3>
+                                <h3 style="">1 балл  - </h3>
+                            </div>
+                        </div>
+                        <div style="display: inline-block; text-align: right">
                             <div th:each="dead : ${deadlineRepository.findAllByLabInfoId(lab.getId())}" >
                                 <h3 th:text="${dead.getDeadlineDate()}" style=""/>
                             </div>
                         </div>
                         <div class="skip-row"></div>
-                    </div>
-                    <div class="skip-row"></div>
-                    <div class="lab-space">
-                        <a href="/main/lab_id2">
-                            <h2><b>Шаблоны С++ (2)</b></h2>
-                        </a>
-                    </div>
-                    <div class="skip-row"></div>
-                    <div class="lab-space">
-                        <a href="/main/lab_id3">
-                            <h2><b>Шаблоны С++ (3)</b></h2>
-                        </a>
                     </div>
                     <div class="skip-row"></div>
                 </div>
