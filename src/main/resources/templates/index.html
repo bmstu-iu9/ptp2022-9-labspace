@@ -34,27 +34,21 @@
                     <div class="text-center dashboard-header">
                         <h1>Доступные лабы</h1>
                     </div>
-                    <div class="lab-space" th:each="lab : ${labs}" >
 
+                    <div class="lab-space" th:each="lab : ${labs}" style="margin-top: 10px">
                         <a th:href="@{'/main/lab_id' + ${lab.getId()}}" style="display: inline-block; text-align: center">
                             <h2 th:text="${lab.name}" />
                         </a>
                         <div style="display: inline-block; text-align: right">
-                            <div >
-                                <h3 style="">3 балла - </h3>
-                                <h3 style="">2 балла - </h3>
-                                <h3 style="">1 балл  - </h3>
-                            </div>
-                        </div>
-                        <div style="display: inline-block; text-align: right">
                             <div th:each="dead : ${deadlineRepository.findAllByLabInfoId(lab.getId())}" >
-                                <h3 th:text="${dead.getDeadlineDate()}" style=""/>
+                                <h3 th:text="${dead.getMaxMark()} + ' балл(ов) - ' + ${dead.getDeadlineDate()}" style=""/>
                             </div>
                         </div>
                         <div class="skip-row"></div>
                     </div>
                     <div class="skip-row"></div>
                 </div>
+
             </div>
         </div>
     </div>
