@@ -37,7 +37,7 @@ public class Groupp {
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Column(
-            name = "headman"
+            name = "groupp_leader"
     )
-    private User user;
+    private User grouppLeader;
 }
