@@ -55,6 +55,10 @@ public class RegistrationController {
                           Model model,
                           HttpServletRequest request,
                           HttpServletResponse response) throws ServletException {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("bindingResult", bindingResult);
+            return "register";
+        }
         try {
             Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(user.getPhoneNumber(), Phonenumber.PhoneNumber.CountryCodeSource.UNSPECIFIED.name());
             if (!phoneNumberUtil.isValidNumber(phoneNumber)) throw new NumberParseException(NumberParseException.ErrorType.NOT_A_NUMBER, "Not a number");
@@ -63,14 +67,11 @@ public class RegistrationController {
             model.addAttribute("bindingResult", bindingResult);
             return "register";
         }
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("bindingResult", bindingResult);
-            return "register";
-        } else if (userService.isAlreadyPresent(user)) {
+        if (userService.isAlreadyPresent(user)) {
             bindingResult.rejectValue("email", "user.email", "An account already exists for this email.");
             model.addAttribute("bindingResult", bindingResult);
             return "register";
-        }else if (!user.getPassword().equals(user.getPasswordConfirm())){
+        } else if (!user.getPassword().equals(user.getPasswordConfirm())){
             bindingResult.rejectValue("password", "user.getPasswordConfirm", "Passwords are not equal");
             model.addAttribute("bindingResult", bindingResult);
             return "register";

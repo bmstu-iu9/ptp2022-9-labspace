@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
@@ -58,11 +59,13 @@ public class User {
     @Column(
             name = "tg_account"
     )
+    @Pattern(regexp = "@[a-zA-Z]\\w{4,}", message = "Telegram username should be: @Username")
     private String tgAccount;
 
     @Column(
             name = "phone_number"
     )
+    @Pattern(regexp = "\\+[0-9]{1,25}", message = "Phone number should start with + and contain only numbers")
     private String phoneNumber;
 
     @Column(
