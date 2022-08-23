@@ -40,9 +40,9 @@
                                     <span class="teacher_title_text">Subject</span>
                                     <select class="teacher_select" name="course_id" required>
                                         <option disabled value="" selected>Select the subject</option>
-                                        <option th:value="1" style="color: #202020">ЯиМП</option>
-                                        <option value="Че то там" style="color: #202020">Че то там2</option>
-                                        <option value="Че то там" style="color: #202020">Че то там3</option>
+                                        <option  th:each="course : ${coursesList}"
+                                                 th:value="${course.id}"
+                                                 style="color: #202020" th:text="${course.name}"></option>
                                     </select>
                                 </div>
 
@@ -61,7 +61,7 @@
 
                             <div class="teacher_row">
                                 <div class="teacher_left_form">
-                                    <span class="teacher_title_text">Title</span>
+                                    <span class="teacher_title_text" >Title</span>
                                     <input class="teacher_input"  th:field="*{name}" placeholder="Name of labwork">
                                 </div>
 
@@ -69,7 +69,7 @@
                                 <div class="teacher_right_form">
                                     <span class="teacher_title_text">Useful files</span>
                                     <div class="teacher_file_import">
-                                        <span class="teacher_text_import" id="filename">file file</span>
+                                        <span class="teacher_text_import" id="filename">No file chosen</span>
                                         <input type="file" name="filee" class="input_file" id="file"  />
                                         <label for="file" class="teacher_button_import">Upload</label>
                                     </div>
@@ -165,5 +165,6 @@
 </div>
 <script src="../static/js/teacher_lab/markChange.js"></script>
 <script src="../static/js/teacher_lab/dateChange.js"></script>
+<script src="../static/js/teacher_lab/customButton.js"></script>
 </body>
 </html>

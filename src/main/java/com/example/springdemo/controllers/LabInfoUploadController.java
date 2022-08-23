@@ -78,6 +78,8 @@ public class LabInfoUploadController {
         model.addAttribute(courseRepository);
         model.addAttribute("labInfo", labInfo);
         Iterable<Groupp> groupList = grouppRepository.findAll();
+        Iterable<Course> courses = courseRepository.findAll();
+        model.addAttribute("coursesList", courses);
         model.addAttribute("groupList",groupList);
         return "teacher_lab";
     }

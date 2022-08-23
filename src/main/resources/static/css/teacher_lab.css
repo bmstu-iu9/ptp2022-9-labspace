@@ -97,9 +97,11 @@
 }
 
 .teacher_text_import {
-    font-size: 25px;
+    font-size: 20px;
     color: #757575;
     text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
     width: 100%;
 }
 
