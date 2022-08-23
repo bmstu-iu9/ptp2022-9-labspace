@@ -5,6 +5,9 @@ import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.GrouppRepository;
 import com.example.springdemo.service.AuthenticationService;
 import com.example.springdemo.service.UserService;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,8 @@ import java.util.Optional;
 
 @Controller
 public class RegistrationController {
+    PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
+
     @Autowired
     private AuthenticationService authenticationService;
 
@@ -53,11 +58,20 @@ public class RegistrationController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("bindingResult", bindingResult);
             return "register";
-        } else if (userService.isAlreadyPresent(user)) {
+        }
+        try {
+            Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(user.getPhoneNumber(), Phonenumber.PhoneNumber.CountryCodeSource.UNSPECIFIED.name());
+            if (!phoneNumberUtil.isValidNumber(phoneNumber)) throw new NumberParseException(NumberParseException.ErrorType.NOT_A_NUMBER, "Not a number");
+        } catch (NumberParseException e) {
+            bindingResult.rejectValue("phoneNumber", "user.phoneNumber", "Phone number is not correct");
+            model.addAttribute("bindingResult", bindingResult);
+            return "register";
+        }
+        if (userService.isAlreadyPresent(user)) {
             bindingResult.rejectValue("email", "user.email", "An account already exists for this email.");
             model.addAttribute("bindingResult", bindingResult);
             return "register";
-        }else if (!user.getPassword().equals(user.getPasswordConfirm())){
+        } else if (!user.getPassword().equals(user.getPasswordConfirm())){
             bindingResult.rejectValue("password", "user.getPasswordConfirm", "Passwords are not equal");
             model.addAttribute("bindingResult", bindingResult);
             return "register";
