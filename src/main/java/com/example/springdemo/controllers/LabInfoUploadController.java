@@ -3,6 +3,7 @@ package com.example.springdemo.controllers;
 import com.example.springdemo.entity.*;
 import com.example.springdemo.repository.CourseRepository;
 import com.example.springdemo.repository.DeadlineRepository;
+import com.example.springdemo.repository.GrouppRepository;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.service.DeadlineService;
 import com.example.springdemo.service.FileStorageService;
@@ -28,14 +29,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class LabInfoUploadController {
     @Autowired
     CourseRepository courseRepository;
+    @Autowired
+    GrouppRepository grouppRepository;
     @Autowired
     private FileStorageService fileStorageService;
     @Autowired
@@ -44,6 +46,8 @@ public class LabInfoUploadController {
     UserService userService;
     @Autowired
     DeadlineService deadlineService;
+    @Autowired
+    LabInfoRepository labInfoRepository;
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -73,6 +77,8 @@ public class LabInfoUploadController {
         addNameAndGroupToModel(model);
         model.addAttribute(courseRepository);
         model.addAttribute("labInfo", labInfo);
+        Iterable<Groupp> groupList = grouppRepository.findAll();
+        model.addAttribute("groupList",groupList);
         return "teacher_lab";
     }
 
@@ -83,6 +89,9 @@ public class LabInfoUploadController {
                           HttpServletRequest request) throws ServletException, ParseException {
             labInfo.setUploadDate(new Date(System.currentTimeMillis()));
             Optional<Course> tmpcourse = courseRepository.findById(Long.valueOf(request.getParameter("course_id")));
+        labInfo.setGroupps(Arrays.stream(request.getParameterValues("groupss")).map(Integer::valueOf)
+                .map((id)->grouppRepository.findById(id.longValue()))
+                .filter(Optional::isPresent).map(Optional::get).collect(Collectors.toSet()));
             labInfo.setSource("labs/");
             fileStorageService.storeFile(file,labInfo);
             tmpcourse.ifPresent(labInfo::setCourse);

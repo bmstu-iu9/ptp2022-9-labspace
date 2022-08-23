@@ -48,6 +48,4 @@ public class SubmitLab {
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private LabInfo labInfo;
-
-    private Integer mark;
 }
