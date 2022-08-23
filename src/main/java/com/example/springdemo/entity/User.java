@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
@@ -37,11 +38,11 @@ public class User {
     )
     @Email(message = "Email is not correct!")
     private String email;
+
     @Column(
             name = "first_name"
     )
     @NotNull(message = "FirstName is compulsory!")
-
     private String firstName;
 
     @Column(
@@ -49,6 +50,23 @@ public class User {
     )
     @NotNull(message = "LastName is compulsory!")
     private String lastName;
+
+    @Column(
+            name = "patronymic"
+    )
+    private String patronymic;
+
+    @Column(
+            name = "tg_account"
+    )
+    @Pattern(regexp = "@[a-zA-Z]\\w{4,}", message = "Telegram username should be: @Username")
+    private String tgAccount;
+
+    @Column(
+            name = "phone_number"
+    )
+    @Pattern(regexp = "\\+[0-9]{1,25}", message = "Phone number should start with + and contain only numbers")
+    private String phoneNumber;
 
     @Column(
             name = "password"
@@ -71,6 +89,7 @@ public class User {
     private Set<Role> roles;
 
     private String activationCode;
+
     @Column(
             name = "reset_password_token"
     )
