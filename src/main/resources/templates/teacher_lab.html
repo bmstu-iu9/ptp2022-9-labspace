@@ -21,6 +21,16 @@
     <script th:src="@{/js/inspinia.js}"></script>
     <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
 
+
+    <!-- Include the plugin's CSS and JS: -->
+    <script type="text/javascript" th:src="@{/js/bootstrap-multiselect.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap-multiselect.css}" type="text/css"/>
+    <!-- Initialize the plugin: -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#multiselect').multiselect();
+        });
+    </script>
 </head>
 <body>
 <div id="wrapper">
@@ -49,8 +59,8 @@
                                 <div class="teacher_right_form">
                                     <span class="teacher_title_text">Group</span>
                                     <!--            <input class="input group_input" list="group_list" placeholder="Select the group">-->
-                                    <select class="teacher_select"  required multiple  name="groupss">
-                                     <!--   <option disabled value="" selected="selected">Select the group</option> -->
+                                    <select class="teacher_select" id="multiselect" required multiple  name="groupss">
+                                        <option disabled value="" selected="selected">Select the group</option>
                                         <option  th:each="group : ${groupList}"
                                                  th:value="${group.id}"
                                                 style="color: #202020" th:text="${group.name}"></option>

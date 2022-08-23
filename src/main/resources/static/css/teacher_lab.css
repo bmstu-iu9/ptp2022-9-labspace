@@ -109,7 +109,9 @@
     font-size: 18px;
     margin-right: 20px;
     width: 120px;
+    line-height: 40px;
     background-color: black;
+    text-align: center;
     color: white;
     height: 40px;
     border-radius: 10px;
