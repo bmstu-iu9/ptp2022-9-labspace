@@ -8,7 +8,9 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(
@@ -26,11 +28,6 @@ public class LabInfo {
     )
     private Long id;
 
-    @Column(
-            name = "department",
-            length = 30
-    )
-    private String department;
 
     @Column(
             name = "upload_date"
@@ -47,6 +44,9 @@ public class LabInfo {
     @JoinColumn(name = "course_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Course course;
+
+    @OneToMany(mappedBy = "labInfo",fetch = FetchType.LAZY)
+    private Set<Groupp> groupps;
 
     @Column(
             name = "is_visible"
