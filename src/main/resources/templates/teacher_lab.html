@@ -28,7 +28,12 @@
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#multiselect').multiselect();
+            $('#multiselect').multiselect({
+                enableFiltering: true,
+                nonSelectedText:'Select the group',
+                buttonWidth: '100%',
+                buttonClass: 'teacher_select',
+            });
         });
     </script>
 </head>
@@ -59,8 +64,7 @@
                                 <div class="teacher_right_form">
                                     <span class="teacher_title_text">Group</span>
                                     <!--            <input class="input group_input" list="group_list" placeholder="Select the group">-->
-                                    <select class="teacher_select" id="multiselect" required multiple  name="groupss">
-                                        <option disabled value="" selected="selected">Select the group</option>
+                                    <select  id="multiselect" required multiple  name="groupss">
                                         <option  th:each="group : ${groupList}"
                                                  th:value="${group.id}"
                                                 style="color: #202020" th:text="${group.name}"></option>
