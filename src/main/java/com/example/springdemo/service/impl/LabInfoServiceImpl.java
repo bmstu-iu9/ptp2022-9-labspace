@@ -26,14 +26,4 @@ public class LabInfoServiceImpl implements LabInfoService {
         labInfoRepository.save(labInfo);
     }
 
-    @Override
-    public HashMap<Date, Integer> getDeadlinesByLabId(Long id) {
-        HashMap<Date, Integer> map = new HashMap<>();
-        List<Deadline> deadlines = deadlineRepository.findAllByLabInfoId(id);
-        for (Deadline elem : deadlines) {
-            map.put(elem.getDeadlineDate(), elem.getMaxMark());
-        }
-
-        return map;
-    }
 }

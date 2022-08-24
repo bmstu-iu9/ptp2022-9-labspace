@@ -30,8 +30,9 @@
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="teacher_container">
+                    <form class="teacher_container" enctype="multipart/form-data" method="post">
                         <span class="teacher_title" th:text="${lab_info.name}"></span>
+                        <!--form class="teacher_file_import" enctype="multipart/form-data" method="post"-->
                         <div class="teacher_form">
                             <div class="teacher_criterias">
                                 <div class="teacher_criteria" th:each="deadline : ${deadlines}">
@@ -40,14 +41,19 @@
                                         <div class="teacher_block teacher_date">
                                             <p style="display: block; text-align: center">
                                                 <span class="teacher_dayMonth"
-                                                      th:text="${deadline.getKey().getDate()} + '.' + ${deadline.getKey().getMonth()}" ></span>
-                                                <span class="teacher_year" th:text="${deadline.getKey().getYear()}"></span>
+                                                      th:text="${formatdayMonth.format(deadline.getDeadlineDate())}" ></span>
+                                                <span class="teacher_year" th:text="${formatYear.format(deadline.getDeadlineDate())}"></span>
                                             </p>
                                         </div>
                                     </div>
                                     <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
                                     <div style="display: block">
-                                        <span class="teacher_title_text" th:text="${deadline.getValue()}">Mark</span>
+                                        <span class="teacher_title_text">Mark</span>
+                                        <div class="teacher_block teacher_mark_btn">
+                                            <p style="display: block; text-align: center; font-size: 60px">
+                                                <span class="teacher_mark" th:text="${deadline.getMaxMark()}"></span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                                 </div>
@@ -55,25 +61,26 @@
 
                             <div style="margin-top: 35px">
                                 <span class="teacher_title_text">General information</span>
-                                <textarea class="teacher_input teacher_input_inf" rows="5" cols="1" placeholder="information"></textarea>
+                                <label class="teacher_input teacher_input_inf" rows="5" cols="1" th:text="${lab_info.getDescription()}"></label>
                             </div>
 
                             <div class="teacher_row">
                                 <div class="student_left_form">
                                     <span class="teacher_title_text">Useful files</span>
-                                    <button class="student_upload">Download</button>
+                                    <button class="student_upload" th:href="@{main/lab_id{id}/download(id=*{lab_info.getId()})}">Download</button>
                                 </div>
                                 <div class="student_right_form">
                                     <span class="teacher_title_text">Your labwork</span>
-                                    <div class="teacher_file_import">
-                                        <span class="teacher_text_import">Ready?</span>
-                                        <button class="teacher_button_import">Upload</button>
-                                    </div>
+                                        <div class="teacher_file_import">
+                                            <span class="teacher_text_import" id="filename">No file chosen</span>
+                                            <input type="file" name="filee" class="input_file" id="file"  />
+                                            <label for="file" class="teacher_button_import">Upload</label>
+                                        </div>
                                 </div>
                             </div>
-
                             <button class="submit_button">Submit</button>
-                        </div>
+                        <!--/form-->
+                        </form>
                     </div>
                 </div>
             </div>
@@ -81,5 +88,6 @@
     </div>
 </div>
 <script src="../static/js/teacher_lab/dateChange.js"></script>
+<script src="../static/js/teacher_lab/customButton.js"></script>
 </body>
 </html>
