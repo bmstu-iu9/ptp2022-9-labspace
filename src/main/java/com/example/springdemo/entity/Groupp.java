@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
+@JsonIgnoreProperties
 @Entity
 @Table(
         name = "groupp"
@@ -34,8 +34,7 @@ public class Groupp {
     private String name;
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lab")
-    private Set<LabInfo> labInfoSet;
+    @ManyToMany
+    private Set<LabInfo> labInfos;
 
 }

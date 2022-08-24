@@ -12,7 +12,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
+@JsonIgnoreProperties
 @Entity
 @Table(
         name = "lab_info"
@@ -46,27 +46,11 @@ public class LabInfo {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Course course;
 
-    @ManyToMany(mappedBy = "labInfoSet",fetch = FetchType.LAZY)
+    @ManyToMany
     private Set<Groupp> groupps;
-    @OneToMany(mappedBy = "labInfo",fetch = FetchType.LAZY )
-    private Set<Deadline> deadlines;
+
     @Column(
             name = "is_visible"
     )
     private Boolean isVisible;
-
-    @Override
-    public String toString() {
-        return "LabInfo{" +
-                "id=" + id +
-                ", uploadDate=" + uploadDate +
-                ", description='" + description + '\'' +
-                ", source='" + source + '\'' +
-                ", name='" + name + '\'' +
-                ", course=" + course +
-                ", groupps=" + groupps +
-                ", deadlines=" + deadlines +
-                ", isVisible=" + isVisible +
-                '}';
-    }
 }

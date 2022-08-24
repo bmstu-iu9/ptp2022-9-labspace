@@ -90,14 +90,18 @@ public class LabInfoUploadController {
                           Model model,
                           HttpServletRequest request) throws ServletException, ParseException {
             labInfo.setUploadDate(new Date(System.currentTimeMillis()));
-            Optional<Course> tmpcourse = courseRepository.findById(Long.valueOf(request.getParameter("course_id")));
-        labInfo.setGroupps(Arrays.stream(request.getParameterValues("groupss")).map(Integer::valueOf)
-                .map((id)->grouppRepository.findById(id.longValue()))
-                .filter(Optional::isPresent).map(Optional::get).collect(Collectors.toSet()));
+          Optional<Course> tmpcourse = courseRepository.findById(Long.valueOf(request.getParameter("course_id")));
+
+        Set<Groupp> groups = Arrays.stream(request.getParameterValues("groupss"))
+                .map(id->grouppRepository.findById(Long.valueOf(id)))
+                .filter(Optional::isPresent).map(Optional::get)
+                .collect(Collectors.toSet());
+        labInfo.setGroupps(groups);
             labInfo.setSource("labs/");
             fileStorageService.storeFile(file,labInfo);
-            tmpcourse.ifPresent(labInfo::setCourse);
+            //tmpcourse.ifPresent(labInfo::setCourse);
             labInfoService.uploadLab(labInfo);
+           // groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
             deadlineService.saveDeadlines(request,labInfo);
         return "teacher_lab";
     }

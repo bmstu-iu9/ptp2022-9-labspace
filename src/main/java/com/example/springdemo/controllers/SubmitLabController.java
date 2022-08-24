@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Date;
+
 @Controller
 public class SubmitLabController {
     @Autowired
@@ -53,7 +55,7 @@ public class SubmitLabController {
     public String view(Model model, @PathVariable("lab_info_id") Long lab_id){
         model.addAttribute("lab_info",labInfoRepository.getReferenceById(lab_id));
         model.addAttribute("grade",gradesListService.getPointsByStudentAndLab(getCurrentUsername(),lab_id));
-        model.addAttribute("deadlines",labInfoService.getDeadlinesByLabId(lab_id).toString());
+        model.addAttribute("deadlines",labInfoService.getDeadlinesByLabId(lab_id));
         return "templs/templateOfUploadLab";
     }
 
