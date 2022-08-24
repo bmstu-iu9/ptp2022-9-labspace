@@ -7,6 +7,7 @@ import com.example.springdemo.repository.CourseRepository;
 import com.example.springdemo.repository.DeadlineRepository;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.repository.SubmitLabRepository;
+import com.example.springdemo.service.LabInfoService;
 import com.example.springdemo.service.RequestService;
 import com.example.springdemo.service.SubmitLabService;
 import com.example.springdemo.service.UserService;
@@ -71,8 +72,9 @@ public class MainController {
     @Autowired
     private RequestService requestService;
 
+
     @Autowired
-    private LabInfoRepository labInfoRepository;
+    LabInfoRepository labInfoRepository;
 
     @Autowired
     UserService userService;
@@ -113,7 +115,7 @@ public class MainController {
             User user = userService.getByEmail(username);
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp",user.getGroupp().getName());
-            List<LabInfo> labs = labInfoRepository.findByIsVisibleAndGroupId(Boolean.TRUE, user.getGroupp().getId());
+           Set<LabInfo> labs = labInfoRepository.findByIsVisibleTrueAndGroupps_Id(user.getGroupp().getId());
             model.addAttribute("labs", labs);
             model.addAttribute("deadlineRepository", deadlineRepository);
         }

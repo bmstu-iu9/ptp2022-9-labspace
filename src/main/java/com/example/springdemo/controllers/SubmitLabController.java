@@ -54,7 +54,7 @@ public class SubmitLabController {
         model.addAttribute("lab_info",labInfoRepository.getReferenceById(lab_id));
         model.addAttribute("grade",gradesListService.getPointsByStudentAndLab(getCurrentUsername(),lab_id));
         model.addAttribute("deadlines",labInfoService.getDeadlinesByLabId(lab_id).toString());
-        return "templs/lab";
+        return "templs/templateOfUploadLab";
     }
 
     @GetMapping(path="main/lab_id{lab_info_id}/download")

@@ -1,5 +1,6 @@
 package com.example.springdemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
-
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(
         name = "deadline"
