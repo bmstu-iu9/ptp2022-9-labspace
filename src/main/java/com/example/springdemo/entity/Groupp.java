@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -40,4 +41,8 @@ public class Groupp {
             name = "groupp_leader"
     )
     private User grouppLeader;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lab")
+    private LabInfo labInfo;
 }
