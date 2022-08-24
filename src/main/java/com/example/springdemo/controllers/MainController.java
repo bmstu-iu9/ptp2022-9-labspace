@@ -115,7 +115,8 @@ public class MainController {
             User user = userService.getByEmail(username);
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp",user.getGroupp().getName());
-           Set<LabInfo> labs = labInfoRepository.findByIsVisibleTrueAndGroupps_Id(user.getGroupp().getId());
+           Set<Long> labid=submitLabRepository.findAllByUserId(user.getId()).stream().map(a -> a.getLabInfo().getId()).collect(Collectors.toSet());
+            Set<LabInfo> labs = labInfoRepository.findByIsVisibleTrueAndGroupps_IdAndIdNotIn(user.getGroupp().getId(),labid);
             model.addAttribute("labs", labs);
             model.addAttribute("deadlineRepository", deadlineRepository);
         }

@@ -10,5 +10,4 @@ public interface SubmitLabService {
     List<LabInfo> getCompleteLabsByEmail(String email);
 
     List<LabInfo> getCompleteLabsByUserId(Long id);
-    SubmitLab submitLab(User user, LabInfo labInfo);
 }

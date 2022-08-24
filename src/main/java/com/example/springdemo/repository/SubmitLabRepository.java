@@ -14,4 +14,6 @@ public interface SubmitLabRepository extends JpaRepository<SubmitLab, Long> {
     Integer getMarkById(Long id);
 
     Optional<SubmitLab> findByUserIdAndLabInfoId(Long userId, Long labInfoId);
+
+    List<SubmitLab> findAllByUserId(Long userId);
 }
