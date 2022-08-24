@@ -99,9 +99,9 @@ public class LabInfoUploadController {
         labInfo.setGroupps(groups);
             labInfo.setSource("labs/");
             fileStorageService.storeFile(file,labInfo);
-            //tmpcourse.ifPresent(labInfo::setCourse);
+            tmpcourse.ifPresent(labInfo::setCourse);
             labInfoService.uploadLab(labInfo);
-           // groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
+            groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
             deadlineService.saveDeadlines(request,labInfo);
         return "teacher_lab";
     }

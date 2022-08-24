@@ -8391,10 +8391,17 @@ body.md-skin {
   width: 100%;
   height: 80px;
   border-radius: 20px;
+  text-align: center;
+  line-height: 40px;
+  vertical-align: center;
   background-color: black;
   color: white;
+  cursor: pointer;
 }
-
+.student_upload:focus{
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
+}
 .student_left_form{
   display: flex;
   flex-direction: column;
