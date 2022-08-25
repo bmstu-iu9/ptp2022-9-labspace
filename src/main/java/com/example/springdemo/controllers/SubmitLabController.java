@@ -53,7 +53,8 @@ public class SubmitLabController {
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return "redirect:/main/lab_id"+labId;
+        // return "redirect:/main/lab_id"+labId;
+        return "redirect:/";
     }
     @GetMapping(path="main/lab_id{lab_info_id}")
     public String view(Model model, @PathVariable("lab_info_id") Long lab_id){

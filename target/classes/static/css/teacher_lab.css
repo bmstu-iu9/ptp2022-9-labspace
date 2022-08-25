@@ -19,6 +19,14 @@
     src: url("../fonts/Comfortaa-VariableFont_wght.ttf");
 }
 
+.student_title {
+    display: flex;
+    font-weight: bold;
+    font-size: 70px;
+    justify-content: center;
+    margin-top: auto;
+}
+
 .teacher_title {
     display: flex;
     font-weight: bold;
@@ -133,7 +141,7 @@
 .teacher_criterias {
     display: flex;
     justify-content: space-between;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .teacher_criteria {
@@ -193,3 +201,6 @@
     outline: -webkit-focus-ring-color auto 5px;
 }
 
+#multiselect:invalid {
+    color: #757575!important;
+}
