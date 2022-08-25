@@ -35,14 +35,14 @@
                         <h1>Доступные лабы</h1>
                     </div>
 
-                    <div class="lab-space" th:each="lab : ${labs}" style="margin-top: 10px">
-                        <a th:href="@{'/main/lab_id' + ${lab.getId()}}" style="display: inline-block; text-align: center">
-                            <h2 th:text="${lab.name}" />
+                    <div class="lab-space" th:each="lab : ${labs}">
+                        <a class="lab-name" th:href="@{'/main/lab_id' + ${lab.getId()}}" >
+                            <h2 class="h2-lab-name" th:text="${lab.name}" />
                         </a>
-                        <h2 th:text="'couse ' + ${lab.getCourse().name}" style="display: inline-block; text-align: right; margin-left:20%"/>
-                        <div style="display: inline-block; text-align: right; margin-left:20%">
+                        <h2 class="lab-course" th:text="${lab.getCourse().name}" />
+                        <div class="lab-marks">
                             <div th:each="dead : ${deadlineRepository.findAllByLabInfoId(lab.getId())}" >
-                                <h3 th:text="${dead.getMaxMark()} + ' балл(ов) - ' + ${dead.getDeadlineDate()}" style=""/>
+                                <h3 class="lab-marks-mark" th:text="${dead.getMaxMark()} + ' балл(ов) - ' + ${dead.getDeadlineDate()}"/>
                             </div>
                         </div>
 

@@ -35,14 +35,14 @@
           <div class="text-center dashboard-header">
             <h1>Выполненные лабы</h1>
           </div>
-          <div class="lab-space" th:each="submit_lab : ${submit_labs}" style="margin-bottom: 10px">
-            <a style="display: inline-block; text-align: center">
-              <h2 th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'" />
+          <div class="lab-space" th:each="submit_lab : ${submit_labs}">
+            <a class="lab-name">
+              <h2 class="h2-lab-name" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'" />
             </a>
-            <h2 th:text="'сдано: ' + ${submit_lab.getSendDate()}" style="display: inline-block; text-align: right; margin-left:20%"/>
-            <div th:switch="${submit_lab.mark}" style="display: inline-block; text-align: right; margin-left:20%">
-              <h2 th:case="'-1'" th:text="'оценка не проставлена'" style="display: inline-block; text-align: right; margin-left:20%"/>
-              <h2 th:case="*" th:text="'оценка: ' + ${submit_lab.mark}" />
+            <h2 class="lab-course" th:text="'сдано: ' + ${submit_lab.getSendDate()}"/>
+            <div class="lab-marks" th:switch="${submit_lab.mark}">
+              <h2 class="lab-marks-mark" th:case="'-1'" th:text="'оценка не проставлена'" />
+              <h2 class="lab-marks-mark" th:case="*" th:text="'оценка: ' + ${submit_lab.mark}" />
             </div>  
           </div>  
           <div class="skip-row"></div>

@@ -17,31 +17,35 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 100;
 }
 h1 {
+  font-weight: 700;
   font-size: 400%;
 }
 h2 {
+  font-weight: 400;
   font-size: 24px;
 }
 h3 {
+  font-weight: 300;
   font-size: 16px;
 }
 h4 {
+  font-weight: 200;
   font-size: 14px;
 }
 h5 {
+  font-weight: 200;
   font-size: 12px;
 }
 h6 {
+  font-weight: 100;
   font-size: 10px;
 }
 h3,
 h4,
 h5 {
   margin-top: 5px;
-  font-weight: 600;
 }
 .nav > li > a {
   color: #a7b1c2;
@@ -3451,7 +3455,7 @@ video {
   width: 100%;
 }
 .wrapper-content {
-  padding: 20px 10px 40px;
+  padding: 0 10px 40px;
 }
 #page-wrapper {
   padding: 0 15px;
@@ -8236,16 +8240,6 @@ body.md-skin {
   }
 }
 
-.lab-space{
-  padding: 15px;
-  border: 3px solid black;
-  margin-left: auto;
-  margin-right: auto;
-
-  height: 100px;
-  border-radius: 20px;
-}
-
 .skip-row {
   height: 20px;
 }
@@ -8392,7 +8386,7 @@ body.md-skin {
   height: 80px;
   border-radius: 20px;
   text-align: center;
-  line-height: 40px;
+  line-height: 80px;
   vertical-align: center;
   background-color: black;
   color: white;
@@ -8447,4 +8441,52 @@ body.md-skin {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+}
+
+.lab-space{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  border: 3px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  height: 120px;
+  border-radius: 20px;
+  overflow: auto;
+}
+
+.lab-name {
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.h2-lab-name {
+  margin: 0;
+}
+
+.lab-course {
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+h2.lab-course {
+  line-height: 3;
+}
+
+.lab-marks {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  justify-content: center;
+  padding: 5px;
+}
+
+.lab-marks-mark {
+  margin: 5px 5px;
+  font-weight: 600;
 }
