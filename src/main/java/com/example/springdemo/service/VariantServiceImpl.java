@@ -55,4 +55,9 @@ public class VariantServiceImpl implements VariantService {
             }
         }
     }
+
+    @Override
+    public int getVariantByLabInfoIdAndStudentId(Long lab_info_id, Long student_id) {
+        return variantRepository.findByLabInfoIdAndStudentId(lab_info_id, student_id).get().getVariant();
+    }
 }

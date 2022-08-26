@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface VariantRepository extends JpaRepository<Variant, Long> {
-    Optional<Integer> findByLabInfoIdAndStudentId(Long labInfoId, Long studentId);
+    Optional<Variant> findByLabInfoIdAndStudentId(Long labInfoId, Long studentId);
 }
