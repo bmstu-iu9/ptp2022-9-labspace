@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Access denied</title>
-</head>
-<body>
-<h2>Sorry, you do not have permission to view this page.</h2>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
-Click <a href="/index" /> ">here
-to go back to the Homepage.
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LABSPACE | Error 403</title>
+  <link href="/" rel="stylesheet">
+</head>
+
+
+<body>
+<div class="d-flex align-items-center justify-content-center vh-100">
+  <div class="text-center">
+    <h1 class="display-1 fw-bold">403</h1>
+    <p class="fs-3"> <span class="text-danger">Opps!</span> It's closed here</p>
+    <p class="lead">
+      Sorry, you haven't got access to this page now(
+    </p>
+    <a href="/" class="btn btn-primary" style="background-color: #1dc5a3; border-color: #1b6d85">Go Home</a>
+  </div>
+</div>
 </body>
+
+
 </html>

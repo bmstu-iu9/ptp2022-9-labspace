@@ -1,8 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LABSPACE | Error</title>
+    <link href="/" rel="stylesheet">
+</head>
+
+
 <body>
-<h1>Something went wrong! </h1>
-<h2>Maybe you don't have access to this page right now</h2>
-<a href="/static">Go Home</a>
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="text-center">
+        <h1 class="display-1 fw-bold">404</h1>
+        <p class="fs-3"> <span class="text-danger">Opps!</span> Error.</p>
+        <p class="lead">
+            Something went wrong...
+        </p>
+        <a href="/" class="btn btn-primary" style="background-color: #1dc5a3; border-color: #1b6d85">Go Home</a>
+    </div>
+</div>
 </body>
+
+
 </html>

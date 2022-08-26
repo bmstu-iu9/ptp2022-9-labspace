@@ -37,15 +37,4 @@ public class SubmitLabServiceImpl implements SubmitLabService {
         }
         return labs;
     }
-
-    @Override
-    public SubmitLab submitLab(User user, LabInfo labInfo) {
-        SubmitLab submitLab= new SubmitLab();
-        submitLab.setLabInfo(labInfo);
-        submitLab.setUser(user);
-        Date date = new Date();
-        submitLab.setSendDate(date);
-        submitLab.setSource(labInfo.getCourse().getName() + "/labid" + labInfo.getId());
-        return submitLab;
-    }
 }

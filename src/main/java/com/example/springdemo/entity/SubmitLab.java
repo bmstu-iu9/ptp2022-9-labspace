@@ -36,6 +36,11 @@ public class SubmitLab {
     )
     private Date sendDate;
 
+    @Column(
+            name = "mark"
+    )
+    private int mark;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "user_id"

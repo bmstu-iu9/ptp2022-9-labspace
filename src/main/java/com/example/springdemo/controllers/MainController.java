@@ -1,7 +1,15 @@
 package com.example.springdemo.controllers;
 
+import com.example.springdemo.entity.LabInfo;
+import com.example.springdemo.entity.SubmitLab;
 import com.example.springdemo.entity.User;
+import com.example.springdemo.repository.CourseRepository;
+import com.example.springdemo.repository.DeadlineRepository;
+import com.example.springdemo.repository.LabInfoRepository;
+import com.example.springdemo.repository.SubmitLabRepository;
+import com.example.springdemo.service.LabInfoService;
 import com.example.springdemo.service.RequestService;
+import com.example.springdemo.service.SubmitLabService;
 import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -64,23 +72,59 @@ public class MainController {
     @Autowired
     private RequestService requestService;
 
+
+    @Autowired
+    LabInfoRepository labInfoRepository;
+
     @Autowired
     UserService userService;
+
+    @Autowired
+    SubmitLabRepository submitLabRepository;
     @GetMapping("/")
     public String view(){
         return "redirect:/main/index";
     }
-    @GetMapping("/main/index")
+    @GetMapping("/main/minor")
     public String index(HttpServletRequest request, Model model) {
-        addNameAndGroupToModel(model);
-        return "index";
+        String username;
+        username = getCurrentUsername();
+        if (!Objects.equals(username, "guest")) {
+            User user = userService.getByEmail(username);
+            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+            model.addAttribute("groupp",user.getGroupp().getName());
+            List<SubmitLab> submit_labs = submitLabRepository.findByUserId(user.getId());
+            model.addAttribute("submit_labs", submit_labs);
+            //model.addAttribute("deadlineRepository", deadlineRepository);
+        }
+        else{
+            model.addAttribute("name", "guest");
+            model.addAttribute("groupp", "");
+        }
+        return "minor";
     }
 
+    @Autowired
+    private DeadlineRepository deadlineRepository;
 
-    @GetMapping("/main/minor")
+    @GetMapping("/main/index")
     public String home2(HttpServletRequest request, Model model) {
-        addNameAndGroupToModel(model);
-        return "minor";
+        String username;
+        username = getCurrentUsername();
+        if (!Objects.equals(username, "guest")) {
+            User user = userService.getByEmail(username);
+            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+            model.addAttribute("groupp",user.getGroupp().getName());
+           Set<Long> labid=submitLabRepository.findAllByUserId(user.getId()).stream().map(a -> a.getLabInfo().getId()).collect(Collectors.toSet());
+            Set<LabInfo> labs = labInfoRepository.findByIsVisibleTrueAndGroupps_IdAndIdNotIn(user.getGroupp().getId(),labid);
+            model.addAttribute("labs", labs);
+            model.addAttribute("deadlineRepository", deadlineRepository);
+        }
+        else{
+            model.addAttribute("name", "guest");
+            model.addAttribute("groupp", "");
+        }
+        return "index";
     }
 
     @GetMapping("/main/teacher_lab")

@@ -83,6 +83,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                     .source(targetLocation.toString())
                     .labInfo(labInfoRepository.getReferenceById(labId))
                     .sendDate(new Date(System.currentTimeMillis()))
+                    .mark(-1)
                     .build();
 
             submitLabRepository.saveAndFlush(submitLab);

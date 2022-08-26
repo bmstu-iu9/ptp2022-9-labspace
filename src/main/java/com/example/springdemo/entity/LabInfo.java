@@ -1,5 +1,6 @@
 package com.example.springdemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
-
+@JsonIgnoreProperties
 @Entity
 @Table(
         name = "lab_info"
@@ -45,7 +46,7 @@ public class LabInfo {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Course course;
 
-    @OneToMany(mappedBy = "labInfo",fetch = FetchType.LAZY)
+    @ManyToMany
     private Set<Groupp> groupps;
 
     @Column(
