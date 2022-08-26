@@ -48,6 +48,7 @@ public class LabInfoUploadController {
     DeadlineService deadlineService;
     @Autowired
     LabInfoRepository labInfoRepository;
+
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -56,53 +57,52 @@ public class LabInfoUploadController {
         return "guest";
     }
 
-    public void addNameAndGroupToModel(Model model){
+    public void addNameAndGroupToModel(Model model) {
         String username;
         username = getCurrentUsername();
         if (!Objects.equals(username, "guest")) {
             User user = userService.getByEmail(username);
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
-            model.addAttribute("groupp",user.getGroupp().getName());
-        }
-        else{
+            model.addAttribute("groupp", user.getGroupp().getName());
+        } else {
             model.addAttribute("name", "guest");
             model.addAttribute("groupp", "");
         }
     }
 
 
-    @GetMapping(value="/main/upload_lab")
-    public String uploadlab(Model model){
-        LabInfo labInfo=new LabInfo();
+    @GetMapping(value = "/main/upload_lab")
+    public String uploadlab(Model model) {
+        LabInfo labInfo = new LabInfo();
         addNameAndGroupToModel(model);
         model.addAttribute(courseRepository);
         model.addAttribute("labInfo", labInfo);
         Iterable<Groupp> groupList = grouppRepository.findAll();
         Iterable<Course> courses = courseRepository.findAll();
         model.addAttribute("coursesList", courses);
-        model.addAttribute("groupList",groupList);
+        model.addAttribute("groupList", groupList);
         return "teacher_lab";
     }
 
     @PostMapping(value = "/main/upload_lab")
-    public String regUser( @Valid LabInfo labInfo,
+    public String regUser(@Valid LabInfo labInfo,
                           @RequestParam(name = "filee") MultipartFile file, RedirectAttributes redirectAttributes,
                           Model model,
                           HttpServletRequest request) throws ServletException, ParseException {
-            labInfo.setUploadDate(new Date(System.currentTimeMillis()));
-          Optional<Course> tmpcourse = courseRepository.findById(Long.valueOf(request.getParameter("course_id")));
+        labInfo.setUploadDate(new Date(System.currentTimeMillis()));
+        Optional<Course> tmpcourse = courseRepository.findById(Long.valueOf(request.getParameter("course_id")));
 
         Set<Groupp> groups = Arrays.stream(request.getParameterValues("groupss"))
-                .map(id->grouppRepository.findById(Long.valueOf(id)))
+                .map(id -> grouppRepository.findById(Long.valueOf(id)))
                 .filter(Optional::isPresent).map(Optional::get)
                 .collect(Collectors.toSet());
         labInfo.setGroupps(groups);
-            labInfo.setSource("labs/");
-            fileStorageService.storeFile(file,labInfo);
-            tmpcourse.ifPresent(labInfo::setCourse);
-            labInfoService.uploadLab(labInfo);
-            groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
-            deadlineService.saveDeadlines(request,labInfo);
+        labInfo.setSource("labs/");
+        fileStorageService.storeFile(file, labInfo);
+        tmpcourse.ifPresent(labInfo::setCourse);
+        labInfoService.uploadLab(labInfo);
+        groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
+        deadlineService.saveDeadlines(request, labInfo);
         return "teacher_lab";
     }
 }

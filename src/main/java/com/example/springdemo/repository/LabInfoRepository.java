@@ -12,6 +12,7 @@ import java.util.Set;
 @Repository
 public interface LabInfoRepository extends JpaRepository<LabInfo, Long> {
     List<LabInfo> findByIsVisible(Boolean isVisible);
+
     Set<LabInfo> findByIsVisibleTrueAndGroupps_IdAndIdNotIn(Long id, Collection<Long> ids);
 
 
