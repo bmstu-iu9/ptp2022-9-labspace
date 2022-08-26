@@ -5,10 +5,7 @@ import com.example.springdemo.repository.CourseRepository;
 import com.example.springdemo.repository.DeadlineRepository;
 import com.example.springdemo.repository.GrouppRepository;
 import com.example.springdemo.repository.LabInfoRepository;
-import com.example.springdemo.service.DeadlineService;
-import com.example.springdemo.service.FileStorageService;
-import com.example.springdemo.service.LabInfoService;
-import com.example.springdemo.service.UserService;
+import com.example.springdemo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,6 +31,9 @@ import java.util.stream.Collectors;
 
 @Controller
 public class LabInfoUploadController {
+    @Autowired
+    private VariantService variantService;
+
     @Autowired
     CourseRepository courseRepository;
     @Autowired
@@ -86,7 +86,9 @@ public class LabInfoUploadController {
 
     @PostMapping(value = "/main/upload_lab")
     public String regUser(@Valid LabInfo labInfo,
-                          @RequestParam(name = "filee") MultipartFile file, RedirectAttributes redirectAttributes,
+                          @RequestParam(name = "filee") MultipartFile file,
+                          //@RequestParam(name = "variants") int count,
+                          RedirectAttributes redirectAttributes,
                           Model model,
                           HttpServletRequest request) throws ServletException, ParseException {
         labInfo.setUploadDate(new Date(System.currentTimeMillis()));
@@ -103,6 +105,7 @@ public class LabInfoUploadController {
         labInfoService.uploadLab(labInfo);
         groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
         deadlineService.saveDeadlines(request, labInfo);
+        //variantService.randomizeVariants(count, labInfo);
         return "teacher_lab";
     }
 }
