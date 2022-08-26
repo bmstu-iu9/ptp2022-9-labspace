@@ -6,4 +6,5 @@ public interface AuthenticationService {
     String getCurrentUsername();
 
     User getCurrentUser();
+    void updateUser(User user);
 }

@@ -26,4 +26,15 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userService.getByEmail(authentication.getName());
     }
+
+    @Override
+    public void updateUser(User user) {
+       User oldUser = getCurrentUser();
+       oldUser.setFirstName(user.getFirstName());
+       oldUser.setLastName(user.getLastName());
+       oldUser.setPatronymic(user.getPatronymic());
+       oldUser.setTgAccount(user.getTgAccount());
+       oldUser.setPhoneNumber(user.getPhoneNumber());
+       userService.save(oldUser);
+    }
 }
