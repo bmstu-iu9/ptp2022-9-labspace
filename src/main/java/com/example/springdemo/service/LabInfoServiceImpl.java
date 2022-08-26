@@ -1,4 +1,4 @@
-package com.example.springdemo.service.impl;
+package com.example.springdemo.service;
 
 import com.example.springdemo.entity.Deadline;
 import com.example.springdemo.entity.Groupp;

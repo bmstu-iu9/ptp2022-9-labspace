@@ -1,4 +1,4 @@
-package com.example.springdemo.service.impl;
+package com.example.springdemo.service;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
