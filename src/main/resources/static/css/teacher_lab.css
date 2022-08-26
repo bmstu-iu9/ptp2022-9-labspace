@@ -198,7 +198,7 @@
     cursor: pointer;
 }
 .input_file:focus + label{
-    outline: 1px dotted #000;
+    outline: 1px dotted #293846;
     outline: -webkit-focus-ring-color auto 5px;
 }
 
