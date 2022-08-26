@@ -8463,6 +8463,11 @@ body.md-skin {
 .lab-name {
   margin: auto;
   padding: 10px;
+  color: #1ab394;
+}
+
+.lab-name:hover {
+  color: #213a53;
 }
 
 .h2-lab-name {
