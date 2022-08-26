@@ -8445,7 +8445,7 @@ body.md-skin {
 
 .lab-space{
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   padding: 10px;
   border: 3px solid black;
   margin-left: auto;
@@ -8456,10 +8456,12 @@ body.md-skin {
   overflow: auto;
 }
 
+.lab-space > * {
+  flex: 1;
+}
+
 .lab-name {
   margin: auto;
-  justify-content: center;
-  align-items: center;
   padding: 10px;
 }
 
@@ -8469,8 +8471,6 @@ body.md-skin {
 
 .lab-course {
   margin: auto;
-  justify-content: center;
-  align-items: center;
   padding: 10px;
 }
 
@@ -8482,7 +8482,6 @@ h2.lab-course {
   display: flex;
   flex-direction: column;
   margin: auto;
-  justify-content: center;
   padding: 5px;
 }
 
