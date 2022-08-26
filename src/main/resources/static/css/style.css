@@ -8489,3 +8489,14 @@ h2.lab-course {
   margin: 5px 5px;
   font-weight: 400;
 }
+
+.columns-name {
+  display: flex;
+  margin: 0 0 0 25px;
+  font-size: 20px;
+  opacity: .5;
+}
+
+.columns-name > * {
+  flex: 1;
+}
