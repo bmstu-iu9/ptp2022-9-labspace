@@ -57,17 +57,10 @@
       </div>
       <div class="form-group">
         <div class="">
-      <select name="groupp_name" >
-        <optgroup label="ИУ9">
-          <option>ИУ9-11Б</option>
-          <option>ИУ9-12Б</option>
-          <option>ИУ9-21Б</option>
-          <option>ИУ9-22Б</option>
-          <option>ИУ9-31Б</option>
-          <option>ИУ9-32Б</option>
-          <option>ИУ9-41Б</option>
-          <option>ИУ9-42Б</option>
-        </optgroup>
+      <select name="groupp_name" required>
+          <option th:each="group : ${groupps}"
+            th:value="${group.getId()}"
+                  th:text="${group.getName()}"> </option>
       </select>
         </div>
       </div>

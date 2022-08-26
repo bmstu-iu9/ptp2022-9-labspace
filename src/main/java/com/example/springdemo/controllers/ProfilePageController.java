@@ -16,17 +16,16 @@ import javax.validation.Valid;
 public class ProfilePageController {
     @Autowired
     AuthenticationService authenticationService;
-    @Autowired
-    UserRepository userRepository;
 
     @GetMapping("/main/profile")
-    public String getUser(HttpServletRequest request, Model model){
+    public String getUser( Model model) {
         User user = authenticationService.getCurrentUser();
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return "profile";
     }
+
     @PostMapping("/main/profile")
-    public String changeUserDetails(HttpServletRequest request, Model model, @Valid User user){
+    public String changeUserDetails(@Valid User user) {
         authenticationService.updateUser(user);
         return "redirect:/main/index";
     }
