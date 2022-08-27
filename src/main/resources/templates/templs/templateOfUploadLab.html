@@ -30,7 +30,7 @@
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
-                    <form class="teacher_container" enctype="multipart/form-data" method="post">
+                    <form id="upload" class="teacher_container" enctype="multipart/form-data" method="post">
                         <span class="student_title" th:text="${lab_info.name}"></span>
                         <!--form class="teacher_file_import" enctype="multipart/form-data" method="post"-->
                         <div class="teacher_form">
@@ -91,5 +91,6 @@
 </div>
 <script src="../static/js/teacher_lab/dateChange.js"></script>
 <script src="../static/js/teacher_lab/customButton.js"></script>
+<script src="../static/js/teacher_lab/preventEnterSubmit.js"></script>
 </body>
 </html>

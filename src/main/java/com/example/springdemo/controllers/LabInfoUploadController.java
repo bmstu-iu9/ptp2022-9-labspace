@@ -103,6 +103,6 @@ public class LabInfoUploadController {
             labInfoService.uploadLab(labInfo);
             groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
             deadlineService.saveDeadlines(request,labInfo);
-        return "teacher_lab";
+        return "redirect:/";
     }
 }
