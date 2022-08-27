@@ -1,8 +1,3 @@
-$(document).ready(function () {
-    $('#upload').keydown(function (event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            return false;
-        }
-    });
-})
+$(document).on("keydown", ":input:not(textarea)", function(event) {
+    return event.key !== "Enter";
+});
