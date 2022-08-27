@@ -1,10 +1,12 @@
 package com.example.springdemo.controllers;
 
+import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.DeadlineRepository;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.service.FileStorageService;
 import com.example.springdemo.service.GradesListService;
 import com.example.springdemo.service.LabInfoService;
+import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 @Controller
 public class SubmitLabController {
@@ -34,6 +37,8 @@ public class SubmitLabController {
     @Autowired
     private DeadlineRepository deadlineRepository;
     private Calendar calendar;
+    @Autowired
+    UserService userService;
 
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -41,6 +46,19 @@ public class SubmitLabController {
             return authentication.getName();
         }
         return "guest";
+    }
+
+    public void addNameAndGroupToModel(Model model) {
+        String username;
+        username = getCurrentUsername();
+        if (!Objects.equals(username, "guest")) {
+            User user = userService.getByEmail(username);
+            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+            model.addAttribute("groupp", user.getGroupp().getName());
+        } else {
+            model.addAttribute("name", "guest");
+            model.addAttribute("groupp", "");
+        }
     }
 
     @PostMapping(path = "main/lab_id{lab_info_id}")
@@ -60,6 +78,7 @@ public class SubmitLabController {
 
     @GetMapping(path = "main/lab_id{lab_info_id}")
     public String view(Model model, @PathVariable("lab_info_id") Long lab_id) {
+        addNameAndGroupToModel(model);
         model.addAttribute("lab_info", labInfoRepository.getReferenceById(lab_id));
         model.addAttribute("grade", gradesListService.getPointsByStudentAndLab(getCurrentUsername(), lab_id));
         model.addAttribute("deadlines", deadlineRepository.findAllByLabInfoId(lab_id));

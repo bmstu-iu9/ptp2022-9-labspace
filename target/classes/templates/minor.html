@@ -42,7 +42,9 @@
           </div>
           <div class="lab-space" th:each="submit_lab : ${submit_labs}">
             <div class="lab-name" th:switch="${submit_lab.mark}">
-              <a th:href="@{'/main/lab_id' + ${submit_lab.getLabInfo().getId()}}"><h2 class="h2-lab-name" th:case="'-2'" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'"/></a>
+              <a th:href="@{'/main/lab_id' + ${submit_lab.getLabInfo().getId()}}">
+                <h2 class="h2-lab-name" th:case="'-2'" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'"/>
+              </a>
               <h2 class="h2-lab-name" th:case="*" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'" />
             </div>
             <h2 class="lab-course" th:text="${submit_lab.getSendDate()}"/>
