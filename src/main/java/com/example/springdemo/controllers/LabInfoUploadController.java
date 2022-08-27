@@ -87,7 +87,7 @@ public class LabInfoUploadController {
     @PostMapping(value = "/main/upload_lab")
     public String regUser(@Valid LabInfo labInfo,
                           @RequestParam(name = "filee") MultipartFile file,
-                          //@RequestParam(name = "variants") int count,
+                          @RequestParam(name = "variants") int count,
                           RedirectAttributes redirectAttributes,
                           Model model,
                           HttpServletRequest request) throws ServletException, ParseException {
@@ -105,7 +105,7 @@ public class LabInfoUploadController {
         labInfoService.uploadLab(labInfo);
         groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
         deadlineService.saveDeadlines(request, labInfo);
-        //variantService.randomizeVariants(count, labInfo);
-        return "teacher_lab";
+        variantService.randomizeVariants(count, labInfo);
+        return "redirect:/main/upload_lab";
     }
 }
