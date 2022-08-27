@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
+
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(

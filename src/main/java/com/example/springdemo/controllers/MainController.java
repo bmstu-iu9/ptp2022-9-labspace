@@ -47,6 +47,7 @@ public class MainController {
         return Arrays.stream(Objects.requireNonNull(dir.listFiles()))
                 .collect(Collectors.toList());
     }
+
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -55,15 +56,14 @@ public class MainController {
         return "guest";
     }
 
-    public void addNameAndGroupToModel(Model model){
+    public void addNameAndGroupToModel(Model model) {
         String username;
         username = getCurrentUsername();
         if (!Objects.equals(username, "guest")) {
             User user = userService.getByEmail(username);
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
-            model.addAttribute("groupp",user.getGroupp().getName());
-        }
-        else{
+            model.addAttribute("groupp", user.getGroupp().getName());
+        } else {
             model.addAttribute("name", "guest");
             model.addAttribute("groupp", "");
         }
@@ -81,10 +81,12 @@ public class MainController {
 
     @Autowired
     SubmitLabRepository submitLabRepository;
+
     @GetMapping("/")
-    public String view(){
+    public String view() {
         return "redirect:/main/index";
     }
+
     @GetMapping("/main/minor")
     public String index(HttpServletRequest request, Model model) {
         String username;
@@ -92,12 +94,11 @@ public class MainController {
         if (!Objects.equals(username, "guest")) {
             User user = userService.getByEmail(username);
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
-            model.addAttribute("groupp",user.getGroupp().getName());
+            model.addAttribute("groupp", user.getGroupp().getName());
             List<SubmitLab> submit_labs = submitLabRepository.findByUserId(user.getId());
             model.addAttribute("submit_labs", submit_labs);
             //model.addAttribute("deadlineRepository", deadlineRepository);
-        }
-        else{
+        } else {
             model.addAttribute("name", "guest");
             model.addAttribute("groupp", "");
         }
@@ -114,13 +115,12 @@ public class MainController {
         if (!Objects.equals(username, "guest")) {
             User user = userService.getByEmail(username);
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
-            model.addAttribute("groupp",user.getGroupp().getName());
-           Set<Long> labid=submitLabRepository.findAllByUserId(user.getId()).stream().map(a -> a.getLabInfo().getId()).collect(Collectors.toSet());
-            Set<LabInfo> labs = labInfoRepository.findByIsVisibleTrueAndGroupps_IdAndIdNotIn(user.getGroupp().getId(),labid);
+            model.addAttribute("groupp", user.getGroupp().getName());
+            Set<Long> labid = submitLabRepository.findAllByUserId(user.getId()).stream().map(a -> a.getLabInfo().getId()).collect(Collectors.toSet());
+            Set<LabInfo> labs = labInfoRepository.findByIsVisibleTrueAndGroupps_IdAndIdNotIn(user.getGroupp().getId(), labid);
             model.addAttribute("labs", labs);
             model.addAttribute("deadlineRepository", deadlineRepository);
-        }
-        else{
+        } else {
             model.addAttribute("name", "guest");
             model.addAttribute("groupp", "");
         }
