@@ -59,13 +59,13 @@ public class UserServiceImpl implements UserService {
                     str.charAt(i) == 'ё' || str.charAt(i) == 'Ё') {
 
                 if (k == 0) {
-                    res += str.substring(i, i+1).toUpperCase();
+                    res += str.substring(i, i + 1).toUpperCase();
                 } else {
-                    res += str.substring(i, i+1).toLowerCase();
+                    res += str.substring(i, i + 1).toLowerCase();
                 }
                 k += 1;
             } else {
-                res += str.substring(i, i+1);
+                res += str.substring(i, i + 1);
                 k = 0;
             }
         }
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateResetPasswordToken(String token, String email) throws UserNotFoundException{
+    public void updateResetPasswordToken(String token, String email) throws UserNotFoundException {
         User user = getByEmail(email);
         if (user != null) {
             user.setResetPasswordToken(token);

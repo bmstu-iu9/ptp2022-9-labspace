@@ -61,7 +61,7 @@ public class ForgotPasswordController {
 
             mailSender.send(email, "Reset password link", message);
             model.addAttribute("message", "A reset password link have sent to your email.");
-        } catch (UserNotFoundException | IllegalStateException ex){
+        } catch (UserNotFoundException | IllegalStateException ex) {
             model.addAttribute("error", ex.getMessage());
         }
 

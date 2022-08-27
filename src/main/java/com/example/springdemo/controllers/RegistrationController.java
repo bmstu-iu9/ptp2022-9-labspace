@@ -43,7 +43,7 @@ public class RegistrationController {
 
     @GetMapping(value = "/auth/register")
     public String registerUser(Model model) {
-        if (Objects.equals(authenticationService.getCurrentUsername(), "guest")){
+        if (Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
             User user = new User();
             model.addAttribute("user", user);
             model.addAttribute("grouppRepository", grouppRepository);
@@ -65,7 +65,8 @@ public class RegistrationController {
         }
         try {
             Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(user.getPhoneNumber(), Phonenumber.PhoneNumber.CountryCodeSource.UNSPECIFIED.name());
-            if (!phoneNumberUtil.isValidNumber(phoneNumber)) throw new NumberParseException(NumberParseException.ErrorType.NOT_A_NUMBER, "Not a number");
+            if (!phoneNumberUtil.isValidNumber(phoneNumber))
+                throw new NumberParseException(NumberParseException.ErrorType.NOT_A_NUMBER, "Not a number");
         } catch (NumberParseException e) {
             bindingResult.rejectValue("phoneNumber", "user.phoneNumber", "Phone number is not correct");
             model.addAttribute("bindingResult", bindingResult);
@@ -75,7 +76,7 @@ public class RegistrationController {
             bindingResult.rejectValue("email", "user.email", "An account already exists for this email.");
             model.addAttribute("bindingResult", bindingResult);
             return "register";
-        } else if (!user.getPassword().equals(user.getPasswordConfirm())){
+        } else if (!user.getPassword().equals(user.getPasswordConfirm())) {
             bindingResult.rejectValue("password", "user.getPasswordConfirm", "Passwords are not equal");
             model.addAttribute("bindingResult", bindingResult);
             return "register";
@@ -98,7 +99,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/auth/login")
-    public String login(HttpServletRequest request){
+    public String login(HttpServletRequest request) {
         if (Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
             return "login";
         } else {
@@ -140,6 +141,6 @@ public class RegistrationController {
             model.addAttribute("error", "Activation code is not found!");
         }
 
-       return "activate";
+        return "activate";
     }
 }

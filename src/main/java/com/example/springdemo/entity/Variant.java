@@ -1,6 +1,5 @@
 package com.example.springdemo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,39 +8,35 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Set;
 
-@JsonIgnoreProperties
 @Entity
 @Table(
-        name = "groupp"
+        name = "variant"
 )
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Groupp {
+public class Variant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
-            name = "groupp_id"
+            name = "variant_id"
     )
     private Long id;
 
-    private String faculty;
-
-    private String department;
-
-    private String name;
-
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User grouppLeader;
+    private User student;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lab_info_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private LabInfo labInfo;
 
-    @ManyToMany
-    private Set<LabInfo> labInfos;
-    
+    @Column(
+            name = "variant"
+    )
+    private Integer variant;
 }

@@ -34,6 +34,7 @@ public class SubmitLabController {
     @Autowired
     private DeadlineRepository deadlineRepository;
     private Calendar calendar;
+
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -47,7 +48,7 @@ public class SubmitLabController {
             @RequestParam(name = "filee", required = false) MultipartFile file, RedirectAttributes redirectAttributes, @PathVariable("lab_info_id") Long labId,
             Model model) {
         String path = labInfoRepository.getReferenceById(labId).getCourse().getName() + "/labid" + labId;
-        model.addAttribute("id",labId);
+        model.addAttribute("id", labId);
         fileStorageService.storeFile(file, path, labId);
 
         redirectAttributes.addFlashAttribute("message",
@@ -56,19 +57,20 @@ public class SubmitLabController {
         // return "redirect:/main/lab_id"+labId;
         return "redirect:/";
     }
-    @GetMapping(path="main/lab_id{lab_info_id}")
-    public String view(Model model, @PathVariable("lab_info_id") Long lab_id){
-        model.addAttribute("lab_info",labInfoRepository.getReferenceById(lab_id));
-        model.addAttribute("grade",gradesListService.getPointsByStudentAndLab(getCurrentUsername(),lab_id));
-        model.addAttribute("deadlines",deadlineRepository.findAllByLabInfoId(lab_id));
-        SimpleDateFormat formatdayMonth= new SimpleDateFormat("dd.MM");
-        SimpleDateFormat formatYear=new SimpleDateFormat("yyyy");
-        model.addAttribute("formatdayMonth",formatdayMonth);
-        model.addAttribute("formatYear",formatYear);
+
+    @GetMapping(path = "main/lab_id{lab_info_id}")
+    public String view(Model model, @PathVariable("lab_info_id") Long lab_id) {
+        model.addAttribute("lab_info", labInfoRepository.getReferenceById(lab_id));
+        model.addAttribute("grade", gradesListService.getPointsByStudentAndLab(getCurrentUsername(), lab_id));
+        model.addAttribute("deadlines", deadlineRepository.findAllByLabInfoId(lab_id));
+        SimpleDateFormat formatdayMonth = new SimpleDateFormat("dd.MM");
+        SimpleDateFormat formatYear = new SimpleDateFormat("yyyy");
+        model.addAttribute("formatdayMonth", formatdayMonth);
+        model.addAttribute("formatYear", formatYear);
         return "templs/templateOfUploadLab";
     }
 
-    @GetMapping(path="main/lab_id{lab_info_id}/download")
+    @GetMapping(path = "main/lab_id{lab_info_id}/download")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable Long lab_info_id) {
         Resource file = fileStorageService.loadAsResource(lab_info_id);
