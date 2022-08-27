@@ -30,7 +30,6 @@
         $(document).ready(function() {
             $('#multiselect').multiselect({
                 enableFiltering: true,
-                fontColor: '#757575',
                 nonSelectedText:'Select the group',
                 buttonWidth: '100%',
                 buttonClass: 'teacher_select',
@@ -58,7 +57,7 @@
                                         <option disabled value="" selected>Select the subject</option>
                                         <option  th:each="course : ${coursesList}"
                                                  th:value="${course.id}"
-                                                 style="color: #202020" th:text="${course.name}"></option>
+                                                 th:text="${course.name}"></option>
                                     </select>
                                 </div>
 
@@ -68,20 +67,25 @@
                                     <select  id="multiselect" required multiple  name="groupss">
                                         <option  th:each="group : ${groupList}"
                                                  th:value="${group.id}"
-                                                style="color: #202020" th:text="${group.name}"></option>
+                                                 th:text="${group.name}"></option>
                                     </select>
                                 </div>
 
                             </div>
 
                             <div class="teacher_row">
-                                <div class="teacher_left_form">
+                                <div class="teacher_left_title_form">
                                     <span class="teacher_title_text" >Title</span>
                                     <input class="teacher_input"  th:field="*{name}" placeholder="Name of labwork">
                                 </div>
 
+                                <div class="teacher_middle_form">
+                                    <span class="teacher_title_text">Vars</span>
+                                    <input class="teacher_variants" type="number" onkeypress="return (event.charCode >= 48 && event.charCode <= 57 && /^\d{0,3}$/.test(this.value));" min="1" placeholder="Add">
+                                </div>
 
-                                <div class="teacher_right_form">
+
+                                <div class="teacher_right_useful_form">
                                     <span class="teacher_title_text">Useful files</span>
                                     <div class="teacher_file_import">
                                         <span class="teacher_text_import" id="filename">No file chosen</span>
@@ -94,7 +98,7 @@
 
                             <div style="margin-top: 35px">
                                 <span class="teacher_title_text">General information</span>
-                                <textarea th:field="*{description}" class="teacher_input teacher_input_inf" rows="5" cols="1" placeholder="information"></textarea>
+                                <textarea th:field="*{description}" class="teacher_input teacher_input_inf" rows="5" cols="1" placeholder="About labwork"></textarea>
                             </div>
 
                             <div class="teacher_criterias">
@@ -102,7 +106,7 @@
                                     <div style="display: block">
                                         <span class="teacher_title_text">Deadline</span>
                                         <div class="teacher_block teacher_date">
-                                            <p style="display: block; text-align: center">
+                                            <p style="display: block; text-align: center; margin-top: 10px;">
                                                 <span class="teacher_dayMonth"></span>
                                                 <span class="teacher_year"></span>
                                             </p>
@@ -113,7 +117,7 @@
                                     <div style="display: block">
                                         <span class="teacher_title_text">Mark</span>
                                         <div class="teacher_block teacher_mark_btn">
-                                            <p style="display: block; text-align: center; font-size: 60px">
+                                            <p style="display: block; text-align: center; font-size: 60px; margin-top: 10px;">
                                                 <span class="teacher_mark"></span>
                                             </p>
                                         </div>
@@ -125,7 +129,7 @@
                                     <div style="display: block">
                                         <span class="teacher_title_text">Deadline</span>
                                         <div class="teacher_block teacher_date">
-                                            <p style="display: block; text-align: center">
+                                            <p style="display: block; text-align: center; margin-top: 10px;">
                                                 <span class="teacher_dayMonth"></span>
                                                 <span class="teacher_year"></span>
                                             </p>
@@ -137,7 +141,7 @@
                                     <div style="display: block">
                                         <span class="teacher_title_text">Mark</span>
                                         <div class="teacher_block teacher_mark_btn">
-                                            <p style="display: block; text-align: center; font-size: 60px">
+                                            <p style="display: block; text-align: center; font-size: 60px; margin-top: 10px;">
                                                 <span class="teacher_mark"></span>
                                             </p>
                                         </div>
@@ -149,7 +153,7 @@
                                     <div style="display: block">
                                         <span class="teacher_title_text">Deadline</span>
                                         <div class="teacher_block teacher_date">
-                                            <p style="display: block; text-align: center">
+                                            <p style="display: block; text-align: center; margin-top: 10px;">
                                                 <span class="teacher_dayMonth"></span>
                                                 <span class="teacher_year"></span>
                                             </p>
@@ -160,7 +164,7 @@
                                     <div style="display: block">
                                         <span class="teacher_title_text">Mark</span>
                                         <div class="teacher_block teacher_mark_btn">
-                                            <p style="display: block; text-align: center; font-size: 60px">
+                                            <p style="display: block; text-align: center; font-size: 60px; margin-top: 10px;">
                                                 <span class="teacher_mark"></span>
                                             </p>
                                         </div>
