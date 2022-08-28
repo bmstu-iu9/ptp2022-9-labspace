@@ -10,7 +10,9 @@ import java.util.Optional;
 @Repository
 public interface SubmitLabRepository extends JpaRepository<SubmitLab, Long> {
     List<SubmitLab> findByUserEmail(String email);
+
     List<SubmitLab> findByUserId(Long id);
+
     Integer getMarkById(Long id);
 
     Optional<SubmitLab> findByUserIdAndLabInfoId(Long userId, Long labInfoId);

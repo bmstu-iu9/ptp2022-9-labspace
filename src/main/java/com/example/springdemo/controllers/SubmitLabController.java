@@ -1,10 +1,13 @@
 package com.example.springdemo.controllers;
 
+import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.DeadlineRepository;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.service.AuthenticationService;
 import com.example.springdemo.service.FileStorageService;
 import com.example.springdemo.service.GradesListService;
+import com.example.springdemo.repository.VariantRepository;
+import com.example.springdemo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Objects;
 
 @Controller
 public class SubmitLabController {
@@ -28,8 +34,29 @@ public class SubmitLabController {
     private GradesListService gradesListService;
     @Autowired
     private DeadlineRepository deadlineRepository;
+    private Calendar calendar;
+    @Autowired
+    UserService userService;
+    @Autowired
+    VariantService variantService;
+    @Autowired
+    VariantRepository variantRepository;
+
     @Autowired
     private AuthenticationService authenticationService;
+
+    public void addNameAndGroupToModel(Model model) {
+        String username;
+        username = authenticationService.getCurrentUsername();
+        if (!Objects.equals(username, "guest")) {
+            User user = userService.getByEmail(username);
+            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+            model.addAttribute("groupp", user.getGroupp().getName());
+        } else {
+            model.addAttribute("name", "guest");
+            model.addAttribute("groupp", "");
+        }
+    }
 
     @PostMapping(path = "main/lab_id{lab_info_id}")
     public String uploadFile(
@@ -43,6 +70,7 @@ public class SubmitLabController {
 
     @GetMapping(path = "main/lab_id{lab_info_id}")
     public String view(Model model, @PathVariable("lab_info_id") Long lab_id) {
+        addNameAndGroupToModel(model);
         model.addAttribute("lab_info", labInfoRepository.getReferenceById(lab_id));
         model.addAttribute("grade", gradesListService.getPointsByStudentAndLab(authenticationService.getCurrentUsername(), lab_id));
         model.addAttribute("deadlines", deadlineRepository.findAllByLabInfoId(lab_id));
@@ -50,6 +78,18 @@ public class SubmitLabController {
         SimpleDateFormat formatYear = new SimpleDateFormat("yyyy");
         model.addAttribute("formatdayMonth", formatdayMonth);
         model.addAttribute("formatYear", formatYear);
+
+        String username;
+        username = authenticationService.getCurrentUsername();
+        User user = userService.getByEmail(username);
+
+        if (variantRepository.findByLabInfoIdAndStudentId(lab_id, user.getId()).isEmpty()){
+            model.addAttribute("variant", "without");
+        }
+        else{
+            int variant = variantService.getVariantByLabInfoIdAndStudentId(lab_id, user.getId());
+            model.addAttribute("variant", variant);
+        }
         return "templs/templateOfUploadLab";
     }
 

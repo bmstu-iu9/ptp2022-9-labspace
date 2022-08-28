@@ -96,5 +96,4 @@ public class User {
     private String resetPasswordToken;
 
 
-
 }

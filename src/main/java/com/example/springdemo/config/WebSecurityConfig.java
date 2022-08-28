@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                    .authorizeRequests()
+                .authorizeRequests()
                     .antMatchers("/admin/**").hasRole("ADMIN") //здесь прописать доступ для админа
                     .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") // тут - для юзера
                     .antMatchers("/main/**").authenticated()
@@ -32,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/auth/login")
                     .usernameParameter("email")
                     .defaultSuccessUrl("/", true)
+                    .failureUrl("/login-error")
                     .permitAll()
                 .and()
                     .logout()

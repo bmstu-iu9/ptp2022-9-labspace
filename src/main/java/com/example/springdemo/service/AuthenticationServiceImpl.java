@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import java.util.Objects;
 
 @Service
-public class AuthenticationServiceImpl implements AuthenticationService{
+public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private UserService userService;
 

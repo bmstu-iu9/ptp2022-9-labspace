@@ -7,11 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
+
 @JsonIgnoreProperties
 @Entity
 @Table(
@@ -34,11 +37,19 @@ public class LabInfo {
             name = "upload_date"
     )
     private Date uploadDate = new Date(System.currentTimeMillis());
+
     private String description;
+
     @Column(
             name = "source"
     )
+    @NotNull(message = "Please choose the file.")
     private String source;
+
+    @Column(
+            name = "name"
+    )
+    @Length(max = 25, message = "Maximum title length 25 symbols.")
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)

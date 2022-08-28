@@ -24,6 +24,8 @@ public interface UserService {
     void save(User user);
 
     void updatePassword(User user, String newPassword);
+
     boolean firstNameContainsIllegalChars(User user);
+
     boolean lastNameContainsIllegalChars(User user);
 }

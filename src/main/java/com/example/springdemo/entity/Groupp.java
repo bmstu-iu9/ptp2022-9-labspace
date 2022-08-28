@@ -38,12 +38,10 @@ public class Groupp {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-
     private User grouppLeader;
 
 
     @ManyToMany
     private Set<LabInfo> labInfos;
-
-
+    
 }

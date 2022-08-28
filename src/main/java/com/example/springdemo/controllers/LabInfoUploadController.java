@@ -32,6 +32,9 @@ import java.util.stream.Collectors;
 @Controller
 public class LabInfoUploadController {
     @Autowired
+    private VariantService variantService;
+
+    @Autowired
     CourseRepository courseRepository;
     @Autowired
     GrouppRepository grouppRepository;
@@ -39,12 +42,16 @@ public class LabInfoUploadController {
     private FileStorageService fileStorageService;
     @Autowired
     LabInfoService labInfoService;
+
     @Autowired
     UserService userService;
+
     @Autowired
     DeadlineService deadlineService;
+
     @Autowired
     AuthenticationService authenticationService;
+
     @GetMapping(value = "/main/upload_lab")
     public String uploadlab(Model model) {
         LabInfo labInfo = new LabInfo();
@@ -60,8 +67,11 @@ public class LabInfoUploadController {
     @PostMapping(value = "/main/upload_lab")
     public String uploadLab(@Valid LabInfo labInfo,
                           @RequestParam(name = "filee") MultipartFile file,
+                          @RequestParam(name = "variants") int count,
                           HttpServletRequest request) throws ParseException {
-        labInfoService.uploadLab(labInfo,file,request);
-        return "teacher_lab";
+
+        labInfoService.uploadLab(labInfo, file, request);
+        variantService.randomizeVariants(count, labInfo);
+        return "redirect:/";
     }
 }
