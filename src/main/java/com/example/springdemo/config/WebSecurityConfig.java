@@ -22,26 +22,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN") //здесь прописать доступ для админа
-                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") // тут - для юзера
-                .antMatchers("/main/**").authenticated()
-                .antMatchers("/error").permitAll()
+                    .authorizeRequests()
+                    .antMatchers("/admin/**").hasRole("ADMIN") //здесь прописать доступ для админа
+                    .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") // тут - для юзера
+                    .antMatchers("/main/**").authenticated()
+                    .antMatchers("/error").permitAll()
                 .and()
-                .formLogin()
-                .loginPage("/auth/login")
-                .usernameParameter("email")
-                .defaultSuccessUrl("/", true)
-                .permitAll()
+                    .formLogin()
+                    .loginPage("/auth/login")
+                    .usernameParameter("email")
+                    .defaultSuccessUrl("/", true)
+                    .permitAll()
                 .and()
-                .logout()
-                .permitAll()
-                .logoutSuccessUrl("/auth/login")
+                    .logout()
+                    .permitAll()
+                    .logoutSuccessUrl("/auth/login")
                 .and()
-                .cors()
+                    .cors()
                 .and()
-                .csrf()
-                .disable();
+                    .csrf()
+                    .disable();
 
     }
 

@@ -58,7 +58,7 @@ public class LabInfoUploadController {
     }
 
     @PostMapping(value = "/main/upload_lab")
-    public String regUser(@Valid LabInfo labInfo,
+    public String uploadLab(@Valid LabInfo labInfo,
                           @RequestParam(name = "filee") MultipartFile file,
                           HttpServletRequest request) throws ParseException {
         labInfoService.uploadLab(labInfo,file,request);
