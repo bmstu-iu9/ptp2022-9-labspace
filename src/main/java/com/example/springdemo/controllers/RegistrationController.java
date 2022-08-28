@@ -123,7 +123,7 @@ public class RegistrationController {
                 }
             }
             model.addAttribute("errorMessage", errorMessage);
-            //bindingResult.rejectValue("email", "user.email", "An account already exists for this email.");
+            
             return "login";
         }
 

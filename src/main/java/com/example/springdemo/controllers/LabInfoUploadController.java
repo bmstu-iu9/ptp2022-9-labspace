@@ -99,12 +99,15 @@ public class LabInfoUploadController {
                 .filter(Optional::isPresent).map(Optional::get)
                 .collect(Collectors.toSet());
         labInfo.setGroupps(groups);
-            labInfo.setSource("labs/");
-            fileStorageService.storeFile(file,labInfo);
-            tmpcourse.ifPresent(labInfo::setCourse);
-            labInfoService.uploadLab(labInfo);
-            groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
-            deadlineService.saveDeadlines(request,labInfo);
+        labInfo.setSource("labs/");
+        fileStorageService.storeFile(file,labInfo);
+        tmpcourse.ifPresent(labInfo::setCourse);
+        labInfoService.uploadLab(labInfo);
+        groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
+        deadlineService.saveDeadlines(request,labInfo);
+
+        variantService.randomizeVariants(count, labInfo);
+
         return "redirect:/";
     }
 }
