@@ -21,6 +21,7 @@ public interface UserService {
     void updateResetPasswordToken(String token, String email) throws UserNotFoundException;
 
     User getByResetPasswordToken(String token);
+    void save(User user);
 
     void updatePassword(User user, String newPassword);
 

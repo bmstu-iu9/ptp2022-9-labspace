@@ -25,8 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/admin/**").hasRole("ADMIN") //здесь прописать доступ для админа
                     .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") // тут - для юзера
-                    .antMatchers( "/main/**").authenticated()
-                    .antMatchers( "/error").permitAll()
+                    .antMatchers("/main/**").authenticated()
+                    .antMatchers("/error").permitAll()
                 .and()
                     .formLogin()
                     .loginPage("/auth/login")

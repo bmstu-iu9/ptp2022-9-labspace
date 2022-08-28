@@ -127,6 +127,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByResetPasswordToken(token);
     }
 
+    @Override
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
     public void updatePassword(User user, String newPassword) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(newPassword);

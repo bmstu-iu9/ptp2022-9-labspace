@@ -30,9 +30,19 @@
           <div class="dropdown profile-element"> <span>
                             <img alt="image" class="img-circle" th:src="@{/img/logo.jpg}"/>
                              </span>
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><span th:text="${name}"></span></strong>
-                             </span> <span class="text-xs block"><span th:text="${groupp}"></span></span> </span> </a>
+            <!--a data-toggle="dropdown" class="dropdown-toggle" th:href="@{/main/profile}"-->
+            <a  class="dropdown-toggle" th:href="@{/main/profile}">
+                            <span class="clear">
+                              <span class="block m-t-xs">
+                              <strong class="font-bold">
+                                <span th:text="${name}"></span>
+                              </strong>
+                            </span>
+                              <span class="text-xs block">
+                                <span th:text="${groupp}"></span>
+                              </span>
+                            </span>
+            </a>
           </div>
           <div class="logo-element">
             LS

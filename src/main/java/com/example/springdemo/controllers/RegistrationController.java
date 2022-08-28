@@ -18,7 +18,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +45,7 @@ public class RegistrationController {
         if (Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
             User user = new User();
             model.addAttribute("user", user);
-            model.addAttribute("grouppRepository", grouppRepository);
+            model.addAttribute("groupps", grouppRepository.findAll());
             return "register";
         } else {
             return "redirect:/";
@@ -89,17 +88,14 @@ public class RegistrationController {
             model.addAttribute("bindingResult", bindingResult);
             return "register";
         } else {
-            Optional<Groupp> tmpgroup = grouppRepository.findByName(request.getParameter("groupp_name"));
-            tmpgroup.ifPresent(user::setGroupp);
-            String pass = user.getPassword();
+            grouppRepository.findById(Long.valueOf(request.getParameter("groupp_name"))).ifPresent(user::setGroupp);
             userService.registerUser(user);
-            request.login(user.getEmail(), pass);
             return "redirect:/";
         }
     }
 
     @GetMapping("/auth/login")
-    public String login(HttpServletRequest request) {
+    public String login() {
         if (Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
             return "login";
         } else {

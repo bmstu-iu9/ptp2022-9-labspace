@@ -5,21 +5,16 @@ import com.example.springdemo.exceptions.UserNotFoundException;
 import com.example.springdemo.service.AuthenticationService;
 import com.example.springdemo.service.MailSender;
 import com.example.springdemo.service.UserService;
-import com.sun.mail.smtp.SMTPSendFailedException;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 
 @Controller

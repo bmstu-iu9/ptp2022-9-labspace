@@ -43,7 +43,7 @@ public class LabInfo {
     @Column(
             name = "source"
     )
-    @NotNull(message = "Please choose the file.")
+    //@NotNull(message = "Please choose the file.")
     private String source;
 
     @Column(
