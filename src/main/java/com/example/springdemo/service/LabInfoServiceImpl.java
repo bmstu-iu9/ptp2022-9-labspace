@@ -39,9 +39,7 @@ public class LabInfoServiceImpl implements LabInfoService {
                 .collect(Collectors.toSet());
         labInfo.setUploadDate(new Date(System.currentTimeMillis()));
         labInfo.setGroupps(groups);
-        labInfo.setSource("labs/");
         fileStorageService.storeFile(file, labInfo);
-        labInfoRepository.save(labInfo);
         deadlineService.saveDeadlines(request, labInfo);
     }
 

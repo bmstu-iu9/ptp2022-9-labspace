@@ -20,17 +20,26 @@ public class DeadLineServiceImpl implements DeadlineService {
         Deadline dl1 = new Deadline();
         Deadline dl2 = new Deadline();
         Deadline dl3 = new Deadline();
-        dl1.setDeadlineDate(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("date1")));
-        dl2.setDeadlineDate(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("date2")));
-        dl3.setDeadlineDate(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("date3")));
-        dl1.setMaxMark(Integer.valueOf(request.getParameter("mark1")));
-        dl2.setMaxMark(Integer.valueOf(request.getParameter("mark2")));
-        dl3.setMaxMark(Integer.valueOf(request.getParameter("mark3")));
-        dl1.setLabInfo(labInfo);
-        dl2.setLabInfo(labInfo);
-        dl3.setLabInfo(labInfo);
-        deadlineRepository.save(dl1);
-        deadlineRepository.save(dl2);
-        deadlineRepository.save(dl3);
+        try {
+            dl1.setDeadlineDate(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("date1")));
+            dl1.setLabInfo(labInfo);
+            dl1.setMaxMark(Integer.valueOf(request.getParameter("mark1")));
+            deadlineRepository.save(dl1);
+        } catch (ParseException ignored) {
+        }
+        try {
+            dl2.setDeadlineDate(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("date2")));
+            dl2.setLabInfo(labInfo);
+            dl2.setMaxMark(Integer.valueOf(request.getParameter("mark2")));
+            deadlineRepository.save(dl2);
+        } catch (ParseException ignored) {
+        }
+        try {
+            dl3.setDeadlineDate(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("date3")));
+            dl3.setLabInfo(labInfo);
+            dl3.setMaxMark(Integer.valueOf(request.getParameter("mark3")));
+            deadlineRepository.save(dl3);
+        } catch (ParseException ignored) {
+        }
     }
 }
