@@ -100,7 +100,7 @@ public class LabInfoUploadController {
                 .collect(Collectors.toSet());
         labInfo.setGroupps(groups);
         labInfo.setSource("labs/");
-        fileStorageService.storeFile(file,labInfo);
+        fileStorageService.storeFile(file, labInfo);
         tmpcourse.ifPresent(labInfo::setCourse);
         labInfoService.uploadLab(labInfo);
         groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
