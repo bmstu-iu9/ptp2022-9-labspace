@@ -69,7 +69,11 @@ public class MainController {
             Set<Long> labid = submitLabRepository.findAllByUserId(user.getId()).stream()
                     .map(a -> a.getLabInfo().getId())
                     .collect(Collectors.toSet());
-            Set<LabInfo> labs = labInfoRepository.findByIsVisibleTrueAndGroupps_IdAndIdNotIn(user.getGroupp().getId(), labid);
+            if (labid.isEmpty()){
+                labid.add(0L);
+            }
+            Set<LabInfo> labs = labInfoRepository.findByIsVisibleTrueAndGroupps_IdAndIdNotIn(user.getGroupp().getId(),labid);
+
             model.addAttribute("labs", labs);
             model.addAttribute("deadlineRepository", deadlineRepository);
         } else {

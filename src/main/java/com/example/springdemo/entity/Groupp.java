@@ -41,7 +41,5 @@ public class Groupp {
     private User grouppLeader;
 
 
-    @ManyToMany
-    private Set<LabInfo> labInfos;
     
 }
