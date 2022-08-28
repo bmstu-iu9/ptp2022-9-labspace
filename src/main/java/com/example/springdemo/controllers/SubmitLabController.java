@@ -3,10 +3,8 @@ package com.example.springdemo.controllers;
 import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.DeadlineRepository;
 import com.example.springdemo.repository.LabInfoRepository;
-import com.example.springdemo.service.FileStorageService;
-import com.example.springdemo.service.GradesListService;
-import com.example.springdemo.service.LabInfoService;
-import com.example.springdemo.service.UserService;
+import com.example.springdemo.repository.VariantRepository;
+import com.example.springdemo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -39,6 +37,10 @@ public class SubmitLabController {
     private Calendar calendar;
     @Autowired
     UserService userService;
+    @Autowired
+    VariantService variantService;
+    @Autowired
+    VariantRepository variantRepository;
 
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -86,6 +88,18 @@ public class SubmitLabController {
         SimpleDateFormat formatYear = new SimpleDateFormat("yyyy");
         model.addAttribute("formatdayMonth", formatdayMonth);
         model.addAttribute("formatYear", formatYear);
+
+        String username;
+        username = getCurrentUsername();
+        User user = userService.getByEmail(username);
+
+        if (variantRepository.findByLabInfoIdAndStudentId(lab_id, user.getId()).isEmpty()){
+            model.addAttribute("variant", "without");
+        }
+        else{
+            int variant = variantService.getVariantByLabInfoIdAndStudentId(lab_id, user.getId());
+            model.addAttribute("variant", variant);
+        }
         return "templs/templateOfUploadLab";
     }
 
