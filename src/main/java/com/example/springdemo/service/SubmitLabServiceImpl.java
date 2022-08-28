@@ -22,7 +22,7 @@ public class SubmitLabServiceImpl implements SubmitLabService {
     public List<LabInfo> getCompleteLabsByEmail(String email) {
         List<SubmitLab> submitLabs = submitLabRepository.findByUserEmail(email);
         List<LabInfo> labs = new ArrayList<>();
-        for(SubmitLab submitLab : submitLabs) {
+        for (SubmitLab submitLab : submitLabs) {
             labs.add(submitLab.getLabInfo());
         }
         return labs;
@@ -32,7 +32,7 @@ public class SubmitLabServiceImpl implements SubmitLabService {
     public List<LabInfo> getCompleteLabsByUserId(Long id) {
         List<SubmitLab> submitLabs = submitLabRepository.findByUserId(id);
         List<LabInfo> labs = new ArrayList<>();
-        for(SubmitLab submitLab : submitLabs) {
+        for (SubmitLab submitLab : submitLabs) {
             labs.add(submitLab.getLabInfo());
         }
         return labs;

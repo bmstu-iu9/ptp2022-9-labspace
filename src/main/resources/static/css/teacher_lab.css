@@ -46,6 +46,27 @@
     width: 560px;
 }
 
+.teacher_left_title_form {
+    width: 480px;
+}
+
+.teacher_middle_form {
+
+}
+
+.teacher_right_useful_form {
+
+}
+
+.teacher_variants {
+    border: #293846 4px solid;
+    border-radius: 20px;
+    background-color: #F3F3F4;
+    text-align: center;
+    font-size: 25px;
+    height: 80px;
+    width: 100px;
+}
 
 .teacher_right_form {
     width: 335px;
@@ -92,6 +113,7 @@
     padding: 30px 40px;
     height: 230px;
     font-size: 37px;
+    resize: none;
 }
 
 .teacher_file_import {
@@ -116,7 +138,6 @@
 .teacher_button_import {
     font-size: 18px;
     margin-right: 20px;
-    margin-top: 5px;
     width: 120px;
     line-height: 40px;
     background-color: #293846;
@@ -124,6 +145,7 @@
     color: white;
     height: 40px;
     border-radius: 10px;
+    margin-top: 5px;
 }
 
 
@@ -132,6 +154,10 @@
     text-align: center;
     font-size: 45px;
     font-weight: bold;
+}
+
+.teacher_variants {
+    text-align: center;
 }
 
 .teacher_criteria .teacher_title_text {
@@ -204,4 +230,10 @@
 
 #multiselect:invalid {
     color: #757575!important;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

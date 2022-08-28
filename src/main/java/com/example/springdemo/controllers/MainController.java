@@ -35,6 +35,7 @@ public class MainController {
 
     @Autowired
     SubmitLabRepository submitLabRepository;
+
     @Autowired
     AuthenticationService authenticationService;
 

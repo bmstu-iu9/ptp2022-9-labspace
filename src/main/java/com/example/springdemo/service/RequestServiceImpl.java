@@ -1,4 +1,4 @@
-package com.example.springdemo.service.impl;
+package com.example.springdemo.service;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -18,17 +18,17 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public String getClientIp(HttpServletRequest request) {
         String ipAddress = request.getHeader("X-Forwarded-For");
-        if(StringUtils.isEmpty(ipAddress) || "unknown".equalsIgnoreCase(ipAddress)) {
+        if (StringUtils.isEmpty(ipAddress) || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getHeader("Proxy-Client-IP");
         }
 
-        if(StringUtils.isEmpty(ipAddress) || "unknown".equalsIgnoreCase(ipAddress)) {
+        if (StringUtils.isEmpty(ipAddress) || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getHeader("WL-Proxy-Client-IP");
         }
 
-        if(StringUtils.isEmpty(ipAddress) || "unknown".equalsIgnoreCase(ipAddress)) {
+        if (StringUtils.isEmpty(ipAddress) || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getRemoteAddr();
-            if(LOCALHOST_IPV4.equals(ipAddress) || LOCALHOST_IPV6.equals(ipAddress)) {
+            if (LOCALHOST_IPV4.equals(ipAddress) || LOCALHOST_IPV6.equals(ipAddress)) {
                 try {
                     InetAddress inetAddress = InetAddress.getLocalHost();
                     ipAddress = inetAddress.getHostAddress();
@@ -38,7 +38,7 @@ public class RequestServiceImpl implements RequestService {
             }
         }
 
-        if(!StringUtils.isEmpty(ipAddress)
+        if (!StringUtils.isEmpty(ipAddress)
                 && ipAddress.length() > 15
                 && ipAddress.indexOf(",") > 0) {
             ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));

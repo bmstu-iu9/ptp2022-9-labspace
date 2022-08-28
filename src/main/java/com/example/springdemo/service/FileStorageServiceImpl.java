@@ -44,6 +44,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                     "Could not create the directory where the uploaded files will be stored.", ex);
         }
     }
+
     private String getFileExtension(String fileName) {
         if (fileName == null) {
             return null;
@@ -69,10 +70,10 @@ public class FileStorageServiceImpl implements FileStorageService {
             String contentType = file.getContentType();
 
             // Check if the filetype is not correct
-            if(contentType == null ||
-                        !(contentType.equals("application/msword") ||
-                        contentType.equals("application/pdf") ||
-                        contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))) {
+            if (contentType == null ||
+                    !(contentType.equals("application/msword") ||
+                            contentType.equals("application/pdf") ||
+                            contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))) {
                 throw new RuntimeException("Allowed filetypes: doc, docx, pdf");
             }
             Files.createDirectories(this.fileStorageLocation.resolve(path));
@@ -108,14 +109,14 @@ public class FileStorageServiceImpl implements FileStorageService {
             String contentType = file.getContentType();
 
             // Check if the filetype is not correct
-            if(contentType == null ||
+            if (contentType == null ||
                     !(contentType.equals("application/msword") ||
                             contentType.equals("application/pdf") ||
                             contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))) {
                 throw new RuntimeException("Allowed filetypes: doc, docx, pdf");
             }
             Files.createDirectories(this.fileStorageLocation.resolve(labInfo.getSource()));
-            labInfo.setSource(labInfo.getSource()+fileName);
+            labInfo.setSource(labInfo.getSource() + fileName);
             Path targetLocation = this.fileStorageLocation.resolve(labInfo.getSource());
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             labInfo.setSource(targetLocation.toString());
@@ -133,17 +134,16 @@ public class FileStorageServiceImpl implements FileStorageService {
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;
-            }
-            else {
+            } else {
                 throw new RuntimeException(
                         "Could not read file");
 
             }
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             throw new RuntimeException("Could not read file", e);
         }
     }
+
     @Override
     public Resource loadAsResource(Long labId) {
         try {
@@ -152,14 +152,12 @@ public class FileStorageServiceImpl implements FileStorageService {
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;
-            }
-            else {
+            } else {
                 throw new RuntimeException(
                         "Could not read file");
 
             }
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             throw new RuntimeException("Could not read file", e);
         }
     }

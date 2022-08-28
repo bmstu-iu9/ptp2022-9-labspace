@@ -1,11 +1,10 @@
-package com.example.springdemo.service.impl;
+package com.example.springdemo.service;
 
 import com.example.springdemo.entity.Groupp;
 import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.repository.*;
-import com.example.springdemo.service.DeadlineService;
-import com.example.springdemo.service.FileStorageService;
-import com.example.springdemo.service.LabInfoService;
+import com.example.springdemo.repository.DeadlineRepository;
+import com.example.springdemo.repository.LabInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,8 +18,10 @@ import java.util.stream.Collectors;
 public class LabInfoServiceImpl implements LabInfoService {
     @Autowired
     private FileStorageService fileStorageService;
+
     @Autowired
     private LabInfoRepository labInfoRepository;
+    
     @Autowired
     private DeadlineService deadlineService;
     @Autowired
