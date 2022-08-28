@@ -47,7 +47,7 @@ public class SubmitLabController {
 
     public void addNameAndGroupToModel(Model model) {
         String username;
-        username = getCurrentUsername();
+        username = authenticationService.getCurrentUsername();
         if (!Objects.equals(username, "guest")) {
             User user = userService.getByEmail(username);
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
@@ -80,7 +80,7 @@ public class SubmitLabController {
         model.addAttribute("formatYear", formatYear);
 
         String username;
-        username = getCurrentUsername();
+        username = authenticationService.getCurrentUsername();
         User user = userService.getByEmail(username);
 
         if (variantRepository.findByLabInfoIdAndStudentId(lab_id, user.getId()).isEmpty()){
