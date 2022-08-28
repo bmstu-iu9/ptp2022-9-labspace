@@ -104,8 +104,10 @@ public class LabInfoUploadController {
         tmpcourse.ifPresent(labInfo::setCourse);
         labInfoService.uploadLab(labInfo);
         groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
-        deadlineService.saveDeadlines(request, labInfo);
+        deadlineService.saveDeadlines(request,labInfo);
+
         variantService.randomizeVariants(count, labInfo);
-        return "redirect:/main/upload_lab";
+
+        return "redirect:/";
     }
 }
