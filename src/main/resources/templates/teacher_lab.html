@@ -53,7 +53,7 @@
                             <div class="teacher_row">
 
                                 <div class="teacher_left_form">
-                                    <span class="teacher_title_text">Subject <span style="color: mediumvioletred">*</span> </span>
+                                    <span class="teacher_title_text">Subject<span style="color: mediumvioletred">*</span> </span>
                                     <select class="teacher_select" name="course_id" required>
                                         <option disabled value="" selected>Select the subject</option>
                                         <option  th:each="course : ${coursesList}"
@@ -63,7 +63,7 @@
                                 </div>
 
                                 <div class="teacher_right_form">
-                                    <span class="teacher_title_text">Group <span style="color: mediumvioletred">*</span> </span>
+                                    <span class="teacher_title_text">Group<span style="color: mediumvioletred">*</span> </span>
                                     <!--            <input class="input group_input" list="group_list" placeholder="Select the group">-->
                                     <select  id="multiselect" required multiple  name="groupss">
                                         <option  th:each="group : ${groupList}"
