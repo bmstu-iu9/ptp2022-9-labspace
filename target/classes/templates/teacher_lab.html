@@ -53,7 +53,7 @@
                             <div class="teacher_row">
 
                                 <div class="teacher_left_form">
-                                    <span class="teacher_title_text">Subject <span style="color: mediumvioletred">*</span> </span>
+                                    <span class="teacher_title_text">Subject<span style="color: mediumvioletred">*</span> </span>
                                     <select class="teacher_select" name="course_id" required>
                                         <option disabled value="" selected>Select the subject</option>
                                         <option  th:each="course : ${coursesList}"
@@ -63,7 +63,7 @@
                                 </div>
 
                                 <div class="teacher_right_form">
-                                    <span class="teacher_title_text">Group <span style="color: mediumvioletred">*</span> </span>
+                                    <span class="teacher_title_text">Group<span style="color: mediumvioletred">*</span> </span>
                                     <!--            <input class="input group_input" list="group_list" placeholder="Select the group">-->
                                     <select  id="multiselect" required multiple  name="groupss">
                                         <option  th:each="group : ${groupList}"
@@ -75,18 +75,18 @@
                             </div>
 
                             <div class="teacher_row">
-                                <div class="teacher_left_form">
+                                <div class="teacher_left_title_form">
                                     <span class="teacher_title_text" >Title<span style="color: mediumvioletred">*</span></span>
                                     <input class="teacher_input"  th:field="*{name}" placeholder="Name of labwork">
                                 </div>
 
                                 <div class="teacher_middle_form">
-                                    <span class="teacher_title_text">Vars</span>
+                                    <span class="teacher_title_text" style="font-size: 35px;">Vars</span>
                                     <input class="teacher_variants" type="number" name="variants" onkeypress="return (event.charCode >= 48 && event.charCode <= 57 && /^\d{0,3}$/.test(this.value));" min="1" placeholder="Add">
                                 </div>
 
 
-                                <div class="teacher_right_form">
+                                <div class="teacher_right_useful_form">
                                     <span class="teacher_title_text">Useful files<span style="color: mediumvioletred">*</span></span>
                                     <div class="teacher_file_import">
                                         <span class="teacher_text_import" id="filename">No file chosen</span>
@@ -106,13 +106,15 @@
                                 <div class="teacher_criteria">
                                     <div style="display: block">
                                         <span class="teacher_title_text">Deadline</span>
-                                        <div class="teacher_block teacher_date">
-                                            <p style="display: block; text-align: center; margin-top: 10px;">
-                                                <span class="teacher_dayMonth"></span>
-                                                <span class="teacher_year"></span>
-                                            </p>
-                                        </div>
                                         <input style="display: none" class="teacher_calendar" type="date" name="date1">
+                                        <div class="teacher_block teacher_date">
+                                            <div style="display: block; text-align: center; margin-top: 5px;">
+                                                <div class="teacher_dayMonth">01.01.</div>
+                                                <div class="teacher_year">2022</div>
+                                                <div class="teacher_time">00:00</div>
+                                            </div>
+                                        </div>
+                                        <input style="display: none" class="teacher_time_input" type="time" value="00:00" name="time1">
                                     </div>
                                     <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
                                     <div style="display: block">
@@ -122,21 +124,34 @@
                                                 <span class="teacher_mark"></span>
                                             </p>
                                         </div>
-                                        <input style="display: none" class="teacher_mark_input" name="mark1">
+                                        <select style="display: none" class="teacher_mark_input" name="mark1">
+                                            <option disabled value="" selected>Select</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
                                     </div>
                                 </div>
 
                                 <div class="teacher_criteria">
                                     <div style="display: block">
                                         <span class="teacher_title_text">Deadline</span>
+                                        <input style="display: none" class="teacher_calendar" type="date" name="date2">
                                         <div class="teacher_block teacher_date">
-                                            <p style="display: block; text-align: center; margin-top: 10px;">
-                                                <span class="teacher_dayMonth"></span>
-                                                <span class="teacher_year"></span>
-                                            </p>
-
+                                            <div style="display: block; text-align: center; margin-top: 5px;">
+                                                <div class="teacher_dayMonth">01.01.</div>
+                                                <div class="teacher_year">2022</div>
+                                                <div class="teacher_time">00:00</div>
+                                            </div>
                                         </div>
-                                        <input style="display: none" class="teacher_calendar" type="date" name="date2" >
+                                        <input style="display: none" class="teacher_time_input" type="time" value="00:00" name="time2">
                                     </div>
                                     <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
                                     <div style="display: block">
@@ -146,20 +161,34 @@
                                                 <span class="teacher_mark"></span>
                                             </p>
                                         </div>
-                                        <input style="display: none" class="teacher_mark_input" name="mark2">
+                                        <select style="display: none" class="teacher_mark_input" name="mark2">
+                                            <option disabled value="" selected>Select</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
                                     </div>
 
                                 </div>
                                 <div class="teacher_criteria">
                                     <div style="display: block">
                                         <span class="teacher_title_text">Deadline</span>
-                                        <div class="teacher_block teacher_date">
-                                            <p style="display: block; text-align: center; margin-top: 10px;">
-                                                <span class="teacher_dayMonth"></span>
-                                                <span class="teacher_year"></span>
-                                            </p>
-                                        </div>
                                         <input style="display: none" class="teacher_calendar" type="date" name="date3">
+                                        <div class="teacher_block teacher_date">
+                                            <div style="display: block; text-align: center; margin-top: 5px;">
+                                                <div class="teacher_dayMonth">01.01.</div>
+                                                <div class="teacher_year">2022</div>
+                                                <div class="teacher_time">00:00</div>
+                                            </div>
+                                        </div>
+                                        <input style="display: none" class="teacher_time_input" type="time" value="00:00" name="time3">
                                     </div>
                                     <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
                                     <div style="display: block">
@@ -169,7 +198,19 @@
                                                 <span class="teacher_mark"></span>
                                             </p>
                                         </div>
-                                        <input style="display: none" class="teacher_mark_input" name="mark3">
+                                        <select style="display: none" class="teacher_mark_input" name="mark3">
+                                            <option disabled value="" selected>Select</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
                                     </div>
 
                                 </div>
@@ -183,6 +224,7 @@
         </div>
     </div>
 </div>
+<script src="../static/js/teacher_lab/timeChange.js"></script>
 <script src="../static/js/teacher_lab/markChange.js"></script>
 <script src="../static/js/teacher_lab/dateChange.js"></script>
 <script src="../static/js/teacher_lab/customButton.js"></script>
