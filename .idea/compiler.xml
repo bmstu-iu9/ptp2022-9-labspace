@@ -16,7 +16,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="springDemo" options="-parameters" />
+      <module name="springDemo" options="-parameters --add-modules java.base,java.sql" />
     </option>
   </component>
 </project>

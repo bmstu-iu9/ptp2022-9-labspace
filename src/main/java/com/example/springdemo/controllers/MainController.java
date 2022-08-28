@@ -3,24 +3,20 @@ package com.example.springdemo.controllers;
 import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.SubmitLab;
 import com.example.springdemo.entity.User;
-import com.example.springdemo.repository.CourseRepository;
 import com.example.springdemo.repository.DeadlineRepository;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.repository.SubmitLabRepository;
-import com.example.springdemo.service.*;
+import com.example.springdemo.service.AuthenticationService;
+import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
