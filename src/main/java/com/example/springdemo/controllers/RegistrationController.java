@@ -11,13 +11,16 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -56,6 +59,7 @@ public class RegistrationController {
     public String regUser(@Valid User user,
                           BindingResult bindingResult,
                           Model model,
+                          RedirectAttributes redirectAttributes,
                           HttpServletRequest request,
                           HttpServletResponse response) throws ServletException {
         if (bindingResult.hasErrors()) {
@@ -90,9 +94,22 @@ public class RegistrationController {
         } else {
             grouppRepository.findById(Long.valueOf(request.getParameter("groupp_name"))).ifPresent(user::setGroupp);
             userService.registerUser(user);
+            redirectAttributes.addAttribute("user", user);
+            return "redirect:/auth/activate_send";
+        }
+    }
+
+    @GetMapping("/auth/activate_send")
+    public String activationCodeSend(Model model,
+                                     @ModelAttribute("user") User user) {
+        if (Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
+            return "activate_send";
+        } else {
             return "redirect:/";
         }
     }
+
+    @Po
 
     @GetMapping("/auth/login")
     public String login() {
