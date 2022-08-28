@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/teacher_lab.css">
+    <title>LABSPACE | Add new labwork</title>
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
@@ -47,12 +48,12 @@
                 <div class="col-lg-12">
                     <div class="teacher_container">
                         <span class="teacher_title">New labwork</span>
-                        <form th:object="${labInfo}" method="post" class="m-t"   enctype="multipart/form-data">
+                        <form th:object="${labInfo}" method="post" class="m-t"  enctype="multipart/form-data" id="upload">
                         <div class="teacher_form" >
                             <div class="teacher_row">
 
                                 <div class="teacher_left_form">
-                                    <span class="teacher_title_text">Subject</span>
+                                    <span class="teacher_title_text">Subject <span style="color: mediumvioletred">*</span> </span>
                                     <select class="teacher_select" name="course_id" required>
                                         <option disabled value="" selected>Select the subject</option>
                                         <option  th:each="course : ${coursesList}"
@@ -62,7 +63,7 @@
                                 </div>
 
                                 <div class="teacher_right_form">
-                                    <span class="teacher_title_text">Group</span>
+                                    <span class="teacher_title_text">Group <span style="color: mediumvioletred">*</span> </span>
                                     <!--            <input class="input group_input" list="group_list" placeholder="Select the group">-->
                                     <select  id="multiselect" required multiple  name="groupss">
                                         <option  th:each="group : ${groupList}"
@@ -74,8 +75,8 @@
                             </div>
 
                             <div class="teacher_row">
-                                <div class="teacher_left_title_form">
-                                    <span class="teacher_title_text" >Title</span>
+                                <div class="teacher_left_form">
+                                    <span class="teacher_title_text" >Title<span style="color: mediumvioletred">*</span></span>
                                     <input class="teacher_input"  th:field="*{name}" placeholder="Name of labwork">
                                 </div>
 
@@ -85,11 +86,11 @@
                                 </div>
 
 
-                                <div class="teacher_right_useful_form">
-                                    <span class="teacher_title_text">Useful files</span>
+                                <div class="teacher_right_form">
+                                    <span class="teacher_title_text">Useful files<span style="color: mediumvioletred">*</span></span>
                                     <div class="teacher_file_import">
                                         <span class="teacher_text_import" id="filename">No file chosen</span>
-                                        <input type="file" name="filee" class="input_file" id="file"  />
+                                        <input type="file" name="filee" class="input_file" id="file"  required="required"/>
                                         <label for="file" class="teacher_button_import">Upload</label>
                                     </div>
                                 </div>
@@ -185,5 +186,7 @@
 <script src="../static/js/teacher_lab/markChange.js"></script>
 <script src="../static/js/teacher_lab/dateChange.js"></script>
 <script src="../static/js/teacher_lab/customButton.js"></script>
+<script src="../static/js/teacher_lab/preventEnterSubmit.js"></script>-->
 </body>
 </html>
+

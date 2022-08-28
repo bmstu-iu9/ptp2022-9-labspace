@@ -67,8 +67,27 @@ public class LabInfoUploadController {
     @PostMapping(value = "/main/upload_lab")
     public String regUser(@Valid LabInfo labInfo,
                           @RequestParam(name = "filee") MultipartFile file,
-                          HttpServletRequest request) throws ParseException {
-        labInfoService.uploadLab(labInfo,file,request);
-        return "teacher_lab";
+                          @RequestParam(name = "variants") int count,
+                          RedirectAttributes redirectAttributes,
+                          Model model,
+                          HttpServletRequest request) throws ServletException, ParseException {
+        labInfo.setUploadDate(new Date(System.currentTimeMillis()));
+        Optional<Course> tmpcourse = courseRepository.findById(Long.valueOf(request.getParameter("course_id")));
+
+        Set<Groupp> groups = Arrays.stream(request.getParameterValues("groupss"))
+                .map(id -> grouppRepository.findById(Long.valueOf(id)))
+                .filter(Optional::isPresent).map(Optional::get)
+                .collect(Collectors.toSet());
+        labInfo.setGroupps(groups);
+        labInfo.setSource("labs/");
+        fileStorageService.storeFile(file, labInfo);
+        tmpcourse.ifPresent(labInfo::setCourse);
+        labInfoService.uploadLab(labInfo);
+        groups.stream().peek(groupp -> groupp.getLabInfos().add(labInfo)).peek(groupp -> grouppRepository.save(groupp));
+        deadlineService.saveDeadlines(request,labInfo);
+
+        variantService.randomizeVariants(count, labInfo);
+
+        return "redirect:/";
     }
 }
