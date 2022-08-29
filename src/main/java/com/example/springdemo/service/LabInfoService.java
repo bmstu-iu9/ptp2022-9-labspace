@@ -2,6 +2,7 @@ package com.example.springdemo.service;
 
 import com.example.springdemo.entity.Deadline;
 import com.example.springdemo.entity.LabInfo;
+import com.example.springdemo.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,5 +15,6 @@ import java.util.Set;
 
 public interface LabInfoService {
     void uploadLab(LabInfo labInfo, MultipartFile file,HttpServletRequest request) throws ParseException;
+    Set<LabInfo> getAvalibleLabs(User user);
 
 }
