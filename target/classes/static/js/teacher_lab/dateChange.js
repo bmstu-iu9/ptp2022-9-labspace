@@ -1,5 +1,5 @@
 calendars = document.querySelectorAll(".teacher_calendar"); // получили все календари
-calendar_btns = document.querySelectorAll(".teacher_date"); // получили все блоки дедлайны
+deadline_blocks = document.querySelectorAll(".teacher_date"); // получили все блоки дедлайны
 dayMonth = document.querySelectorAll(".teacher_dayMonth"); // получили все текстовые поля (1 строку) в блоках дедлайна
 year = document.querySelectorAll(".teacher_year"); // получили все текстовые поля (2 строку) в блоках дедлайна
 
@@ -9,12 +9,14 @@ function click (numberOfBlock) {
     return 0;
 }
 
-console.log(calendar_btns)
 // для каждого блока дедлайна навешиваем функцию с соответствующим числовым параметром
-for (let i = 0; i < calendar_btns.length; i++) {
-    calendar_btns[i].addEventListener('click', function() {
+for (let i = 0; i < dayMonth.length; i++) {
+    dayMonth[i].addEventListener('click', function() {
         click(i);
-    })
+    });
+    year[i].addEventListener('click', function() {
+        click(i);
+    });
 }
 // для каждого календаря навешиваем функцию при которой он возвращает дату после каждого выбора
 for (let i = 0; i < calendars.length; i++) {
@@ -36,9 +38,6 @@ for (let i = 0; i < calendars.length; i++) {
         // записываем данные в строки блока
         dayMonth[i].innerHTML = firstRow;
         year[i].innerHTML = secondRow;
-
-        // скрываем календарь
-        click(i);
     })
 }
 
