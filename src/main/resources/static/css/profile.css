@@ -66,3 +66,140 @@
 .card .inputs input[type="text"][readonly] {
     border: 2px solid rgba(0, 0, 0, 0)
 }
+
+.user_profile_title {
+    display: flex;
+    font-weight: bold;
+    font-size: 70px;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.user_profile_container {
+    display: flex;
+    justify-content: center;
+    max-width: 920px;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-left: 300px;
+    color: #293846;
+    background-color: #F3F3F4;
+}
+
+.user_profile_form{
+    border: #293846 4px solid;
+
+    border-radius: 20px;
+    background-color: #F3F3F4;
+    text-align: center;
+    font-size: 25px;
+    height: 60px;
+    width: 500px;
+    justify-content: center;
+}
+
+#form_container{
+    margin: auto;
+}
+
+.user_form_title{
+    display: flex;
+    font-size: 30px;
+    justify-content: center;
+    font-weight: bold;
+    margin-top: 14px;
+    margin-bottom: -4px;
+}
+
+.save_row{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    margin-top: 25px;
+}
+
+.save_form_user{
+    border: none;
+    border-radius: 20px;
+    padding: 10px 210px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    font-size: 30px;
+    background-color: #1ab394;
+    color: white;
+}
+
+.user_grades{
+    display: flex;
+    justify-content: center;
+    max-width: 500px;
+    flex-direction: column;
+    margin: 0 auto;
+    color: #293846;
+    background-color: #F3F3F4;
+    margin-top: 150px;
+}
+
+.user_completed_labs{
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+#user_number_completed_labs{
+    display: flex;
+    justify-content: left;
+    font-size: 80px;
+    font-weight: bold;
+}
+
+#user_title_completed_labs{
+    display: flex;
+    justify-content: left;
+    font-size: 20px;
+    margin-top: -20px;
+}
+
+.user_points_received{
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+#user_number_received_points{
+    display: flex;
+    justify-content: left;
+    font-size: 80px;
+    font-weight: bold;
+}
+
+#user_title_received_point{
+    display: flex;
+    justify-content: left;
+    font-size: 20px;
+    margin-top: -20px;
+}
+
+.user_available_labs{
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+#user_number_available_labs{
+    display: flex;
+    justify-content: left;
+    font-size: 80px;
+    font-weight: bold;
+}
+
+#user_title_available_labs{
+    display: flex;
+    justify-content: left;
+    font-size: 20px;
+    margin-top: -20px;
+}
