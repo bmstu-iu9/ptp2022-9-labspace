@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/teacher_lab.css">
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/js/jquery-2.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+    <script th:src="@{/js/inspinia.js}"></script>
+    <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+
+    <!-- Include the plugin's CSS and JS: -->
+    <script type="text/javascript" th:src="@{/js/bootstrap-multiselect.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap-multiselect.css}" type="text/css"/>
+    <!-- Initialize the plugin: -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#multiselect').multiselect({
+                enableFiltering: true,
+                fontColor: '#757575',
+                nonSelectedText:'Select the group',
+                buttonWidth: '100%',
+                buttonClass: 'teacher_select',
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="wrapper">
+    <div th:insert="~{templs/templateOfSideMenu1 :: copy}"></div>
+    <div id="page-wrapper" class="gray-bg">
+        <div th:insert="~{templs/templateOfUpperPanel :: copy}"></div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="check_lab_container">
+                        <span class="check_lab_title" th:text="${lab_info.name}">Theme of lab</span>
+                        <form th:object="${labInfo}" method="post" class="m-t"   enctype="multipart/form-data">
+                            <div class="check_lab_form" >
+                                <div class="check_lab_row">
+                                    <div class="check_lab_left_form">
+                                        <span class="check_lab_title_text" >Full name</span>
+                                        <label class="check_lab_full_name" th:text="${}">Кежаев Максим Константинович</label>
+                                    </div>
+
+                                    <div class="check_lab_right_form">
+                                        <span class="check_lab_title_text">Group</span>
+                                        <div class="check_lab_input">
+                                            <span class="check_lab_group" >ИУ9-32Б</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="check_lab_row">
+                                    <div class="check_lab_left_form">
+                                        <span class="check_lab_title_text" >Loaded labwork</span>
+                                        <label class="check_lab_loaded_labwork" th:text="${}">Check it</label>
+                                    </div>
+
+                                    <div class="check_lab_right_form">
+                                        <span class="check_lab_title_text">Load time</span>
+                                        <div class="check_lab_input">
+                                            <span class="check_lab_load_time" >ИУ9-32Б</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="check_lab_criterias">
+                                    <div class="check_lab_criteria">
+                                        <div style="display: block">
+                                            <span class="check_lab_title_text">Deadline</span>
+                                            <div class="check_lab_block teacher_date">
+                                                <p style="display: block; text-align: center">
+                                                    <span class="check_lab_dayMonth"></span>
+                                                    <span class="check_lab_year"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <span>-</span>
+                                        <div style="display: block">
+                                            <span class="check_lab_title_text">Mark</span>
+                                            <div class="check_lab_block teacher_mark_btn">
+                                                <p style="display: block; text-align: center; font-size: 60px">
+                                                    <span class="check_lab_mark"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="check_lab_criteria">
+                                        <div style="display: block">
+                                            <span class="check_lab_title_text">Deadline</span>
+                                            <div class="check_lab_block teacher_date">
+                                                <p style="display: block; text-align: center">
+                                                    <span class="check_lab_dayMonth"></span>
+                                                    <span class="check_lab_year"></span>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <span>-</span>
+                                        <div style="display: block">
+                                            <span class="check_lab_title_text">Mark</span>
+                                            <div class="check_lab_block teacher_mark_btn">
+                                                <p style="display: block; text-align: center; font-size: 60px">
+                                                    <span class="check_lab_mark"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="check_lab_criteria">
+                                        <div style="display: block">
+                                            <span class="check_lab_title_text">Deadline</span>
+                                            <div class="check_lab_block teacher_date">
+                                                <p style="display: block; text-align: center">
+                                                    <span class="check_lab_dayMonth"></span>
+                                                    <span class="check_lab_year"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <span>-</span>
+                                        <div style="display: block">
+                                            <span class="check_lab_title_text">Mark</span>
+                                            <div class="check_lab_block check_lab_mark_btn">
+                                                <p style="display: block; text-align: center; font-size: 60px">
+                                                    <span class="check_lab_mark"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div style="display: block">
+                                        <span class="check_lab_title_text">Final Mark</span>
+                                        <div class="check_lab_block check_lab_mark_btn">
+                                            <p style="display: block; text-align: center; font-size: 60px">
+                                                <span class="check_lab_final_mark"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="send-revision" style="margin-top: 35px;">
+                                    <input type="checkbox" id="send-revision" name="send-revision" value=1>
+                                    <label for="send-revision">Send for revision</label>
+                                </div>
+
+                                <div style="margin-top: 35px">
+                                    <span class="check_lab_title_text">Comment for revision</span>
+                                    <textarea th:field="*{}" class="check_lab_input" placeholder="information"></textarea>
+                                </div>
+                                <button class="check_lab_confirm_button" type="submit">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../static/js/teacher_lab/customButton.js"></script>
+</body>
+</html>
