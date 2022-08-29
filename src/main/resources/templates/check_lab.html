@@ -143,11 +143,24 @@
                                     <div class="check_lab_criteria">
                                         <div style="display: block">
                                             <span class="check_lab_title_text">Final Mark</span>
-                                            <div class="check_lab_block check_lab_mark_btn">
+                                            <div class="check_lab_block final_mark_btn">
                                                 <p style="display: block; text-align: center; font-size: 60px; margin-top: 10px;">
-                                                    <span class="teacher_mark"></span>
+                                                    <span class="final_mark"></span>
                                                 </p>
                                             </div>
+                                            <select style="display: none;" class="final_mark_input" name="final_mark">
+                                                <option disabled value="" selected>Select</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -172,6 +185,7 @@
         </div>
     </div>
 </div>
+<script src="../static/js/check_lab/markChange.js"></script>
 <script src="../static/js/teacher_lab/customButton.js"></script>
 </body>
 </html>
