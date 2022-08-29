@@ -8,12 +8,17 @@ import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.repository.SubmitLabRepository;
 import com.example.springdemo.service.AuthenticationService;
 import com.example.springdemo.service.UserService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -36,12 +41,26 @@ public class MainController {
     AuthenticationService authenticationService;
 
     @GetMapping("/")
-    public String view() {
+    public String view(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
+        String role =  authResult.getAuthorities().toString();
+        if(role.contains("ADMIN")){
+            //response.sendRedirect(response.encodeRedirectURL( "/admin/" + request.getContextPath()));
+            return "redirect:/admin/index";
+        }
+        else if(role.contains("USER")) {
+            //response.sendRedirect(response.encodeRedirectURL("/user/" + request.getContextPath()));
+            return "redirect:/main/index";
+        }
         return "redirect:/main/index";
     }
 
     @GetMapping("/main/minor")
     public String index(HttpServletRequest request, Model model) {
+        return getString(model, authenticationService, userService, submitLabRepository);
+    }
+
+    @NotNull
+    static String getString(Model model, AuthenticationService authenticationService, UserService userService, SubmitLabRepository submitLabRepository) {
         String username = authenticationService.getCurrentUsername();
         if (!Objects.equals(username, "guest")) {
             User user = userService.getByEmail(username);
@@ -61,6 +80,11 @@ public class MainController {
 
     @GetMapping("/main/index")
     public String home2(Model model) {
+        return getString(model, authenticationService, userService, submitLabRepository, labInfoRepository, deadlineRepository);
+    }
+
+    @NotNull
+    static String getString(Model model, AuthenticationService authenticationService, UserService userService, SubmitLabRepository submitLabRepository, LabInfoRepository labInfoRepository, DeadlineRepository deadlineRepository) {
         String username = authenticationService.getCurrentUsername();
         if (!Objects.equals(username, "guest")) {
             User user = userService.getByEmail(username);

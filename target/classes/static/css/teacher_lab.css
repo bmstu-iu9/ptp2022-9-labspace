@@ -204,7 +204,7 @@
     border-bottom-color: #f3f3f3;
 }
 
-.teacher_calendar, .teacher_mark_input {
+.teacher_calendar, .teacher_mark_input, .teacher_time_input {
     margin-top: 5px;
     font-size: 16px;
     width: 120px;
@@ -212,6 +212,20 @@
     font-weight: bold;
     border: #293846 4px solid;
 }
+
+.teacher_calendar {
+    margin: 0 0 5px 0;
+}
+
+.teacher_year, .teacher_dayMonth {
+    cursor: pointer;
+}
+
+.teacher_time {
+    cursor: pointer;
+    font-size: 24px;
+}
+
 .input_file{
     width: 0.1px;
     height: 0.1px;
