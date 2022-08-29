@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/teacher_lab.css">
+    <link rel="stylesheet" href="../static/css/check_lab.css">
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
@@ -49,32 +49,28 @@
                     <div class="check_lab_container">
                         <span class="check_lab_title" th:text="${lab_info.name}">Theme of lab</span>
                         <form th:object="${labInfo}" method="post" class="m-t"   enctype="multipart/form-data">
-                            <div class="check_lab_form" >
+                            <div class="check_lab_form">
                                 <div class="check_lab_row">
                                     <div class="check_lab_left_form">
                                         <span class="check_lab_title_text" >Full name</span>
-                                        <label class="check_lab_full_name" th:text="${}">Кежаев Максим Константинович</label>
+                                        <label class="check_lab_full_name">Кежаев Максим Константинович</label><!-- th:text="*{}"-->
                                     </div>
 
                                     <div class="check_lab_right_form">
                                         <span class="check_lab_title_text">Group</span>
-                                        <div class="check_lab_input">
-                                            <span class="check_lab_group" >ИУ9-32Б</span>
-                                        </div>
+                                        <label class="check_lab_group">ИУ9-32Б</label><!-- th:text="*{}"-->
                                     </div>
                                 </div>
 
                                 <div class="check_lab_row">
-                                    <div class="check_lab_left_form">
+                                    <div class="check_lab_left_half_form">
                                         <span class="check_lab_title_text" >Loaded labwork</span>
-                                        <label class="check_lab_loaded_labwork" th:text="${}">Check it</label>
+                                        <label class="check_lab_loaded_labwork">check it</label><!-- th:text="*{}"-->
                                     </div>
 
-                                    <div class="check_lab_right_form">
+                                    <div class="check_lab_right_half_form">
                                         <span class="check_lab_title_text">Load time</span>
-                                        <div class="check_lab_input">
-                                            <span class="check_lab_load_time" >ИУ9-32Б</span>
-                                        </div>
+                                        <label class="check_lab_load_time">08.09.2022 11:30:25</label><!-- th:text="*{}"-->
                                     </div>
                                 </div>
 
@@ -82,73 +78,76 @@
                                     <div class="check_lab_criteria">
                                         <div style="display: block">
                                             <span class="check_lab_title_text">Deadline</span>
-                                            <div class="check_lab_block teacher_date">
-                                                <p style="display: block; text-align: center">
-                                                    <span class="check_lab_dayMonth"></span>
-                                                    <span class="check_lab_year"></span>
-                                                </p>
+                                            <div class="check_lab_block check_lab_date">
+                                                <div style="display: block; text-align: center; margin-top: 5px;">
+                                                    <div class="check_lab_dayMonth">08.09.</div>
+                                                    <div class="check_lab_year">2022</div>
+                                                    <div class="check_lab_time">00:00</div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <span>-</span>
-                                        <div style="display: block">
-                                            <span class="check_lab_title_text">Mark</span>
-                                            <div class="check_lab_block teacher_mark_btn">
-                                                <p style="display: block; text-align: center; font-size: 60px">
-                                                    <span class="check_lab_mark"></span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="check_lab_criteria">
-                                        <div style="display: block">
-                                            <span class="check_lab_title_text">Deadline</span>
-                                            <div class="check_lab_block teacher_date">
-                                                <p style="display: block; text-align: center">
-                                                    <span class="check_lab_dayMonth"></span>
-                                                    <span class="check_lab_year"></span>
-                                                </p>
-
-                                            </div>
-                                        </div>
-                                        <span>-</span>
-                                        <div style="display: block">
-                                            <span class="check_lab_title_text">Mark</span>
-                                            <div class="check_lab_block teacher_mark_btn">
-                                                <p style="display: block; text-align: center; font-size: 60px">
-                                                    <span class="check_lab_mark"></span>
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="check_lab_criteria">
-                                        <div style="display: block">
-                                            <span class="check_lab_title_text">Deadline</span>
-                                            <div class="check_lab_block teacher_date">
-                                                <p style="display: block; text-align: center">
-                                                    <span class="check_lab_dayMonth"></span>
-                                                    <span class="check_lab_year"></span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <span>-</span>
+                                        <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
                                         <div style="display: block">
                                             <span class="check_lab_title_text">Mark</span>
                                             <div class="check_lab_block check_lab_mark_btn">
-                                                <p style="display: block; text-align: center; font-size: 60px">
-                                                    <span class="check_lab_mark"></span>
+                                                <p style="display: block; text-align: center; font-size: 60px; margin-top: 10px;">
+                                                    <span class="check_lab_mark">3</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="check_lab_criteria">
+                                        <div style="display: block">
+                                            <span class="check_lab_title_text">Deadline</span>
+                                            <div class="check_lab_block check_lab_date">
+                                                <div style="display: block; text-align: center; margin-top: 5px;">
+                                                    <div class="check_lab_dayMonth">09.09.</div>
+                                                    <div class="check_lab_year">2022</div>
+                                                    <div class="check_lab_time">00:00</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
+                                        <div style="display: block">
+                                            <span class="check_lab_title_text">Mark</span>
+                                            <div class="check_lab_block check_lab_mark_btn">
+                                                <p style="display: block; text-align: center; font-size: 60px; margin-top: 10px;">
+                                                    <span class="check_lab_mark">2</span>
                                                 </p>
                                             </div>
                                         </div>
 
                                     </div>
-                                    <div style="display: block">
-                                        <span class="check_lab_title_text">Final Mark</span>
-                                        <div class="check_lab_block check_lab_mark_btn">
-                                            <p style="display: block; text-align: center; font-size: 60px">
-                                                <span class="check_lab_final_mark"></span>
-                                            </p>
+                                    <div class="check_lab_criteria">
+                                        <div style="display: block">
+                                            <span class="check_lab_title_text">Deadline</span>
+                                            <div class="check_lab_block">
+                                                <div style="display: block; text-align: center; margin-top: 5px;">
+                                                    <div class="check_lab_dayMonth">10.09.</div>
+                                                    <div class="check_lab_year">2022</div>
+                                                    <div class="check_lab_time">00:00</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
+                                        <div style="display: block">
+                                            <span class="check_lab_title_text">Mark</span>
+                                            <div class="check_lab_block check_lab_mark_btn">
+                                                <p style="display: block; text-align: center; font-size: 60px; margin-top: 10px;">
+                                                    <span class="teacher_mark">1</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="check_lab_criteria">
+                                        <div style="display: block">
+                                            <span class="check_lab_title_text">Final Mark</span>
+                                            <div class="check_lab_block check_lab_mark_btn">
+                                                <p style="display: block; text-align: center; font-size: 60px; margin-top: 10px;">
+                                                    <span class="teacher_mark"></span>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -160,9 +159,9 @@
                                     <label for="send-revision">Send for revision</label>
                                 </div>
 
-                                <div style="margin-top: 35px">
+                                <div style="margin-top: 20px">
                                     <span class="check_lab_title_text">Comment for revision</span>
-                                    <textarea th:field="*{}" class="check_lab_input" placeholder="information"></textarea>
+                                    <textarea class="check_lab_input" placeholder="information"></textarea><!-- th:field="*{}"-->
                                 </div>
                                 <button class="check_lab_confirm_button" type="submit">Confirm</button>
                             </div>

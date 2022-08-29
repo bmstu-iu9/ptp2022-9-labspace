@@ -214,6 +214,10 @@
     border: #293846 4px solid;
 }
 
+.teacher_mark_input, .teacher_mark_btn{
+    cursor: pointer;
+}
+
 .teacher_calendar {
     margin: 0 0 5px 0;
 }
