@@ -115,12 +115,11 @@ public class FileStorageServiceImpl implements FileStorageService {
                             contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))) {
                 throw new RuntimeException("Allowed filetypes: doc, docx, pdf");
             }
-            Files.createDirectories(this.fileStorageLocation.resolve(labInfo.getSource()));
-            labInfo.setSource(labInfo.getSource() + fileName);
-            Path targetLocation = this.fileStorageLocation.resolve(labInfo.getSource());
+            Files.createDirectories(this.fileStorageLocation.resolve("labs/"));
+            Path targetLocation = this.fileStorageLocation.resolve("labs/" + fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             labInfo.setSource(targetLocation.toString());
-            labInfoRepository.saveAndFlush(labInfo);
+            labInfoRepository.save(labInfo);
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
         }
