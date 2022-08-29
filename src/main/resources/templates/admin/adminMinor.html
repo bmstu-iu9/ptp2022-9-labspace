@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/js/jquery-2.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+    <script th:src="@{/js/inspinia.js}"></script>
+    <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+</head>
+
+<body>
+
+<div id="wrapper">
+    <div th:insert="~{admin/adminSideMenu2:: copy}"></div>
+    <div id="page-wrapper" class="gray-bg">
+        <div th:insert="~{templs/templateOfUpperPanel :: copy}"></div>
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center dashboard-header">
+                        <h1>Completed labs</h1>
+                    </div>
+                    <div class="columns-name">
+                        <p>Name of lab(course)</p>
+                        <p>Upload date</p>
+                        <p>Mark</p>
+                    </div>
+                    <div class="lab-space" th:each="submit_lab : ${submit_labs}">
+                        <div class="lab-name" th:switch="${submit_lab.mark}">
+                            <a th:href="@{'/main/lab_id' + ${submit_lab.getLabInfo().getId()}}">
+                                <h2 class="h2-lab-name" th:case="'-2'" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'"/>
+                            </a>
+                            <h2 class="h2-lab-name" th:case="*" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'" />
+                        </div>
+                        <h2 class="lab-course" th:text="${submit_lab.getSendDate()}"/>
+                        <div class="lab-marks" th:switch="${submit_lab.mark}">
+                            <h2 class="lab-marks-mark" th:case="'-1'" th:text="'Mark is not set'" />
+                            <h2 class="lab-marks-mark" th:case="'-2'" th:text="'Editing is required'"/>
+                            <h2 class="lab-marks-mark" th:case="*" th:text="${submit_lab.mark} + ' point(-s)'" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

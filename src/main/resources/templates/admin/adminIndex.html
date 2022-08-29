@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/js/jquery-2.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+    <script th:src="@{/js/inspinia.js}"></script>
+    <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+</head>
+
+<body>
+
+<div id="wrapper">
+    <div th:insert="~{admin/adminSideMenu1:: copy}"></div>
+    <div id="page-wrapper" class="gray-bg">
+        <div th:insert="~{templs/templateOfUpperPanel :: copy}"></div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center dashboard-header">
+                        <h1>Available labs</h1>
+                    </div>
+
+                    <div class="columns-name">
+                        <p>Name of lab</p>
+                        <p>Course</p>
+                        <p>Marks & Deadlines</p>
+                    </div>
+
+                    <div class="lab-space" th:each="lab : ${labs}">
+                        <a class="lab-name" th:href="@{'/main/lab_id' + ${lab.getId()}}" >
+                            <h2 class="h2-lab-name" th:text="${lab.name}" />
+                        </a>
+                        <h2 class="lab-course" th:text="${lab.getCourse().name}" />
+                        <div class="lab-marks">
+                            <div th:each="dead : ${deadlineRepository.findAllByLabInfoId(lab.getId())}" >
+                                <h3 class="lab-marks-mark" th:text="${dead.getMaxMark()} + ' point(-s) - ' + ${dead.getDeadlineDate()}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

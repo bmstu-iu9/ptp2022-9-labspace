@@ -56,11 +56,6 @@ public class MainController {
 
     @GetMapping("/main/minor")
     public String index(HttpServletRequest request, Model model) {
-        return getString(model, authenticationService, userService, submitLabRepository);
-    }
-
-    @NotNull
-    static String getString(Model model, AuthenticationService authenticationService, UserService userService, SubmitLabRepository submitLabRepository) {
         String username = authenticationService.getCurrentUsername();
         if (!Objects.equals(username, "guest")) {
             User user = userService.getByEmail(username);
@@ -75,16 +70,14 @@ public class MainController {
         return "minor";
     }
 
+    @NotNull
+
+
     @Autowired
     private DeadlineRepository deadlineRepository;
 
     @GetMapping("/main/index")
     public String home2(Model model) {
-        return getString(model, authenticationService, userService, submitLabRepository, labInfoRepository, deadlineRepository);
-    }
-
-    @NotNull
-    static String getString(Model model, AuthenticationService authenticationService, UserService userService, SubmitLabRepository submitLabRepository, LabInfoRepository labInfoRepository, DeadlineRepository deadlineRepository) {
         String username = authenticationService.getCurrentUsername();
         if (!Objects.equals(username, "guest")) {
             User user = userService.getByEmail(username);

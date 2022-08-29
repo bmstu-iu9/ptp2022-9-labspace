@@ -38,15 +38,46 @@ public class AdminMainController {
 
     @GetMapping("/admin/index")
     public String index(HttpServletRequest request, Model model) {
-        return "index";
+        String username = authenticationService.getCurrentUsername();
+        if (!Objects.equals(username, "guest")) {
+            User user = userService.getByEmail(username);
+            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+            model.addAttribute("groupp", user.getGroupp().getName());
+            Set<Long> labid = submitLabRepository.findAllByUserId(user.getId()).stream()
+                    .map(a -> a.getLabInfo().getId())
+                    .collect(Collectors.toSet());
+            if (labid.isEmpty()){
+                labid.add(0L);
+            }
+            Set<LabInfo> labs = labInfoRepository.findByIsVisibleTrueAndGroupps_IdAndIdNotIn(user.getGroupp().getId(),labid);
+
+            model.addAttribute("labs", labs);
+            model.addAttribute("deadlineRepository", deadlineRepository);
+        } else {
+            model.addAttribute("name", "guest");
+            model.addAttribute("groupp", "");
+        }
+        return "admin/adminIndex";
     }
+
 
     @Autowired
     private DeadlineRepository deadlineRepository;
 
     @GetMapping("/admin/minor")
     public String home2(Model model) {
-        return "minor";
+        String username = authenticationService.getCurrentUsername();
+        if (!Objects.equals(username, "guest")) {
+            User user = userService.getByEmail(username);
+            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+            model.addAttribute("groupp", user.getGroupp().getName());
+            List<SubmitLab> submit_labs = submitLabRepository.findByUserId(user.getId());
+            model.addAttribute("submit_labs", submit_labs);
+        } else {
+            model.addAttribute("name", "guest");
+            model.addAttribute("groupp", "");
+        }
+        return "admin/adminMinor";
     }
 
 }
