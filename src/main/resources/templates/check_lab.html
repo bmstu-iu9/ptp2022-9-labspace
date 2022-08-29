@@ -167,14 +167,14 @@
 
 
 
-                                <div class="send-revision" style="margin-top: 35px;">
-                                    <input type="checkbox" id="send-revision" name="send-revision" value=1>
-                                    <label for="send-revision">Send for revision</label>
+                                <div class="send-revision">
+                                    <input class="send-revision_input" type="checkbox" id="send-revision" name="send-revision" value=1>
+                                    <label class="send-revision_label" for="send-revision">Send for revision</label>
                                 </div>
 
-                                <div style="margin-top: 20px">
+                                <div class="revision">
                                     <span class="check_lab_title_text">Comment for revision</span>
-                                    <textarea class="check_lab_input" placeholder="information"></textarea><!-- th:field="*{}"-->
+                                    <textarea class="check_lab_input" placeholder="Add comment"></textarea><!-- th:field="*{}"-->
                                 </div>
                                 <button class="check_lab_confirm_button" type="submit">Confirm</button>
                             </div>
@@ -185,6 +185,7 @@
         </div>
     </div>
 </div>
+<script src="../static/js/check_lab/Revision.js"></script>
 <script src="../static/js/check_lab/markChange.js"></script>
 <script src="../static/js/teacher_lab/customButton.js"></script>
 </body>

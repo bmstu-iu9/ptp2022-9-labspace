@@ -182,7 +182,76 @@
     background-color: #1ab394;
     width: 100%;
     height: 60px;
-    margin-top: 25px;
     border-radius: 15px;
     cursor: pointer;
 }
+
+.send-revision {
+    position: relative;
+}
+
+.send-revision_input {
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.send-revision_label {
+    font-size: 28px;
+    cursor: pointer;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.send-revision_label:before {
+    content: "";
+    display: block;
+    border: #293846 4px solid;
+    width: 35px;
+    height: 35px;
+    border-radius: 7px;
+    z-index: 1;
+    position: relative;
+    top: 35px;
+    right: 55px;
+    cursor: pointer;
+
+    transition: background .1s linear, border .1s linear;
+}
+
+.send-revision_label:after {
+    content: "";
+    display: block;
+    border-radius: 7px;
+    width: 35px;
+    height: 35px;
+    z-index: 2;
+    background: url("../img/check_mark.svg") no-repeat;
+    background-size: 35px 35px;
+    position: relative;
+    bottom: 39px;
+    right: 55px;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.send-revision_input:checked + .send-revision_label:before {
+    border: #1ab394 4px solid;
+    background-color: #1ab394;
+}
+
+.send-revision_input:checked + .send-revision_label:after {
+    opacity: 1;
+    border: #1ab394 4px solid;
+}
+
+.revision {
+    display: none;
+    margin-bottom: 15px;
+}
+
