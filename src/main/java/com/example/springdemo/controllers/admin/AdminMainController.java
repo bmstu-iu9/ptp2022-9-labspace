@@ -1,11 +1,7 @@
 package com.example.springdemo.controllers.admin;
 
-import com.example.springdemo.entity.LabInfo;
-import com.example.springdemo.entity.SubmitLab;
-import com.example.springdemo.entity.User;
-import com.example.springdemo.repository.DeadlineRepository;
-import com.example.springdemo.repository.LabInfoRepository;
-import com.example.springdemo.repository.SubmitLabRepository;
+import com.example.springdemo.entity.*;
+import com.example.springdemo.repository.*;
 import com.example.springdemo.service.AuthenticationService;
 import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +32,12 @@ public class AdminMainController {
     @Autowired
     AuthenticationService authenticationService;
 
+    @Autowired
+    GrouppRepository grouppRepository;
+
+    @Autowired
+    CourseRepository courseRepository;
+
     @GetMapping("/admin/index")
     public String index(HttpServletRequest request, Model model) {
         String username = authenticationService.getCurrentUsername();
@@ -53,6 +55,10 @@ public class AdminMainController {
 
             model.addAttribute("labs", labs);
             model.addAttribute("deadlineRepository", deadlineRepository);
+            Iterable<Groupp> groupList = grouppRepository.findAll();
+            Iterable<Course> courses = courseRepository.findAll();
+            model.addAttribute("coursesList", courses);
+            model.addAttribute("groupList", groupList);
         } else {
             model.addAttribute("name", "guest");
             model.addAttribute("groupp", "");
