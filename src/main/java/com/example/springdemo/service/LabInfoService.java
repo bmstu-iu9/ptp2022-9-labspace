@@ -15,4 +15,5 @@ import java.util.Set;
 public interface LabInfoService {
     void uploadLab(LabInfo labInfo, MultipartFile file,HttpServletRequest request) throws ParseException;
 
+    void updateVisibility(Long id, Boolean val);
 }

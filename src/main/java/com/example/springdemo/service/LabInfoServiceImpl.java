@@ -3,9 +3,9 @@ package com.example.springdemo.service;
 import com.example.springdemo.entity.Groupp;
 import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.repository.*;
-import com.example.springdemo.repository.DeadlineRepository;
 import com.example.springdemo.repository.LabInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,8 +39,15 @@ public class LabInfoServiceImpl implements LabInfoService {
                 .collect(Collectors.toSet());
         labInfo.setUploadDate(new Date(System.currentTimeMillis()));
         labInfo.setGroupps(groups);
+        labInfo.setIsVisible(false);
         fileStorageService.storeFile(file, labInfo);
         deadlineService.saveDeadlines(request, labInfo);
+    }
+    @Modifying
+    @Override
+    public void updateVisibility(Long id, Boolean val){
+        LabInfo lab = labInfoRepository.findById(id).get();
+        lab.setIsVisible(val);
     }
 
 }

@@ -62,7 +62,11 @@
                                 <h3 class="lab-marks-mark" th:text="${group.getName()}" style="word-break: break-all"/>
                             </div>
                         </div>
-                    </div>
+                     <form th:switch="${lab.getIsVisible()}" method="get"  name="changeVisibility">
+                         <button th:case="false" type="submit" name = "Do"  th:value="'t' + ${lab.id}">Publish</button>
+                         <button th:case="true" type="submit" name = "Do"  th:value="'f' + ${lab.id}">Hide</button>
+                        </form>
+
                 </div>
 
             </div>
