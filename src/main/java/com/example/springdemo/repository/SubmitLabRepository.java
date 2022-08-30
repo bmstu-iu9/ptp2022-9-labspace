@@ -1,6 +1,7 @@
 package com.example.springdemo.repository;
 
 import com.example.springdemo.entity.SubmitLab;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +18,8 @@ public interface SubmitLabRepository extends JpaRepository<SubmitLab, Long> {
 
     Optional<SubmitLab> findByUserIdAndLabInfoId(Long userId, Long labInfoId);
 
-    List<SubmitLab> findAllByUserId(Long userId);
+    List<SubmitLab> findAllByUserIdAndMarkGreaterThan(Long user_id, int mark);
+
+    List<SubmitLab> findAllByUserId(Long user_id);
+
 }
