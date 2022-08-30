@@ -32,9 +32,10 @@
             Login in. To see it.
         </p>
         <form class="m-t" role="form" th:action="@{/auth/login}"  method="post">
-            <div th:if="${email.toString().length()}" class="middle-box text-center loginscreen animated fadeInDown">
+            <div    th:if="${email.toString().length()}"
+                    class="middle-box text-center loginscreen animated fadeInDown" style="padding-top: 5px">
                 <div class="alert alert-success" role="alert" th:text="'Activation code sent to ' + ${email} +
-                                                                        ' . Check it to confirm your email.'"></div>
+                                                                        ' . Check it to confirm your email.'" style="margin-top: 0px"></div>
             </div>
             <div >
                 <input type="email" class="form-control" name="email" placeholder="Email" required="">
