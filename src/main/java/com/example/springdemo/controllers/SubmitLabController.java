@@ -40,19 +40,6 @@ public class SubmitLabController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    public void addNameAndGroupToModel(Model model) {
-        String username;
-        username = authenticationService.getCurrentUsername();
-        if (!Objects.equals(username, "guest")) {
-            User user = userService.getByEmail(username);
-            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
-            model.addAttribute("groupp", user.getGroupp().getName());
-        } else {
-            model.addAttribute("name", "guest");
-            model.addAttribute("groupp", "");
-        }
-    }
-
     @PostMapping(path = "main/lab_id{lab_info_id}")
     public String uploadFile(
             @RequestParam(name = "filee", required = false) MultipartFile file,
@@ -65,7 +52,7 @@ public class SubmitLabController {
 
     @GetMapping(path = "main/lab_id{lab_info_id}")
     public String view(Model model, @PathVariable("lab_info_id") Long lab_id) {
-        addNameAndGroupToModel(model);
+        authenticationService.addNameAndGroupToModel(model);
         model.addAttribute("lab_info", labInfoRepository.getReferenceById(lab_id));
         model.addAttribute("grade", gradesListService.getPointsByStudentAndLab(authenticationService.getCurrentUsername(), lab_id));
         model.addAttribute("deadlines", deadlineRepository.findAllByLabInfoId(lab_id));

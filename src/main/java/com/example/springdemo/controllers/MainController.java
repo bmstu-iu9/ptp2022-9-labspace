@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -49,6 +50,8 @@ public class MainController {
             model.addAttribute("groupp", user.getGroupp().getName());
             List<SubmitLab> submit_labs = submitLabRepository.findByUserId(user.getId());
             model.addAttribute("submit_labs", submit_labs);
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+            model.addAttribute("format", format);
         } else {
             model.addAttribute("name", "guest");
             model.addAttribute("groupp", "");
@@ -73,7 +76,8 @@ public class MainController {
                 labid.add(0L);
             }
             Set<LabInfo> labs = labInfoRepository.findByIsVisibleTrueAndGroupps_IdAndIdNotIn(user.getGroupp().getId(),labid);
-
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+            model.addAttribute("format", format);
             model.addAttribute("labs", labs);
             model.addAttribute("deadlineRepository", deadlineRepository);
         } else {

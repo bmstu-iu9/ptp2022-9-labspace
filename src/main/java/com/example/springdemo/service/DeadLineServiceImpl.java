@@ -21,21 +21,21 @@ public class DeadLineServiceImpl implements DeadlineService {
         Deadline dl2 = new Deadline();
         Deadline dl3 = new Deadline();
         try {
-            dl1.setDeadlineDate(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("date1")));
+            dl1.setDeadlineDate(new SimpleDateFormat("yyyy-MM-ddHH:mm").parse(request.getParameter("date1") + request.getParameter("time1")));
             dl1.setLabInfo(labInfo);
             dl1.setMaxMark(Integer.valueOf(request.getParameter("mark1")));
             deadlineRepository.save(dl1);
         } catch (ParseException ignored) {
         }
         try {
-            dl2.setDeadlineDate(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("date2")));
+            dl2.setDeadlineDate(new SimpleDateFormat("yyyy-MM-ddHH:mm").parse(request.getParameter("date2") + request.getParameter("time2")));
             dl2.setLabInfo(labInfo);
             dl2.setMaxMark(Integer.valueOf(request.getParameter("mark2")));
             deadlineRepository.save(dl2);
         } catch (ParseException ignored) {
         }
         try {
-            dl3.setDeadlineDate(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("date3")));
+            dl3.setDeadlineDate(new SimpleDateFormat("yyyy-MM-ddHH:mm").parse(request.getParameter("date3") + request.getParameter("time3")));
             dl3.setLabInfo(labInfo);
             dl3.setMaxMark(Integer.valueOf(request.getParameter("mark3")));
             deadlineRepository.save(dl3);
