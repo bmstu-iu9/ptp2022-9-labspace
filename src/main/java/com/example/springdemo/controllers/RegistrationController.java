@@ -5,6 +5,7 @@ import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.GrouppRepository;
 import com.example.springdemo.repository.UserRepository;
 import com.example.springdemo.service.AuthenticationService;
+import com.example.springdemo.service.MailSender;
 import com.example.springdemo.service.UserService;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
@@ -42,6 +43,9 @@ public class RegistrationController {
 
     @Autowired
     GrouppRepository grouppRepository;
+
+    @Autowired
+    private MailSender mailSender;
 
     @GetMapping(value = "/auth/register")
     public String registerUser(Model model) {
@@ -94,25 +98,13 @@ public class RegistrationController {
         } else {
             grouppRepository.findById(Long.valueOf(request.getParameter("groupp_name"))).ifPresent(user::setGroupp);
             userService.registerUser(user);
-            redirectAttributes.addAttribute("user", user);
-            return "redirect:/auth/activate_send";
+            redirectAttributes.addAttribute("send_code", "Activation code sent to your email. Check it to confirm email.");
+            return "redirect:/auth/login";
         }
     }
-
-    @GetMapping("/auth/activate_send")
-    public String activationCodeSend(Model model,
-                                     @ModelAttribute("user") User user) {
-        if (Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
-            return "activate_send";
-        } else {
-            return "redirect:/";
-        }
-    }
-
-    @Po
 
     @GetMapping("/auth/login")
-    public String login() {
+    public String login(@ModelAttribute("send_code") String send_code) {
         if (Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
             return "login";
         } else {
