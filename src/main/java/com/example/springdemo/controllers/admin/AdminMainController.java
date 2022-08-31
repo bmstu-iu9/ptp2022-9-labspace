@@ -8,6 +8,7 @@ import com.example.springdemo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -91,7 +92,7 @@ public class AdminMainController {
             User user = userService.getByEmail(username);
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
-            List<SubmitLab> submit_labs = submitLabRepository.findByUserId(user.getId());
+            List<SubmitLab> submit_labs = submitLabRepository.findAll();
             model.addAttribute("submit_labs", submit_labs);
         } else {
             model.addAttribute("name", "guest");
