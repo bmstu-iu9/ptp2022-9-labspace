@@ -84,20 +84,20 @@
                         </div>
                     </form>
                 </div>
-                <form class="user_grades col-lg-3" method="post" th:object="${user}">
+                <div class="user_grades col-lg-3" >
                     <div class="user_completed_labs">
-                        <div id="user_number_completed_labs">7</div>
+                        <div id="user_number_completed_labs" th:text="${completedLabsNum}"></div>
                         <div id="user_title_completed_labs">completed labs</div>
                     </div>
                     <div class="user_points_received">
-                        <div id="user_number_received_points">21</div>
+                        <div id="user_number_received_points" th:text="${totalPoints}"></div>
                         <div id="user_title_received_point">points received</div>
                     </div>
                     <div class="user_available_labs">
-                        <div id="user_number_available_labs">0</div>
+                        <div id="user_number_available_labs" th:text="${countOfAvalibleLabs}"></div>
                         <div id="user_title_available_labs">available labs</div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
