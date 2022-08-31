@@ -24,7 +24,7 @@ for (let i = 0; i < calendars.length; i++) {
         let input = this.value; // получили строчку из календаря
         let dateEntered = new Date(input);  // превратили в объект даты
 
-        // добавляем нули к чилам, если они меньше 10
+        // добавляем нули к чиcлам, если они меньше 10
         let day = dateEntered.getDate();
         day < 10 ? day = '0' + day : day;
         let month = dateEntered.getMonth();

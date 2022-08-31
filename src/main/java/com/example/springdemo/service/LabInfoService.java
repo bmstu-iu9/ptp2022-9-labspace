@@ -17,5 +17,4 @@ public interface LabInfoService {
     void uploadLab(LabInfo labInfo, MultipartFile file,HttpServletRequest request) throws ParseException;
     Set<LabInfo> getAvalibleLabs(User user);
 
-    void updateVisibility(Long id, Boolean val);
 }

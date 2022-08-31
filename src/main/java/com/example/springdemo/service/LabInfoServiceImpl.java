@@ -47,14 +47,13 @@ public class LabInfoServiceImpl implements LabInfoService {
         deadlineService.saveDeadlines(request, labInfo);
     }
 
-    public Set<LabInfo> getAvalibleLabs(User user){
+    public Set<LabInfo> getAvalibleLabs(User user) {
         Set<Long> labid = submitLabRepository.findAllByUserId(user.getId()).stream()
                 .map(a -> a.getLabInfo().getId())
                 .collect(Collectors.toSet());
-        if (labid.isEmpty()){
+        if (labid.isEmpty()) {
             labid.add(0L);
         }
-        return labInfoRepository.findByIsVisibleTrueAndGroupps_IdAndIdNotIn(user.getGroupp().getId(),labid);
+        return labInfoRepository.findByIsVisibleTrueAndGroupps_IdAndIdNotIn(user.getGroupp().getId(), labid);
     }
-
 }
