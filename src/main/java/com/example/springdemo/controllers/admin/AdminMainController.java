@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 
 
 @Controller
@@ -53,12 +50,6 @@ public class AdminMainController {
             User user = userService.getByEmail(username);
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
-            Set<Long> labid = submitLabRepository.findAllByUserId(user.getId()).stream()
-                    .map(a -> a.getLabInfo().getId())
-                    .collect(Collectors.toSet());
-            if (labid.isEmpty()){
-                labid.add(0L);
-            }
             List<LabInfo> labs = labInfoRepository.findAll();
 
             model.addAttribute("labs", labs);
@@ -70,31 +61,29 @@ public class AdminMainController {
             model.addAttribute("name", "guest");
             model.addAttribute("groupp", "");
         }
-        return "admin/adminIndex";
+        return "adminTemp/adminIndex";
     }
 
     @PostMapping("/admin/index")
-    public String changeVisibility(@RequestParam (name="Do") String val) {
+    public String changeVisibility(HttpServletRequest request) {
+        String val = request.getParameter("Do");
         Long id = Long.valueOf(val.substring(1));
         LabInfo lab = labInfoRepository.findById(id).get();
         if (val.charAt(0) == 't'){
             logger.trace("Set visibitity of lab id " + val.substring(1) + " true");
-            labInfoService.updateVisibility(id, true);
             lab.setIsVisible(true);
         }
         else{
             logger.trace("Set visibitity of lab id " + val.substring(1) + " false");
-            labInfoService.updateVisibility(id, false);
             lab.setIsVisible(false);
         }
         labInfoRepository.save(lab);
-        return "admin/adminIndex";
+        return "redirect:/admin/index";
     }
 
 
     @Autowired
     private DeadlineRepository deadlineRepository;
-
     @GetMapping("/admin/minor")
     public String home2(Model model) {
         String username = authenticationService.getCurrentUsername();
@@ -108,7 +97,7 @@ public class AdminMainController {
             model.addAttribute("name", "guest");
             model.addAttribute("groupp", "");
         }
-        return "admin/adminMinor";
+        return "adminTemp/adminMinor";
     }
 
 }

@@ -25,7 +25,7 @@
 <body>
 
 <div id="wrapper">
-    <div th:insert="~{admin/adminSideMenu1:: copy}"></div>
+    <div th:insert="~{adminTemp/adminSideMenu1:: copy}"></div>
     <div id="page-wrapper" class="gray-bg">
         <div th:insert="~{templs/templateOfUpperPanel :: copy}"></div>
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -62,10 +62,10 @@
                                 <h3 class="lab-marks-mark" th:text="${group.getName()}" style="word-break: break-all"/>
                             </div>
                         </div>
-                     <form th:switch="${lab.getIsVisible()}" method="get"  name="changeVisibility">
+                     <form th:switch="${lab.getIsVisible()}" method="post"  name="changeVisibility">
                          <button th:case="false" type="submit" name = "Do"  th:value="'t' + ${lab.id}">Publish</button>
                          <button th:case="true" type="submit" name = "Do"  th:value="'f' + ${lab.id}">Hide</button>
-                        </form>
+                     </form>
 
                 </div>
 
