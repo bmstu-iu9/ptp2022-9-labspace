@@ -39,7 +39,7 @@ public class LabInfoUploadController {
     @Autowired
     AuthenticationService authenticationService;
 
-    @GetMapping(value = "/main/upload_lab")
+    @GetMapping(value = "/admin/upload_lab")
     public String uploadlab(Model model) {
         LabInfo labInfo = new LabInfo();
         authenticationService.addNameAndGroupToModel(model);

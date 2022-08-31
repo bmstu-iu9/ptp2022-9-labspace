@@ -27,13 +27,13 @@
 <div id="wrapper">
     <div th:insert="~{adminTemp/adminSideMenu1:: copy}"></div>
     <div id="page-wrapper" class="gray-bg">
-        <div th:insert="~{templs/templateOfUpperPanel :: copy}"></div>
+        <div th:insert="~{adminTemp/adminTemplateOfUpperPanel :: copy}"></div>
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="text-center dashboard-header">
+                    <span class="text-center dashboard-header">
                         <h1>Uploaded labs</h1>
-                    </div>
+                    </span>
 
 <!--                    <div class="teacher_right_form">-->
 <!--                        <span class="teacher_title_text">Group <span style="color: mediumvioletred">*</span> </span>-->
@@ -63,8 +63,11 @@
                             </div>
                         </div>
                      <form th:switch="${lab.getIsVisible()}" method="post"  name="changeVisibility">
-                         <button th:case="false" type="submit" name = "Do"  th:value="'t' + ${lab.id}">Publish</button>
-                         <button th:case="true" type="submit" name = "Do"  th:value="'f' + ${lab.id}">Hide</button>
+                         <button th:case="false" type="submit" name = "Do"  th:value="'t' + ${lab.id}"
+                                 class="btn btn-primary h2-lab-name" >Publish</button>
+                         <button th:case="true" type="submit" name = "Do"  th:value="'f' + ${lab.id}"
+                                 class="btn btn-info h2-lab-name" >Hide</button>
+
                      </form>
 
                 </div>
