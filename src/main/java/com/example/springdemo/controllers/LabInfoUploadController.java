@@ -51,7 +51,7 @@ public class LabInfoUploadController {
         return "teacher_lab";
     }
 
-    @PostMapping(value = "/main/upload_lab")
+    @PostMapping(value = "/admin/upload_lab")
     public String uploadLab(@Valid LabInfo labInfo,
                           @RequestParam(name = "filee") MultipartFile file,
                           @RequestParam(name = "variants") int count,

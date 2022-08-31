@@ -60,9 +60,13 @@ public class ProfilePageController {
         for (SubmitLab lab: completedLabs){
             sum+= lab.getMark();
         }
+        List<SubmitLab> submit_labs = submitLabRepository.findAllByUserId(user_id);
+        model.addAttribute("submit_labs", submit_labs);
+        model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
         model.addAttribute("completedLabsNum",completedLabs.size());
         model.addAttribute("totalPoints",sum);
         model.addAttribute("countOfAvalibleLabs", labInfoService.getAvalibleLabs(user).size());
+
         return "profile_read_only";
     }
 }
