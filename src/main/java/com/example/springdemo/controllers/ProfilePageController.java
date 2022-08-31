@@ -45,4 +45,19 @@ public class ProfilePageController {
         authenticationService.updateUser(user);
         return "redirect:/main/index";
     }
+
+    @GetMapping("/main/profile_read_only")
+    public String getUserReadOnly( Model model) {
+        User user = authenticationService.getCurrentUser();
+        model.addAttribute("user", user);
+        List<SubmitLab> completedLabs = submitLabRepository.findAllByUserIdAndMarkGreaterThan(user.getId(), 0);
+        int sum = 0;
+        for (SubmitLab lab: completedLabs){
+            sum+= lab.getMark();
+        }
+        model.addAttribute("completedLabsNum",completedLabs.size());
+        model.addAttribute("totalPoints",sum);
+        model.addAttribute("countOfAvalibleLabs", labInfoService.getAvalibleLabs(user).size());
+        return "profile_read_only";
+    }
 }
