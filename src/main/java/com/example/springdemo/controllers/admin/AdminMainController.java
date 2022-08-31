@@ -101,4 +101,20 @@ public class AdminMainController {
         return "adminTemp/adminMinor";
     }
 
+    @GetMapping("/admin/gradedLabs")
+    public String home3(Model model) {
+        String username = authenticationService.getCurrentUsername();
+        if (!Objects.equals(username, "guest")) {
+            User user = userService.getByEmail(username);
+            model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+            model.addAttribute("groupp", user.getGroupp().getName());
+            List<SubmitLab> submit_labs = submitLabRepository.findAllChecked();
+            model.addAttribute("submit_labs", submit_labs);
+        } else {
+            model.addAttribute("name", "guest");
+            model.addAttribute("groupp", "");
+        }
+        return "adminTemp/adminGraded";
+    }
+
 }

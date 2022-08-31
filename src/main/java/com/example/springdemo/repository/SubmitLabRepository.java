@@ -30,4 +30,7 @@ public interface SubmitLabRepository extends JpaRepository<SubmitLab, Long> {
     @Query("select sl from SubmitLab sl where sl.mark=-1")
     List<SubmitLab> findAllNotChecked();
 
+    @Query("select sl from SubmitLab sl where sl.mark <> -1")
+    List<SubmitLab> findAllChecked();
+
 }
