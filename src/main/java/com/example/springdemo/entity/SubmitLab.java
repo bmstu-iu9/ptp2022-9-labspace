@@ -55,4 +55,7 @@ public class SubmitLab {
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private LabInfo labInfo;
+
+    private String revisionComment;
+    private boolean onRevision = false;
 }

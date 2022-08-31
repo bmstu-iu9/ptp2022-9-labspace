@@ -20,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -69,6 +70,8 @@ public class MainController {
             model.addAttribute("groupp", user.getGroupp().getName());
             List<SubmitLab> submit_labs = submitLabRepository.findByUserId(user.getId());
             model.addAttribute("submit_labs", submit_labs);
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+            model.addAttribute("format", format);
         } else {
             model.addAttribute("name", "guest");
             model.addAttribute("groupp", "");
@@ -89,6 +92,8 @@ public class MainController {
             User user = userService.getByEmail(username);
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+            model.addAttribute("format", format);
             Set<LabInfo> labs = labInfoService.getAvalibleLabs(user);
             model.addAttribute("labs", labs);
             model.addAttribute("deadlineRepository", deadlineRepository);
