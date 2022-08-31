@@ -98,13 +98,13 @@ public class RegistrationController {
         } else {
             grouppRepository.findById(Long.valueOf(request.getParameter("groupp_name"))).ifPresent(user::setGroupp);
             userService.registerUser(user);
-            redirectAttributes.addAttribute("email", user.getEmail());
+            redirectAttributes.addAttribute("activationEmail", user.getEmail());
             return "redirect:/auth/login";
         }
     }
 
     @GetMapping("/auth/login")
-    public String login(@ModelAttribute("email") String email) {
+    public String login(@ModelAttribute("activationEmail") String email) {
         if (Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
             return "login";
         } else {
