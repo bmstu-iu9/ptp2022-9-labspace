@@ -8483,7 +8483,7 @@ body.md-skin {
 }
 
 .h2-lab-name {
-  margin: 0;
+  margin: auto;
 }
 
 .lab-course {
@@ -8516,4 +8516,9 @@ h2.lab-course {
 
 .columns-name > * {
   flex: 1;
+}
+
+.visible {
+  display: flex;
+  margin: auto;
 }

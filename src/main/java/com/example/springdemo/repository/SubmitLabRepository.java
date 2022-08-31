@@ -24,7 +24,10 @@ public interface SubmitLabRepository extends JpaRepository<SubmitLab, Long> {
 
     List<SubmitLab> findAllByUserIdAndMarkGreaterThan(Long user_id, int mark);
 
-    @Query("select sl from SubmitLab sl where sl.user.id=?1 and sl.mark=-1")
+    @Query("select sl from SubmitLab sl where sl.mark=-1")
     List<SubmitLab> findAllByUserIdAndNotChecked(Long user_id);
+
+    @Query("select sl from SubmitLab sl where sl.mark=-1")
+    List<SubmitLab> findAllNotChecked();
 
 }

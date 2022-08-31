@@ -92,7 +92,7 @@ public class AdminMainController {
             User user = userService.getByEmail(username);
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
-            List<SubmitLab> submit_labs = submitLabRepository.findAll();
+            List<SubmitLab> submit_labs = submitLabRepository.findAllNotChecked();
             model.addAttribute("submit_labs", submit_labs);
         } else {
             model.addAttribute("name", "guest");
