@@ -7,6 +7,7 @@ import com.example.springdemo.repository.DeadlineRepository;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.repository.SubmitLabRepository;
 import com.example.springdemo.service.AuthenticationService;
+import com.example.springdemo.service.LabInfoService;
 import com.example.springdemo.service.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class MainController {
 
     @Autowired
     LabInfoRepository labInfoRepository;
+    @Autowired
+    LabInfoService labInfoService;
 
     @Autowired
     UserService userService;
@@ -86,14 +89,7 @@ public class MainController {
             User user = userService.getByEmail(username);
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
-            Set<Long> labid = submitLabRepository.findAllByUserId(user.getId()).stream()
-                    .map(a -> a.getLabInfo().getId())
-                    .collect(Collectors.toSet());
-            if (labid.isEmpty()){
-                labid.add(0L);
-            }
-            Set<LabInfo> labs = labInfoRepository.findByIsVisibleTrueAndGroupps_IdAndIdNotIn(user.getGroupp().getId(),labid);
-
+            Set<LabInfo> labs = labInfoService.getAvalibleLabs(user);
             model.addAttribute("labs", labs);
             model.addAttribute("deadlineRepository", deadlineRepository);
         } else {

@@ -5,19 +5,23 @@ import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.GrouppRepository;
 import com.example.springdemo.repository.UserRepository;
 import com.example.springdemo.service.AuthenticationService;
+import com.example.springdemo.service.MailSender;
 import com.example.springdemo.service.UserService;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +44,9 @@ public class RegistrationController {
     @Autowired
     GrouppRepository grouppRepository;
 
+    @Autowired
+    private MailSender mailSender;
+
     @GetMapping(value = "/auth/register")
     public String registerUser(Model model) {
         if (Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
@@ -56,6 +63,7 @@ public class RegistrationController {
     public String regUser(@Valid User user,
                           BindingResult bindingResult,
                           Model model,
+                          RedirectAttributes redirectAttributes,
                           HttpServletRequest request,
                           HttpServletResponse response) throws ServletException {
         if (bindingResult.hasErrors()) {
@@ -90,12 +98,13 @@ public class RegistrationController {
         } else {
             grouppRepository.findById(Long.valueOf(request.getParameter("groupp_name"))).ifPresent(user::setGroupp);
             userService.registerUser(user);
-            return "redirect:/";
+            redirectAttributes.addAttribute("email", user.getEmail());
+            return "redirect:/auth/login";
         }
     }
 
     @GetMapping("/auth/login")
-    public String login() {
+    public String login(@ModelAttribute("email") String email) {
         if (Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
             return "login";
         } else {

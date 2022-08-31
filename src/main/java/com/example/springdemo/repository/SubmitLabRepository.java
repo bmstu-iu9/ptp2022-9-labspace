@@ -2,7 +2,7 @@ package com.example.springdemo.repository;
 
 import com.example.springdemo.entity.SubmitLab;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.data.jpa.repository.JpaRepository;
+gframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,4 +21,7 @@ public interface SubmitLabRepository extends JpaRepository<SubmitLab, Long> {
     List<SubmitLab> findAllByUserId(Long userId);
 
     List<SubmitLab> findAll();
+
+    List<SubmitLab> findAllByUserIdAndMarkGreaterThan(Long user_id, int mark);
+
 }

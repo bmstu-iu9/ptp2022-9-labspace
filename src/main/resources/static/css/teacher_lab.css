@@ -47,15 +47,15 @@
 }
 
 .teacher_left_title_form {
-    width: 480px;
+    width: 430px;
 }
 
 .teacher_middle_form {
-
+    margin: 7px 25px 0;
 }
 
 .teacher_right_useful_form {
-
+    width: 335px;
 }
 
 .teacher_variants {
@@ -76,6 +76,7 @@
     margin-top: 35px;
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 
 .teacher_row:first-child {
@@ -152,7 +153,7 @@
 .teacher_title_text {
     display: block;
     text-align: center;
-    font-size: 45px;
+    font-size: 40px;
     font-weight: bold;
 }
 
@@ -219,11 +220,13 @@
 
 .teacher_year, .teacher_dayMonth {
     cursor: pointer;
+    height: 30px;
 }
 
 .teacher_time {
     cursor: pointer;
     font-size: 24px;
+    margin-top: 13px;
 }
 
 .input_file{

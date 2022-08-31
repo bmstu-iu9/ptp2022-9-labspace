@@ -2,6 +2,7 @@ package com.example.springdemo.service;
 
 import com.example.springdemo.entity.Groupp;
 import com.example.springdemo.entity.LabInfo;
+import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.*;
 import com.example.springdemo.repository.LabInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class LabInfoServiceImpl implements LabInfoService {
     private CourseRepository courseRepository;
     @Autowired
     private GrouppRepository grouppRepository;
+    @Autowired
+    private SubmitLabRepository submitLabRepository;
 
 
     @Override
@@ -43,11 +46,15 @@ public class LabInfoServiceImpl implements LabInfoService {
         fileStorageService.storeFile(file, labInfo);
         deadlineService.saveDeadlines(request, labInfo);
     }
-    @Modifying
-    @Override
-    public void updateVisibility(Long id, Boolean val){
-        LabInfo lab = labInfoRepository.findById(id).get();
-        lab.setIsVisible(val);
+
+    public Set<LabInfo> getAvalibleLabs(User user){
+        Set<Long> labid = submitLabRepository.findAllByUserId(user.getId()).stream()
+                .map(a -> a.getLabInfo().getId())
+                .collect(Collectors.toSet());
+        if (labid.isEmpty()){
+            labid.add(0L);
+        }
+        return labInfoRepository.findByIsVisibleTrueAndGroupps_IdAndIdNotIn(user.getGroupp().getId(),labid);
     }
 
 }
