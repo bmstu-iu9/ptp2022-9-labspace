@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+  <link rel="stylesheet" th:href="@{../static/css/profile.css}">
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/css/teacher_lab.css">
+
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+  <link th:href="@{/css/animate.css}" rel="stylesheet">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+
+  <script th:src="@{/js/jquery-2.1.1.js}"></script>
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+  <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+  <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+  <script th:src="@{/js/inspinia.js}"></script>
+  <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+
+  <!-- Include the plugin's CSS and JS: -->
+  <script type="text/javascript" th:src="@{/js/bootstrap-multiselect.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/bootstrap-multiselect.css}" type="text/css"/>
+  <!-- Initialize the plugin: -->
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#multiselect').multiselect({
+        enableFiltering: true,
+        nonSelectedText:'Select the group',
+        buttonWidth: '100%',
+        buttonClass: 'teacher_select',
+      });
+    });
+  </script>
+</head>
+<body>
+<div id="wrapper">
+  <div th:insert="~{templs/templateOfSideMenu1 :: copy}"></div>
+  <div id="page-wrapper" class="gray-bg">
+    <div th:insert="~{templs/templateOfUpperPanel :: copy}"></div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="row">
+        <div class="col-lg-9">
+          <form class="user_profile_container" method="post" th:object="${user}">
+            <span class="user_profile_title">Your account</span>
+            <div id="form_container">
+              <div>
+                <span class="user_form_title">Surname</span>
+                <input class="user_profile_form" type="text" th:field="*{lastName}" readonly>
+              </div>
+              <div>
+                <span class="user_form_title">Name</span>
+                <input class="user_profile_form" type="text" th:field="*{firstName}" readonly>
+              </div>
+              <div>
+                <span class="user_form_title">Patronymic</span>
+                <input class="user_profile_form" type="text" th:field="*{patronymic}" readonly>
+              </div>
+              <div>
+                <span class="user_form_title">Group</span>
+                <input class="user_profile_form" type="text" th:value="*{groupp.getName()}" readonly>
+              </div>
+              <div>
+                <span class="user_form_title">Phone</span>
+                <input class="user_profile_form" type="text" th:field="*{phoneNumber}" readonly>
+              </div>
+              <div>
+                <span class="user_form_title">Email</span>
+                <input class="user_profile_form" type="text" th:field="*{email}" readonly>
+              </div>
+              <div>
+                <span class="user_form_title">Telegram</span>
+                <input class="user_profile_form" type="text" th:field="*{tgAccount}" readonly>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="user_grades col-lg-3" >
+          <div class="user_completed_labs">
+            <div id="user_number_completed_labs" th:text="${completedLabsNum}"></div>
+            <div id="user_title_completed_labs">completed labs</div>
+          </div>
+          <div class="user_points_received">
+            <div id="user_number_received_points" th:text="${totalPoints}"></div>
+            <div id="user_title_received_point">points received</div>
+          </div>
+          <div class="user_available_labs">
+            <div id="user_number_available_labs" th:text="${countOfAvalibleLabs}"></div>
+            <div id="user_title_available_labs">available labs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--script src="../static/js/profile.js"></script-->
+<script src="../static/js/teacher_lab/markChange.js"></script>
+<script src="../static/js/teacher_lab/dateChange.js"></script>
+<script src="../static/js/teacher_lab/customButton.js"></script>
+<script src="../static/js/teacher_lab/preventEnterSubmit.js"></script>-->
+</body>
+
+</html>
