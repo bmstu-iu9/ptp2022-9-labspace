@@ -6,10 +6,12 @@ import com.example.springdemo.repository.SubmitLabRepository;
 import com.example.springdemo.repository.UserRepository;
 import com.example.springdemo.service.AuthenticationService;
 import com.example.springdemo.service.LabInfoService;
+import com.example.springdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,9 @@ public class ProfilePageController {
     SubmitLabRepository submitLabRepository;
     @Autowired
     LabInfoService labInfoService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/main/profile")
     public String getUser( Model model) {
@@ -46,9 +51,9 @@ public class ProfilePageController {
         return "redirect:/main/index";
     }
 
-    @GetMapping("/main/profile_read_only")
-    public String getUserReadOnly( Model model) {
-        User user = authenticationService.getCurrentUser();
+    @GetMapping(path = "/main/profile_read_only{user_id}")
+    public String getUserReadOnly( Model model, @PathVariable("user_id") Long user_id) {
+        User user = userService.getById(user_id);
         model.addAttribute("user", user);
         List<SubmitLab> completedLabs = submitLabRepository.findAllByUserIdAndMarkGreaterThan(user.getId(), 0);
         int sum = 0;

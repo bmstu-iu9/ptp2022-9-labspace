@@ -41,14 +41,14 @@
 </head>
 <body>
 <div id="wrapper">
-  <div th:insert="~{templs/templateOfSideMenu1 :: copy}"></div>
+  <div th:insert="~{adminTemp/adminSideMenu1:: copy}"></div>
   <div id="page-wrapper" class="gray-bg">
-    <div th:insert="~{templs/templateOfUpperPanel :: copy}"></div>
+    <div th:insert="~{adminTemp/adminTemplateOfUpperPanel :: copy}"></div>
     <div class="wrapper wrapper-content animated fadeInRight">
       <div class="row">
         <div class="col-lg-9">
           <form class="user_profile_container" method="post" th:object="${user}">
-            <span class="user_profile_title">Your account</span>
+            <span class="user_profile_title">Account</span>
             <div id="form_container">
               <div>
                 <span class="user_form_title">Surname</span>
