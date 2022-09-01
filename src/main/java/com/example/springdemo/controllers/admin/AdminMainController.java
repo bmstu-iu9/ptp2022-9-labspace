@@ -14,8 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Controller
@@ -52,7 +54,7 @@ public class AdminMainController {
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
             List<LabInfo> labs = labInfoRepository.findAll();
-
+            Collections.reverse(labs);
             model.addAttribute("labs", labs);
             Iterable<Groupp> groupList = grouppRepository.findAll();
             Iterable<Course> courses = courseRepository.findAll();
@@ -109,6 +111,7 @@ public class AdminMainController {
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
             List<SubmitLab> submit_labs = submitLabRepository.findAllChecked();
+            Collections.reverse(submit_labs);
             model.addAttribute("submit_labs", submit_labs);
         } else {
             model.addAttribute("name", "guest");

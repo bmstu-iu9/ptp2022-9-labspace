@@ -23,6 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                    .antMatchers("/auth/**").not().fullyAuthenticated()
                     .antMatchers("/admin/**", "/main/**").hasAuthority("ADMIN")
                     .antMatchers("/user/**", "/main/**").hasAuthority("USER") // тут - для юзера
                     //.antMatchers("/main/**").authenticated()

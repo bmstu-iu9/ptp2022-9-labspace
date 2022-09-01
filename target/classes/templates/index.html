@@ -48,7 +48,7 @@
                         <h2 class="lab-course" th:text="${lab.getCourse().name}" />
                         <div class="lab-marks">
                             <div th:each="dead : ${deadlineRepository.findAllByLabInfoId(lab.getId())}" >
-                                <h3 class="lab-marks-mark" th:text="${dead.getMaxMark()} + ' point(-s) - ' + ${dead.getDeadlineDate()}"/>
+                                <h3 class="lab-marks-mark" th:text="${dead.getMaxMark()} + ' point(-s) - ' + ${format.format(dead.getDeadlineDate())}"/>
                             </div>
                         </div>
                     </div>
