@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -46,9 +47,10 @@ public class MainController {
 
     @GetMapping("/")
     public String view(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
+
         String role =  authResult.getAuthorities().toString();
         if (authResult.getName().length() == 0){
-            return "redirect:auth/login";
+            return "redirect:/auth/login";
         }
         if(role.contains("ADMIN")){
             //response.sendRedirect(response.encodeRedirectURL( "/admin/" + request.getContextPath()));
@@ -69,6 +71,8 @@ public class MainController {
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
             List<SubmitLab> submit_labs = submitLabRepository.findByUserId(user.getId());
+            Collections.reverse(submit_labs);
+            Collections.reverse(submit_labs);
             model.addAttribute("submit_labs", submit_labs);
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             model.addAttribute("format", format);
