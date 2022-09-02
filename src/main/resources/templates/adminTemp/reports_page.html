@@ -54,12 +54,16 @@
           <div class="columns-name">
             <p>Student</p>
             <p>Upload date</p>
+            <p>Add mark</p>
           </div>
           <div class="lab-space" th:each="submit_lab : ${submit_labs}">
             <div class="lab-name">
               <h2><a class="h2-lab-name" th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/> <h2 class="h2-lab-name" th:text="'(' + ${submit_lab.getUser().getGroupp().getName()} + ')'" /></h2>
             </div>
             <h2 class="lab-course" th:text="${submit_lab.getSendDate()}"/>
+            <a th:href="'/admin/check_lab_id' + ${submit_lab.getLabInfo().getId()} + 'user_id' + ${submit_lab.getUser().getId()}">
+              <h2 class="h2-lab-name"  th:text="'Add your mark'"/>
+            </a>
           </div>
         <div class="col-lg-12">
           <div class="text-center dashboard-header">
