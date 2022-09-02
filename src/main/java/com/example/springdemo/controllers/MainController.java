@@ -47,11 +47,10 @@ public class MainController {
 
     @GetMapping("/")
     public String view(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
-
-        String role =  authResult.getAuthorities().toString();
-        if (authResult.getName().length() == 0){
+        if(Objects.equals(authenticationService.getCurrentUsername(), "guest")){
             return "redirect:/auth/login";
         }
+        String role =  authResult.getAuthorities().toString();
         if(role.contains("ADMIN")){
             //response.sendRedirect(response.encodeRedirectURL( "/admin/" + request.getContextPath()));
             return "redirect:/admin/index";
