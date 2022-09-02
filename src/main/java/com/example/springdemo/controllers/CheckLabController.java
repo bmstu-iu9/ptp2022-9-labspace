@@ -2,12 +2,14 @@ package com.example.springdemo.controllers;
 
 import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.SubmitLab;
+import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.DeadlineRepository;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.repository.SubmitLabRepository;
 import com.example.springdemo.repository.UserRepository;
 import com.example.springdemo.service.AuthenticationService;
 import com.example.springdemo.service.DeadlineService;
+import com.example.springdemo.service.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -33,12 +37,15 @@ public class CheckLabController {
     DeadlineRepository deadlineRepository;
     @Autowired
     AuthenticationService authenticationService;
-    @GetMapping("/main/check_lab_id{lab_id}user_id{user_id}")
+    @Autowired
+    UserService userService;
+
+    @GetMapping("/admin/check_lab_id{lab_id}user_id{user_id}")
     public String checkLab(Model model, @PathVariable Long lab_id, @PathVariable Long user_id){
         LabInfo labInfo = labInfoRepository.findById(lab_id).get();
         Optional<SubmitLab> submitLab = submitLabRepository.findByUserIdAndLabInfoId(user_id,lab_id);
         if (!submitLab.isPresent()){
-            return "redirect:/main/check_lab_id" + lab_id;
+            return "redirect:/admin/check_lab_id" + lab_id;
         }
         model.addAttribute("lab_info", labInfo);
         model.addAttribute("user", userRepository.findById(user_id).get());
@@ -56,7 +63,7 @@ public class CheckLabController {
         return "check_lab";
     }
 
-    @PostMapping("/main/check_lab_id{lab_id}user_id{user_id}")
+    @PostMapping("/admin/check_lab_id{lab_id}user_id{user_id}")
     public String writeMark(@NotNull HttpServletRequest request, @PathVariable Long lab_id, @PathVariable Long user_id){
       Optional <SubmitLab> submitLab1 = submitLabRepository.findByUserIdAndLabInfoId(user_id,lab_id);
       SubmitLab submitLab=submitLab1.get();
@@ -66,6 +73,23 @@ public class CheckLabController {
        }
        submitLab.setMark(Integer.parseInt(request.getParameter("final_mark")));
        submitLabRepository.save(submitLab);
-       return "redirect:/main/check_lab_id" + lab_id;
+       return "redirect:/admin/check_lab_id" + lab_id;
+    }
+
+    @GetMapping("/admin/check_lab_id{lab_id}")
+    public String allReportsLabPage(Model model, @PathVariable Long lab_id){
+        String username = authenticationService.getCurrentUsername();
+        User user = userService.getByEmail(username);
+        model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+        model.addAttribute("groupp", user.getGroupp().getName());
+        List<SubmitLab> submit_labs = submitLabRepository.findAllByLabInfoIdAndMark(lab_id, -1);
+        Collections.reverse(submit_labs);
+        model.addAttribute("submit_labs", submit_labs);
+        List<SubmitLab> submit_labs_graded = submitLabRepository.findAllByLabInfoIdAndMarkGreaterThan(lab_id, -1);
+        Collections.reverse(submit_labs_graded);
+        model.addAttribute("submit_labs_graded", submit_labs_graded);
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        model.addAttribute("format", format);
+        return "adminTemp/reports_page";
     }
 }

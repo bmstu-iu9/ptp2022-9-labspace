@@ -71,7 +71,6 @@ public class MainController {
             model.addAttribute("groupp", user.getGroupp().getName());
             List<SubmitLab> submit_labs = submitLabRepository.findByUserId(user.getId());
             Collections.reverse(submit_labs);
-            Collections.reverse(submit_labs);
             model.addAttribute("submit_labs", submit_labs);
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             model.addAttribute("format", format);

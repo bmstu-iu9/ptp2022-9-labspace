@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -34,6 +35,8 @@ public class ProfilePageController {
     public String getUser( Model model) {
         User user = authenticationService.getCurrentUser();
         model.addAttribute("user", user);
+        model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+        model.addAttribute("groupp", user.getGroupp().getName());
         List<SubmitLab> completedLabs = submitLabRepository.findAllByUserIdAndMarkGreaterThan(user.getId(), 0);
         int sum = 0;
         for (SubmitLab lab: completedLabs){
@@ -60,7 +63,8 @@ public class ProfilePageController {
         for (SubmitLab lab: completedLabs){
             sum+= lab.getMark();
         }
-        List<SubmitLab> submit_labs = submitLabRepository.findAllByUserId(user_id);
+        List<SubmitLab> submit_labs = submitLabRepository.findAllByUserIdAndNotChecked(user_id);
+        Collections.reverse(submit_labs);
         model.addAttribute("submit_labs", submit_labs);
         model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
         model.addAttribute("completedLabsNum",completedLabs.size());

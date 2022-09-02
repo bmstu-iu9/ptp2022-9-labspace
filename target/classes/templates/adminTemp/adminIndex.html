@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="lab-space admin" th:each="lab : ${labs}">
-                        <a class="lab-name admin" th:href="@{'/main/lab_id' + ${lab.getId()}}" >
+                        <a class="lab-name admin" th:href="'/admin/check_lab_id' + ${lab.getId()}" >
                             <h2 class="h2-lab-name admin" th:text="${lab.name}" />
                         </a>
                         <h2 class="lab-course admin" th:text="${lab.getCourse().name}" />

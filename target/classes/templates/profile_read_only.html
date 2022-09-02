@@ -41,7 +41,7 @@
 </head>
 <body>
 <div id="wrapper">
-  <div th:insert="~{adminTemp/adminSideMenu1:: copy}"></div>
+  <div th:insert="~{adminTemp/adminSideMenu2:: copy}"></div>
   <div id="page-wrapper" class="gray-bg">
     <div th:insert="~{adminTemp/adminTemplateOfUpperPanel :: copy}"></div>
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -105,13 +105,10 @@
           </div>
 
           <div class="lab-space" th:each="submit_lab : ${submit_labs}">
-            <div class="lab-name" th:switch="${submit_lab.mark}">
-              <a th:href="@{'/main/lab_id' + ${submit_lab.getLabInfo().getId()}}">
-                <h2 class="h2-lab-name" th:case="'-2'" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'"/>
+              <a th:href="'/admin/check_lab_id' + ${submit_lab.getId()} + 'user_id' + ${submit_lab.getUser().getId()}">
+                <h2 class="h2-lab-name"  th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'"/>
               </a>
-              <h2 class="h2-lab-name" th:case="*" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'" />
-            </div>
-            <h2 class="lab-course" th:text="${submit_lab.getSendDate()}"/>
+              <h2 class="lab-course" th:text="${submit_lab.getSendDate()}"/>
 <!--            <h2><a class="h2-lab-name" th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/> <h2 class="h2-lab-name" th:text="'(' + ${submit_lab.getUser().getGroupp().getName()} + ')'" /></h2>-->
           </div>
         </div>
