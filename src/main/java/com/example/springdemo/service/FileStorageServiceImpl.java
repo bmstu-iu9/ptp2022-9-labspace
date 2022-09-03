@@ -1,5 +1,6 @@
 package com.example.springdemo.service;
 
+import ch.qos.logback.core.Context;
 import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.SubmitLab;
 import com.example.springdemo.repository.LabInfoRepository;
@@ -29,12 +30,14 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Autowired
     private SubmitLabRepository submitLabRepository;
+    @Autowired
+    Environment env;
 
     private final Path fileStorageLocation;
 
     @Autowired
     public FileStorageServiceImpl(Environment env) {
-        this.fileStorageLocation = Paths.get(env.getProperty("app.file.upload-dir", "./uploads/files"))
+        this.fileStorageLocation = Paths.get(env.getProperty("app.file.upload-dir", "./main/files"))
                 .toAbsolutePath().normalize();
 
         try {
@@ -118,7 +121,9 @@ public class FileStorageServiceImpl implements FileStorageService {
             Files.createDirectories(this.fileStorageLocation.resolve("labs/"));
             Path targetLocation = this.fileStorageLocation.resolve("labs/" + fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            labInfo.setSource(targetLocation.toString());
+
+                labInfo.setSource(targetLocation.toString());
+
             labInfoRepository.save(labInfo);
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
