@@ -1,5 +1,6 @@
 package com.example.springdemo.controllers;
 
+import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.DeadlineRepository;
 import com.example.springdemo.repository.LabInfoRepository;
@@ -8,6 +9,8 @@ import com.example.springdemo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +32,6 @@ public class SubmitLabController {
     private GradesListService gradesListService;
     @Autowired
     private DeadlineRepository deadlineRepository;
-    private Calendar calendar;
     @Autowired
     UserService userService;
     @Autowired
@@ -44,7 +46,7 @@ public class SubmitLabController {
     public String uploadFile(
             @RequestParam(name = "filee", required = false) MultipartFile file,
             @PathVariable("lab_info_id") Long labId, Model model) {
-        String path = labInfoRepository.getReferenceById(labId).getCourse().getName() + "/labid" + labId;
+        String path = labInfoRepository.getReferenceById(labId).getCourse().getId() + "/labid" + labId + "/";
         model.addAttribute("id", labId);
         fileStorageService.storeFile(file, path, labId);
         return "redirect:/";
@@ -74,12 +76,21 @@ public class SubmitLabController {
         }
         return "templs/templateOfUploadLab";
     }
-
     @GetMapping(path = "main/lab_id{lab_info_id}/download")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable Long lab_info_id) {
         Resource file = fileStorageService.loadAsResource(lab_info_id);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.add("content-disposition", "inline;filename=" + file.getFilename());
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        String fileName = file.getFilename();
+        if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0
+                && (fileName.substring(fileName.lastIndexOf(".") + 1).equals("pdf"))){
+            return new ResponseEntity<>(file,headers, HttpStatus.OK);
+        }else {
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        }
     }
 }

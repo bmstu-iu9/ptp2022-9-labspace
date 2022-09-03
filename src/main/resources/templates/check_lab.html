@@ -65,7 +65,7 @@
                                 <div class="check_lab_row">
                                     <div class="check_lab_left_half_form">
                                         <span class="check_lab_title_text" >Loaded labwork</span>
-                                        <a href="#">
+                                        <a th:href="'lab_id' + ${lab_info.getId()} + '/download/user_id' + ${user.getId()}">
                                         <label class="check_lab_loaded_labwork">check it</label><!-- th:text="*{}"-->
                                         </a>
                                     </div>
