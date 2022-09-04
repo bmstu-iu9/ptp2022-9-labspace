@@ -8490,6 +8490,18 @@ body.md-skin {
   margin: auto;
 }
 
+.student-name {
+  margin: auto;
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.student-group {
+  margin: auto;
+  font-weight: 400;
+  font-size: 24px;
+}
+
 .lab-course {
   margin: auto;
   padding: 10px;
