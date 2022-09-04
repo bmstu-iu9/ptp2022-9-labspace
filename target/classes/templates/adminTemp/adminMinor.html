@@ -39,6 +39,7 @@
                         <p>Name of lab(course)</p>
                         <p>Upload date</p>
                         <p>Student</p>
+                        <p>Group</p>
                     </div>
                     <div class="lab-space" th:each="submit_lab : ${submit_labs}">
                         <div class="lab-name" th:switch="${submit_lab.mark}">
@@ -48,7 +49,8 @@
 
                         </div>
                         <h2 class="lab-course" th:text="${submit_lab.getSendDate()}"/>
-                        <h2><a class="h2-lab-name" th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/> <h2 class="h2-lab-name" th:text="'(' + ${submit_lab.getUser().getGroupp().getName()} + ')'" /></h2>
+                        <div class="student-name"><a th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/></div>
+                            <div class="student-group" th:text="'(' + ${submit_lab.getUser().getGroupp().getName()} + ')'" />
                     </div>
                 </div>
             </div>
