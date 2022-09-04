@@ -48,7 +48,7 @@
                             </a>
 
                         </div>
-                        <h2 class="lab-course" th:text="${submit_lab.getSendDate()}"/>
+                        <div class="student-send-date" th:text="${submit_lab.getSendDate()}"/>
                         <div class="student-name"><a th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/></div>
                             <div class="student-group" th:text="'(' + ${submit_lab.getUser().getGroupp().getName()} + ')'" />
                     </div>

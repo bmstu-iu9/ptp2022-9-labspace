@@ -8490,6 +8490,12 @@ body.md-skin {
   margin: auto;
 }
 
+.student-send-date {
+  margin: auto;
+  font-weight: 400;
+  font-size: 24px;
+}
+
 .student-name {
   margin: auto;
   font-weight: 400;
