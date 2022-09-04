@@ -63,7 +63,7 @@ public class CheckLabController {
         return "check_lab";
     }
 
-    @PostMapping("/admin/check_lab_id{lab_id}user_id{user_id}")
+    @PostMapping("/admin/check_lab_id" + "{lab_id}" + "user_id" + "{user_id}")
     public String writeMark(@NotNull HttpServletRequest request, @PathVariable Long lab_id, @PathVariable Long user_id){
       Optional <SubmitLab> submitLab1 = submitLabRepository.findByUserIdAndLabInfoId(user_id,lab_id);
       SubmitLab submitLab=submitLab1.get();
@@ -83,6 +83,8 @@ public class CheckLabController {
         model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
         model.addAttribute("groupp", user.getGroupp().getName());
         List<SubmitLab> submit_labs = submitLabRepository.findAllByLabInfoIdAndMark(lab_id, -1);
+        Optional<LabInfo> lab_info = labInfoRepository.findById(lab_id);
+        model.addAttribute("lab_info", lab_info.get());
         Collections.reverse(submit_labs);
         model.addAttribute("submit_labs", submit_labs);
         List<SubmitLab> submit_labs_graded = submitLabRepository.findAllByLabInfoIdAndMarkGreaterThan(lab_id, -1);
