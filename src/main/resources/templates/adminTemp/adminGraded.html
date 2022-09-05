@@ -45,24 +45,19 @@
                         <h1>Graded labs</h1>
                     </div>
                     <div class="columns-name">
-                        <p>Name of lab(course)</p>
-                        <p>Student</p>
-                        <p>Group</p>
-                        <p>Mark</p>
+                        <p style="flex: 1">Name of lab (course)</p>
+                        <p style="flex: 1">Student</p>
+                        <p style="flex: 1">Group</p>
+                        <p style="flex: 0.45">Mark</p>
                     </div>
                     <div class="lab-space" th:each="submit_lab : ${submit_labs}">
-                        <div class="lab-name" th:switch="${submit_lab.mark}">
-                            <a th:href="@{'/main/lab_id' + ${submit_lab.getLabInfo().getId()}}">
-                                <h2 class="h2-lab-name" th:case="'-2'" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'"/>
-                            </a>
-                            <h2 class="h2-lab-name" th:case="*" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'" />
+                        <div class="lab-name" style="flex: 1; padding: 0 10px;">
+                            <h2 class="h2-lab-name" style="cursor: default; pointer-events: none; color: dimgrey;" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'" />
                         </div>
-                        <div class="student-name"><a th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/admin/profile_read_only' + ${submit_lab.getUser().getId()}"/></div>
-                            <div class="student-group" th:text="${submit_lab.getUser().getGroupp().getName()}" />
-                        <div class="lab-marks" th:switch="${submit_lab.mark}">
-                            <h2 class="lab-marks-mark" th:case="'-1'" th:text="'Mark is not set'" />
-                            <h2 class="lab-marks-mark" th:case="'-2'" th:text="'Editing is required'"/>
-                            <h2 class="lab-marks-mark" th:case="*" th:text="${submit_lab.mark} + ' point(-s)'" />
+                        <div class="student-name" style="flex: 1; padding: 0 10px 0 0;"><a th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/admin/profile_read_only' + ${submit_lab.getUser().getId()}"/></div>
+                        <div class="student-group" style="flex: 1; " th:text="${submit_lab.getUser().getGroupp().getName()}" />
+                        <div class="lab-marks" style="flex: 0.4">
+                            <h2 class="lab-marks-mark" th:text="${submit_lab.mark}" />
                         </div>
                     </div>
                 </div>

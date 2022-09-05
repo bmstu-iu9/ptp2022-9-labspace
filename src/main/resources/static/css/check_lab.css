@@ -232,7 +232,6 @@
     height: 35px;
     z-index: 2;
     background: url("../img/check_mark.svg") no-repeat;
-    background-size: 35px 35px;
     position: relative;
     bottom: 39px;
     right: 55px;
