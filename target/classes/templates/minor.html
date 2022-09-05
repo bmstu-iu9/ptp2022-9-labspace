@@ -45,16 +45,20 @@
             <h1>Completed labs</h1>
           </div>
           <div class="columns-name">
-            <p>Name of lab(course)</p>
+            <p>Name of lab</p>
+            <p>Course</p>
             <p>Upload date</p>
             <p>Mark</p>
           </div>
           <div class="lab-space" th:each="submit_lab : ${submit_labs}">
-            <div class="lab-name" th:switch="${submit_lab.mark}">
+            <div class="lab-name"th:switch="${submit_lab.mark}">
               <a th:href="@{'/main/lab_id' + ${submit_lab.getLabInfo().getId()}}">
-                <h2 class="h2-lab-name" th:case="'-2'" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'"/>
+                <h2 class="h2-lab-name" th:case="'-2'" th:text="${submit_lab.getLabInfo().getName()}"/>
               </a>
-              <h2 class="h2-lab-name" th:case="*" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'" />
+              <h2 class="h2-lab-name" style="cursor: default; pointer-events: none; color: #1ab394;" th:case="*" th:text="${submit_lab.getLabInfo().getName()}" />
+            </div>
+            <div class="lab-course">
+              <h2 class="h2-lab-name" th:text="${submit_lab.getLabInfo().getCourse().getName()}" />
             </div>
             <h2 class="lab-course" th:text="${format.format(submit_lab.getSendDate())}"/>
             <div class="lab-marks" th:switch="${submit_lab.mark}">
