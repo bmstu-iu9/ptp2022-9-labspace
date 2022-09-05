@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
 <head>
-    <title>LS | Check labwork</title>
+    <title th:text="'LS | ' + ${lab_info.getName()}"></title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
@@ -62,12 +62,12 @@
                                 <div class="check_lab_row">
                                     <div class="check_lab_left_form">
                                         <span class="check_lab_title_text" >Full name</span>
-                                        <label class="check_lab_full_name" th:text="${user.getLastName()} + ' ' +  ${user.getFirstName()} + ' ' + ${user.getPatronymic()}"></label><!-- th:text="*{}"-->
+                                        <label class="check_lab_full_name" th:text="${user.getLastName()} + ' ' +  ${user.getFirstName()} + ' ' + ${user.getPatronymic()}"></label>
                                     </div>
 
                                     <div class="check_lab_right_form">
                                         <span class="check_lab_title_text">Group</span>
-                                        <label class="check_lab_group" th:text="${user.getGroupp().getName()}"></label><!-- th:text="*{}"-->
+                                        <label class="check_lab_group" th:text="${user.getGroupp().getName()}"></label>
                                     </div>
                                 </div>
 
@@ -75,13 +75,13 @@
                                     <div class="check_lab_left_half_form">
                                         <span class="check_lab_title_text" >Loaded labwork</span>
                                         <a th:href="@{'/admin/check_lab_id' + ${lab_info.getId()} + '/download/user_id' + ${user.getId()}}">
-                                        <label class="check_lab_loaded_labwork">check it</label><!-- th:text="*{}"-->
+                                        <div class="check_lab_loaded_labwork">check it</div>
                                         </a>
                                     </div>
 
                                     <div class="check_lab_right_half_form">
                                         <span class="check_lab_title_text">Load time</span>
-                                        <label class="check_lab_load_time" th:text="${format.format(submit_lab.getSendDate())}"></label><!-- th:text="*{08.09.2022 11:30:25}"-->
+                                        <label class="check_lab_load_time" th:text="${format.format(submit_lab.getSendDate())}"></label>
                                     </div>
                                 </div>
 
@@ -138,7 +138,7 @@
 
                                 <div class="revision">
                                     <span class="check_lab_title_text">Comment for revision</span>
-                                    <textarea class="check_lab_input" placeholder="Add comment" name="comment"></textarea><!-- th:field="*{}"-->
+                                    <textarea class="check_lab_input" placeholder="Add comment" name="comment"></textarea>
                                 </div>
                                 <button class="check_lab_confirm_button" type="submit">Confirm</button>
                             </div>
