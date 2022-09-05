@@ -95,7 +95,7 @@
           </div>
           <div class="lab-space" th:each="submit_lab : ${submit_labs_graded}">
             <div class="student-name">
-              <a class="h2-lab-name" th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/>
+              <a class="h2-lab-name" th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/admin/profile_read_only' + ${submit_lab.getUser().getId()}"/>
             </div>
             <div class="student-group" th:text="${submit_lab.getUser().getGroupp().getName()}" style="flex: 0.6;"/>
             <h2 class="student-send-date" th:text="${submit_lab.getSendDate()}"/>
