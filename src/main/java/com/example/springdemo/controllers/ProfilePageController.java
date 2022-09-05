@@ -54,7 +54,7 @@ public class ProfilePageController {
         return "redirect:/main/index";
     }
 
-    @GetMapping(path = "/main/profile_read_only{user_id}")
+    @GetMapping(path = "/admin/profile_read_only{user_id}")
     public String getUserReadOnly( Model model, @PathVariable("user_id") Long user_id) {
         User user = userService.getById(user_id);
         model.addAttribute("user", user);

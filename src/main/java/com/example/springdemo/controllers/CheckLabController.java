@@ -40,12 +40,12 @@ public class CheckLabController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/admin/check_lab_id{lab_id}user_id{user_id}")
+    @GetMapping("admin/check_lab_id{lab_id}/user_id{user_id}")
     public String checkLab(Model model, @PathVariable Long lab_id, @PathVariable Long user_id){
         LabInfo labInfo = labInfoRepository.findById(lab_id).get();
         Optional<SubmitLab> submitLab = submitLabRepository.findByUserIdAndLabInfoId(user_id,lab_id);
         if (!submitLab.isPresent()){
-            return "redirect:/admin/check_lab_id" + lab_id;
+            return "redirect:admin/check_lab_id" + lab_id;
         }
         model.addAttribute("lab_info", labInfo);
         model.addAttribute("user", userRepository.findById(user_id).get());
@@ -63,7 +63,7 @@ public class CheckLabController {
         return "check_lab";
     }
 
-    @PostMapping("/admin/check_lab_id" + "{lab_id}" + "user_id" + "{user_id}")
+    @PostMapping("/admin/check_lab_id" + "{lab_id}" + "/user_id" + "{user_id}")
     public String writeMark(@NotNull HttpServletRequest request, @PathVariable Long lab_id, @PathVariable Long user_id){
       Optional <SubmitLab> submitLab1 = submitLabRepository.findByUserIdAndLabInfoId(user_id,lab_id);
       SubmitLab submitLab=submitLab1.get();
