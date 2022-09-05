@@ -1,8 +1,8 @@
 package com.example.springdemo.service;
 
-import ch.qos.logback.core.Context;
 import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.SubmitLab;
+import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.repository.SubmitLabRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
@@ -82,15 +83,30 @@ public class FileStorageServiceImpl implements FileStorageService {
             Files.createDirectories(this.fileStorageLocation.resolve(path));
             Path targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            SubmitLab submitLab = SubmitLab.builder()
-                    .user(authenticationService.getCurrentUser())
-                    .source(targetLocation.toString())
-                    .labInfo(labInfoRepository.getReferenceById(labId))
-                    .sendDate(new Date(System.currentTimeMillis()))
-                    .mark(-1)
-                    .build();
-
-            submitLabRepository.saveAndFlush(submitLab);
+            User user = authenticationService.getCurrentUser();
+            Optional<SubmitLab> submitLabOpt = submitLabRepository.findByUserIdAndLabInfoId(user.getId(),labId);
+            if (submitLabOpt.isPresent()){
+                SubmitLab sb = submitLabOpt.get();
+                if (sb.isOnRevision()){
+                    Files.delete(Paths.get(sb.getSource()));
+                    sb.setSource(targetLocation.toString());
+                    sb.setOnRevision(false);
+                    sb.setRevisionComment(null);
+                    sb.setSendDate(new Date((System.currentTimeMillis())));
+                    submitLabRepository.saveAndFlush(sb);
+                }else {
+                    throw new RuntimeException("You have submitted this labwork already!");
+                }
+            }else {
+                SubmitLab submitLab = SubmitLab.builder()
+                        .user(authenticationService.getCurrentUser())
+                        .source(targetLocation.toString())
+                        .labInfo(labInfoRepository.getReferenceById(labId))
+                        .sendDate(new Date(System.currentTimeMillis()))
+                        .mark(-1)
+                        .build();
+                submitLabRepository.saveAndFlush(submitLab);
+            }
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
         }

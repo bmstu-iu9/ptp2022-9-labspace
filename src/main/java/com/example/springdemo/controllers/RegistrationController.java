@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -66,8 +67,11 @@ public class RegistrationController {
                           RedirectAttributes redirectAttributes,
                           HttpServletRequest request,
                           HttpServletResponse response) throws ServletException {
+        List<Groupp> grouppList = grouppRepository.findAll();
+        model.addAttribute("groupps", grouppList);
         if (bindingResult.hasErrors()) {
             model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("groupps", grouppList);
             return "register";
         }
         try {
@@ -77,34 +81,39 @@ public class RegistrationController {
         } catch (NumberParseException e) {
             bindingResult.rejectValue("phoneNumber", "user.phoneNumber", "Phone number is not correct");
             model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("groupps", grouppList);
             return "register";
         }
         if (userService.isAlreadyPresent(user)) {
             bindingResult.rejectValue("email", "user.email", "An account already exists for this email.");
             model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("groupps", grouppList);
             return "register";
         } else if (!user.getPassword().equals(user.getPasswordConfirm())) {
             bindingResult.rejectValue("password", "user.getPasswordConfirm", "Passwords are not equal");
             model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("groupps", grouppList);
             return "register";
         } else if (userService.firstNameContainsIllegalChars(user)) {
             bindingResult.rejectValue("firstName", "user.containsIllegalChar", "Имя может содержать только буквы и символ \"-\"");
             model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("groupps", grouppList);
             return "register";
         } else if (userService.lastNameContainsIllegalChars(user)) {
             bindingResult.rejectValue("lastName", "user.containsIllegalChar", "Фамилия может содержать только буквы и символ \"-\"");
             model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("groupps", grouppList);
             return "register";
         } else {
             grouppRepository.findById(Long.valueOf(request.getParameter("groupp_name"))).ifPresent(user::setGroupp);
             userService.registerUser(user);
-            redirectAttributes.addAttribute("email", user.getEmail());
+            redirectAttributes.addAttribute("activationEmail", user.getEmail());
             return "redirect:/auth/login";
         }
     }
 
     @GetMapping("/auth/login")
-    public String login(@ModelAttribute("email") String email) {
+    public String login(@ModelAttribute("activationEmail") String email) {
         if (Objects.equals(authenticationService.getCurrentUsername(), "guest")) {
             return "login";
         } else {

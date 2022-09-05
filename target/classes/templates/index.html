@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
 <head>
+    <title>LS | Available labs</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#1ab394">
+    <meta name="theme-color" content="#1ab394">
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,7 +57,7 @@
                         <h2 class="lab-course" th:text="${lab.getCourse().name}" />
                         <div class="lab-marks">
                             <div th:each="dead : ${deadlineRepository.findAllByLabInfoId(lab.getId())}" >
-                                <h3 class="lab-marks-mark" th:text="${dead.getMaxMark()} + ' point(-s) - ' + ${dead.getDeadlineDate()}"/>
+                                <h3 class="lab-marks-mark" th:text="${dead.getMaxMark()} + ' point(-s) - ' + ${format.format(dead.getDeadlineDate())}"/>
                             </div>
                         </div>
                     </div>

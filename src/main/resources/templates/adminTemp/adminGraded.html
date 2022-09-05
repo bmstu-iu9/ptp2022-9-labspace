@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
+<head>
+    <title>LS | Graded labs</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#1ab394">
+    <meta name="theme-color" content="#1ab394">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/js/jquery-2.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+    <script th:src="@{/js/inspinia.js}"></script>
+    <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+</head>
+
+<body>
+
+<div id="wrapper">
+    <div th:insert="~{adminTemp/adminSideMenu3 :: copy}"></div>
+    <div id="page-wrapper" class="gray-bg">
+        <div th:insert="~{adminTemp/adminTemplateOfUpperPanel :: copy}"></div>
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center dashboard-header">
+                        <h1>Graded labs</h1>
+                    </div>
+                    <div class="columns-name">
+                        <p>Name of lab(course)</p>
+                        <p>Student</p>
+                        <p>Group</p>
+                        <p>Mark</p>
+                    </div>
+                    <div class="lab-space" th:each="submit_lab : ${submit_labs}">
+                        <div class="lab-name" th:switch="${submit_lab.mark}">
+                            <a th:href="@{'/main/lab_id' + ${submit_lab.getLabInfo().getId()}}">
+                                <h2 class="h2-lab-name" th:case="'-2'" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'"/>
+                            </a>
+                            <h2 class="h2-lab-name" th:case="*" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'" />
+                        </div>
+                        <div class="student-name"><a th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/admin/profile_read_only' + ${submit_lab.getUser().getId()}"/></div>
+                            <div class="student-group" th:text="${submit_lab.getUser().getGroupp().getName()}" />
+                        <div class="lab-marks" th:switch="${submit_lab.mark}">
+                            <h2 class="lab-marks-mark" th:case="'-1'" th:text="'Mark is not set'" />
+                            <h2 class="lab-marks-mark" th:case="'-2'" th:text="'Editing is required'"/>
+                            <h2 class="lab-marks-mark" th:case="*" th:text="${submit_lab.mark} + ' point(-s)'" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

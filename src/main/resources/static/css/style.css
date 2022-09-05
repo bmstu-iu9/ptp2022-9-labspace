@@ -77,6 +77,7 @@ h5 {
 }
 .navbar {
   border: 0;
+  display: flex;
 }
 .navbar-default {
   background-color: transparent;
@@ -3351,6 +3352,7 @@ body.boxed-layout #wrapper {
 }
 a {
   cursor: pointer;
+  color: #1ab394;
 }
 a:hover,
 a:focus {
@@ -8375,6 +8377,12 @@ body.md-skin {
   width: 80%;
 }
 
+.create-lab {
+  margin: 13px 0 0 0;
+  font-size: 20px;
+  font-weight: 400;
+}
+
 .sticky{
   position: sticky;
 }
@@ -8478,17 +8486,46 @@ body.md-skin {
   color: #1ab394;
 }
 
+.lab-name.admin {
+  flex: 5 5 0;
+}
+
 .lab-name:hover {
   color: #213a53;
 }
 
 .h2-lab-name {
-  margin: 0;
+  margin: auto;
+}
+
+.student-send-date {
+  margin: auto;
+  font-weight: 400;
+  font-size: 24px;
+  padding-right: 10px;
+}
+
+.student-name {
+  margin: auto;
+  font-weight: 400;
+  font-size: 24px;
+  padding: 10px;
+}
+
+.student-group {
+  margin: auto;
+  font-weight: 400;
+  font-size: 24px;
+  padding-right: 10px;
 }
 
 .lab-course {
   margin: auto;
   padding: 10px;
+}
+
+.lab-course.admin {
+  flex: 5 5 0;
 }
 
 h2.lab-course {
@@ -8502,9 +8539,23 @@ h2.lab-course {
   padding: 5px;
 }
 
+.lab-groups {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 5px;
+  flex-wrap: wrap;
+  flex: 5 5 0;
+  max-height: 91px;
+}
+
 .lab-marks-mark {
   margin: 5px 5px;
   font-weight: 400;
+}
+
+.lab-groups-group {
+  width: fit-content;
 }
 
 .columns-name {
@@ -8516,4 +8567,9 @@ h2.lab-course {
 
 .columns-name > * {
   flex: 1;
+}
+
+.visible {
+  margin: auto;
+  flex: 2 2 0;
 }

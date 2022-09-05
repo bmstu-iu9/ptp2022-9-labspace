@@ -9,13 +9,19 @@ import com.example.springdemo.repository.SubmitLabRepository;
 import com.example.springdemo.service.AuthenticationService;
 import com.example.springdemo.service.LabInfoService;
 import com.example.springdemo.service.UserService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -40,7 +46,19 @@ public class MainController {
     AuthenticationService authenticationService;
 
     @GetMapping("/")
-    public String view() {
+    public String view(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
+        if(Objects.equals(authenticationService.getCurrentUsername(), "guest")){
+            return "redirect:/auth/login";
+        }
+        String role =  authResult.getAuthorities().toString();
+        if(role.contains("ADMIN")){
+            //response.sendRedirect(response.encodeRedirectURL( "/admin/" + request.getContextPath()));
+            return "redirect:/admin/index";
+        }
+        else if(role.contains("USER")) {
+            //response.sendRedirect(response.encodeRedirectURL("/user/" + request.getContextPath()));
+            return "redirect:/main/index";
+        }
         return "redirect:/main/index";
     }
 
@@ -52,6 +70,7 @@ public class MainController {
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
             List<SubmitLab> submit_labs = submitLabRepository.findByUserId(user.getId());
+            Collections.reverse(submit_labs);
             model.addAttribute("submit_labs", submit_labs);
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             model.addAttribute("format", format);
@@ -61,6 +80,9 @@ public class MainController {
         }
         return "minor";
     }
+
+    @NotNull
+
 
     @Autowired
     private DeadlineRepository deadlineRepository;

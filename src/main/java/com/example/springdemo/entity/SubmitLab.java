@@ -57,5 +57,9 @@ public class SubmitLab {
     private LabInfo labInfo;
 
     private String revisionComment;
-    private boolean onRevision = false;
+    private Boolean onRevision = false;
+
+    public boolean isOnRevision() {
+        return onRevision;
+    }
 }

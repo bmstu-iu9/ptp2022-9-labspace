@@ -1,0 +1,257 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Comfortaa, serif;
+    box-sizing: border-box;
+}
+
+.check_lab_container {
+    display: flex;
+    max-width: 920px;
+    flex-direction: column;
+    margin: 0 auto;
+    color: #293846;
+    background-color: #F3F3F4;
+}
+
+@font-face {
+    font-family: Comfortaa;
+    src: url("../fonts/Comfortaa-VariableFont_wght.ttf");
+}
+
+.check_lab_title {
+    display: flex;
+    font-weight: bold;
+    font-size: 70px;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.check_lab_form {
+    display: flex;
+    flex-direction: column;
+}
+
+.check_lab_row {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.check_lab_left_form {
+    flex: 3.5;
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.check_lab_title_text {
+    display: block;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.check_lab_full_name {
+    border: #293846 4px solid;
+    height: 70px;
+    border-radius: 20px;
+    background-color: #F3F3F4;
+    text-align: center;
+    font-size: 33px;
+    line-height: 65px;
+    overflow: hidden;
+}
+
+.check_lab_right_form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.check_lab_group {
+    border: #293846 4px solid;
+    height: 70px;
+    border-radius: 20px;
+    background-color: #F3F3F4;
+    text-align: center;
+    font-size: 33px;
+    line-height: 65px;
+    overflow: hidden;
+}
+
+.check_lab_left_half_form {
+    flex: 1;
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.check_lab_loaded_labwork {
+    height: 70px;
+    border-radius: 20px;
+    background-color: #293846;
+    color: #F3F3F4;
+    text-align: center;
+    font-size: 33px;
+    line-height: 70px;
+    font-weight: lighter;
+    overflow: auto;
+}
+
+.check_lab_right_half_form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.check_lab_load_time {
+    border: #293846 4px solid;
+    height: 70px;
+    border-radius: 20px;
+    background-color: #F3F3F4;
+    text-align: center;
+    font-size: 33px;
+    line-height: 70px;
+    overflow: clip;
+}
+
+.check_lab_criterias {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.check_lab_criteria{
+    display: inherit;
+    align-items: center;
+}
+
+.check_lab_criteria .check_lab_title_text {
+    font-size: 16px;
+}
+
+.check_lab_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: #293846 4px solid;
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.final_mark_input {
+    margin-top: 5px;
+    font-size: 16px;
+    width: 100px;
+    border-radius: 10px;
+    font-weight: bold;
+    border: #293846 4px solid;
+    cursor: pointer;
+}
+
+.final_mark_btn {
+    cursor: pointer;
+}
+
+.send-revision {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+}
+
+.check_lab_input {
+    border: #293846 4px solid;
+    color: #293846;
+    width: 100%;
+    border-radius: 20px;
+    background-color: #F3F3F4;
+    text-align: left;
+    padding: 30px 40px;
+    height: 230px;
+    font-size: 37px;
+    resize: none;
+}
+
+.check_lab_confirm_button {
+    font-size: 35px;
+    color: #F3F3F4;
+    background-color: #1ab394;
+    width: 100%;
+    height: 60px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.send-revision {
+    position: relative;
+}
+
+.send-revision_input {
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.send-revision_label {
+    font-size: 28px;
+    cursor: pointer;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.send-revision_label:before {
+    content: "";
+    display: block;
+    border: #293846 4px solid;
+    width: 35px;
+    height: 35px;
+    border-radius: 7px;
+    z-index: 1;
+    position: relative;
+    top: 35px;
+    right: 55px;
+    cursor: pointer;
+
+    transition: background .1s linear, border .1s linear;
+}
+
+.send-revision_label:after {
+    content: "";
+    display: block;
+    border-radius: 7px;
+    width: 35px;
+    height: 35px;
+    z-index: 2;
+    background: url("../img/check_mark.svg") no-repeat;
+    background-size: 35px 35px;
+    position: relative;
+    bottom: 39px;
+    right: 55px;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.send-revision_input:checked + .send-revision_label:before {
+    border: #1ab394 4px solid;
+    background-color: #1ab394;
+}
+
+.send-revision_input:checked + .send-revision_label:after {
+    opacity: 1;
+    border: #1ab394 4px solid;
+}
+
+.revision {
+    display: none;
+    margin-bottom: 15px;
+}
+

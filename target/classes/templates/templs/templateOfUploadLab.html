@@ -3,6 +3,16 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 
+    <title th:text="'LS | ' + ${lab_info.name}"></title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#1ab394">
+    <meta name="theme-color" content="#1ab394">
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/teacher_lab.css">
@@ -69,8 +79,8 @@
                             <div class="teacher_row">
                                 <div class="student_left_form">
                                     <span class="teacher_title_text">Useful files</span>
-                                    <a th:href="@{lab_id{id}/download(id=*{lab_info.getId()})}">
-                                    <div class="student_upload" id="btn" >Download</div>
+                                    <a th:href="@{'lab_id' + ${lab_info.getId()} + '/download'}">
+                                        <div class="student_upload" id="btn" >Download</div>
                                     </a>
                                 </div>
                                 <div class="student_right_form">

@@ -19,7 +19,7 @@ public class FileDownloadController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    @GetMapping("main/lab_id{labId}/download/user_id{userId}")
+    @GetMapping("admin/check_lab_id{labId}/download/user_id{userId}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable Long labId, @PathVariable Long userId) {
 

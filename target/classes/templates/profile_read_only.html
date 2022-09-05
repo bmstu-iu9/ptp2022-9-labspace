@@ -3,6 +3,16 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head>
+  <title>LS | Student profile</title>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/img/favicons/site.webmanifest">
+  <link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#1ab394">
+  <meta name="theme-color" content="#1ab394">
+
   <link rel="stylesheet" th:href="@{../static/css/profile.css}">
 
   <meta charset="utf-8">
@@ -41,14 +51,14 @@
 </head>
 <body>
 <div id="wrapper">
-  <div th:insert="~{templs/templateOfSideMenu1 :: copy}"></div>
+  <div th:insert="~{adminTemp/adminSideMenu2:: copy}"></div>
   <div id="page-wrapper" class="gray-bg">
-    <div th:insert="~{templs/templateOfUpperPanel :: copy}"></div>
+    <div th:insert="~{adminTemp/adminTemplateOfUpperPanel :: copy}"></div>
     <div class="wrapper wrapper-content animated fadeInRight">
       <div class="row">
         <div class="col-lg-9">
           <form class="user_profile_container" method="post" th:object="${user}">
-            <span class="user_profile_title">Your account</span>
+            <span class="user_profile_title">Account</span>
             <div id="form_container">
               <div>
                 <span class="user_form_title">Surname</span>
@@ -93,6 +103,23 @@
           <div class="user_available_labs">
             <div id="user_number_available_labs" th:text="${countOfAvalibleLabs}"></div>
             <div id="user_title_available_labs">available labs</div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="text-center dashboard-header">
+            <h1>Ungraded labs</h1>
+          </div>
+          <div class="columns-name">
+            <p>Name of lab(course)</p>
+            <p>Upload date</p>
+          </div>
+
+          <div class="lab-space" th:each="submit_lab : ${submit_labs}">
+              <a th:href="'/admin/check_lab_id' + ${submit_lab.getId()} + 'user_id' + ${submit_lab.getUser().getId()}">
+                <h2 class="h2-lab-name"  th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'"/>
+              </a>
+              <h2 class="lab-course" th:text="${submit_lab.getSendDate()}"/>
+<!--            <h2><a class="h2-lab-name" th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/> <h2 class="h2-lab-name" th:text="'(' + ${submit_lab.getUser().getGroupp().getName()} + ')'" /></h2>-->
           </div>
         </div>
       </div>

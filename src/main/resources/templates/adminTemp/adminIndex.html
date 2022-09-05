@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
+<head>
+
+    <title>LS | Uploaded labs</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#1ab394">
+    <meta name="theme-color" content="#1ab394">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/js/jquery-2.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+    <script th:src="@{/js/inspinia.js}"></script>
+    <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+</head>
+
+<body>
+
+<div id="wrapper">
+    <div th:insert="~{adminTemp/adminSideMenu1:: copy}"></div>
+    <div id="page-wrapper" class="gray-bg">
+        <div th:insert="~{adminTemp/adminTemplateOfUpperPanel :: copy}"></div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <span class="text-center dashboard-header">
+                        <h1>Uploaded labs</h1>
+                    </span>
+
+<!--                    <div class="teacher_right_form">-->
+<!--                        <span class="teacher_title_text">Group <span style="color: mediumvioletred">*</span> </span>-->
+<!--                        &lt;!&ndash;            <input class="input group_input" list="group_list" placeholder="Select the group">&ndash;&gt;-->
+<!--                        <select  id="multiselect" required multiple  name="groupss">-->
+<!--                            <option  th:each="group : ${groupList}"-->
+<!--                                     th:value="${group.id}"-->
+<!--                                     th:text="${group.name}"></option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+
+                    <div class="columns-name">
+                        <p style="flex: 5 5 0;">Name of lab</p>
+                        <p style="flex: 5 5 0;">Course</p>
+                        <p style="flex: 5 5 0;">Groups</p>
+                        <p style="flex: 2 2 0;">Is Visible</p>
+                    </div>
+
+                    <div class="lab-space admin" th:each="lab : ${labs}">
+                        <a class="lab-name admin" th:href="'/admin/check_lab_id' + ${lab.getId()}" >
+                            <h2 class="h2-lab-name admin" th:text="${lab.name}" />
+                        </a>
+                        <h2 class="lab-course admin" th:text="${lab.getCourse().name}" />
+                        <div class="lab-groups">
+                            <div class="lab-groups-group" th:each="group : ${lab.getGroupps()}" style="word-break: break-all">
+                                <h3 th:text="${group.getName()}" style="word-break: break-all; margin: 5px 5px; font-weight: 400;"/>
+                            </div>
+                        </div>
+                     <form th:switch="${lab.getIsVisible()}" method="post"  name="changeVisibility" class="visible">
+                         <button th:case="false" type="submit" name = "Do"  th:value="'t' + ${lab.id}"
+                                 class="btn btn-primary" >Publish</button>
+                         <button th:case="true" type="submit" name = "Do"  th:value="'f' + ${lab.id}"
+                                 class="btn btn-info" >Hide</button>
+
+                     </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#multiselect').multiselect({
+            enableFiltering: true,
+            nonSelectedText:'Select the group',
+            buttonWidth: '100%',
+            buttonClass: 'teacher_select',
+        });
+    });
+</script>
+<script src="../static/js/teacher_lab/timeChange.js"></script>
+<script src="../static/js/teacher_lab/markChange.js"></script>
+<script src="../static/js/teacher_lab/dateChange.js"></script>
+<script src="../static/js/teacher_lab/customButton.js"></script>
+<script src="../static/js/teacher_lab/preventEnterSubmit.js"></script>-->
+
+</html>

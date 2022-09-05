@@ -2,11 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
+    <title>LS | New labwork</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/teacher_lab.css">
-    <title>LABSPACE | Add new labwork</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#1ab394">
+    <meta name="theme-color" content="#1ab394">
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
@@ -40,7 +48,7 @@
 </head>
 <body>
 <div id="wrapper">
-    <div th:insert="~{templs/templateOfSideMenu1 :: copy}"></div>
+    <div th:insert="~{adminTemp/adminSideMenu1:: copy}"></div>
     <div id="page-wrapper" class="gray-bg">
         <div th:insert="~{templs/templateOfUpperPanel :: copy}"></div>
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -109,12 +117,12 @@
                                         <input style="display: none" class="teacher_calendar" type="date" name="date1">
                                         <div class="teacher_block teacher_date">
                                             <div style="display: block; text-align: center; margin-top: 5px;">
-                                                <div class="teacher_dayMonth">01.01.</div>
-                                                <div class="teacher_year">2022</div>
-                                                <div class="teacher_time">00:00</div>
+                                                <div class="teacher_dayMonth">ddMM</div>
+                                                <div class="teacher_year">yyyy</div>
+                                                <div class="teacher_time">hh:mm</div>
                                             </div>
                                         </div>
-                                        <input style="display: none" class="teacher_time_input" type="time" value="00:00" name="time1">
+                                        <input style="display: none" class="teacher_time_input" type="time" name="time1">
                                     </div>
                                     <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
                                     <div style="display: block">
@@ -146,12 +154,12 @@
                                         <input style="display: none" class="teacher_calendar" type="date" name="date2">
                                         <div class="teacher_block teacher_date">
                                             <div style="display: block; text-align: center; margin-top: 5px;">
-                                                <div class="teacher_dayMonth">01.01.</div>
-                                                <div class="teacher_year">2022</div>
-                                                <div class="teacher_time">00:00</div>
+                                                <div class="teacher_dayMonth">ddMM</div>
+                                                <div class="teacher_year">yyyy</div>
+                                                <div class="teacher_time">hh:mm</div>
                                             </div>
                                         </div>
-                                        <input style="display: none" class="teacher_time_input" type="time" value="00:00" name="time2">
+                                        <input style="display: none" class="teacher_time_input" type="time"  name="time2">
                                     </div>
                                     <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
                                     <div style="display: block">
@@ -183,12 +191,12 @@
                                         <input style="display: none" class="teacher_calendar" type="date" name="date3">
                                         <div class="teacher_block teacher_date">
                                             <div style="display: block; text-align: center; margin-top: 5px;">
-                                                <div class="teacher_dayMonth">01.01.</div>
-                                                <div class="teacher_year">2022</div>
-                                                <div class="teacher_time">00:00</div>
+                                                <div class="teacher_dayMonth">ddMM</div>
+                                                <div class="teacher_year">yyyy</div>
+                                                <div class="teacher_time">hh:mm</div>
                                             </div>
                                         </div>
-                                        <input style="display: none" class="teacher_time_input" type="time" value="00:00" name="time3">
+                                        <input style="display: none" class="teacher_time_input" type="time" name="time3">
                                     </div>
                                     <span style="font-weight: bold; margin: 15px 10px 0 10px; font-size: 30px;">-</span>
                                     <div style="display: block">

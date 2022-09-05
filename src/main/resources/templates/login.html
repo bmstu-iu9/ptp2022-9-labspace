@@ -2,6 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
+    <title>LS | Login</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#1ab394">
+    <meta name="theme-color" content="#1ab394">
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,9 +41,9 @@
             Login in. To see it.
         </p>
         <form class="m-t" role="form" th:action="@{/auth/login}"  method="post">
-            <div    th:if="${email.toString().length()}"
+            <div th:if="${activationEmail} and ${activationEmail.toString().length()}"
                     class="middle-box text-center loginscreen animated fadeInDown" style="padding-top: 5px">
-                <div class="alert alert-success" role="alert" th:text="'Activation code sent to ' + ${email} +
+                <div class="alert alert-success" role="alert" th:text="'Activation code sent to ' + ${activationEmail} +
                                                                         '. Check it to confirm your email.'" style="margin-top: 0px"></div>
             </div>
             <div >
