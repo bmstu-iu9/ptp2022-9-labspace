@@ -20,6 +20,8 @@ public interface SubmitLabRepository extends JpaRepository<SubmitLab, Long> {
 
     List<SubmitLab> findAllByUserId(Long userId);
 
+    List<SubmitLab> findByUser_IdAndOnRevisionFalse(Long id);
+
     List<SubmitLab> findAll();
 
     List<SubmitLab> findAllByUserIdAndMarkGreaterThan(Long user_id, int mark);

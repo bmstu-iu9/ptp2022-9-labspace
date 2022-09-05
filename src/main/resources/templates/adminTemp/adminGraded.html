@@ -57,7 +57,7 @@
                             </a>
                             <h2 class="h2-lab-name" th:case="*" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'" />
                         </div>
-                        <div class="student-name"><a th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/></div>
+                        <div class="student-name"><a th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/admin/profile_read_only' + ${submit_lab.getUser().getId()}"/></div>
                             <div class="student-group" th:text="${submit_lab.getUser().getGroupp().getName()}" />
                         <div class="lab-marks" th:switch="${submit_lab.mark}">
                             <h2 class="lab-marks-mark" th:case="'-1'" th:text="'Mark is not set'" />

@@ -48,7 +48,7 @@ public class LabInfoServiceImpl implements LabInfoService {
     }
 
     public Set<LabInfo> getAvalibleLabs(User user) {
-        Set<Long> labid = submitLabRepository.findAllByUserId(user.getId()).stream()
+        Set<Long> labid = submitLabRepository.findByUser_IdAndOnRevisionFalse(user.getId()).stream()
                 .map(a -> a.getLabInfo().getId())
                 .collect(Collectors.toSet());
         if (labid.isEmpty()) {

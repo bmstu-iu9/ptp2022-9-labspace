@@ -71,7 +71,11 @@ public class CheckLabController {
            submitLab.setRevisionComment( request.getParameter("comment"));
            submitLab.setOnRevision(true);
        }
-       submitLab.setMark(Integer.parseInt(request.getParameter("final_mark")));
+      try {
+          submitLab.setMark(Integer.parseInt(request.getParameter("final_mark")));
+      } catch (NumberFormatException ex) {
+          submitLab.setMark(0);
+      }
        submitLabRepository.save(submitLab);
        return "redirect:/admin/check_lab_id" + lab_id;
     }
