@@ -110,14 +110,16 @@
             <h1>Ungraded labs</h1>
           </div>
           <div class="columns-name">
-            <p>Name of lab(course)</p>
+            <p>Name of lab (course)</p>
             <p>Upload date</p>
           </div>
 
           <div class="lab-space" th:each="submit_lab : ${submit_labs}">
+            <div class="lab-name">
               <a th:href="'/admin/check_lab_id' + ${submit_lab.getLabInfo().getId()} + '/user_id' + ${submit_lab.getUser().getId()}">
                 <h2 class="h2-lab-name"  th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'"/>
               </a>
+            </div>
               <h2 class="lab-course" th:text="${submit_lab.getSendDate()}"/>
 <!--            <h2><a class="h2-lab-name" th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/> <h2 class="h2-lab-name" th:text="'(' + ${submit_lab.getUser().getGroupp().getName()} + ')'" /></h2>-->
           </div>
