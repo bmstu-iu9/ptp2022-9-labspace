@@ -95,6 +95,7 @@ public class AdminMainController {
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
             List<SubmitLab> submit_labs = submitLabRepository.findAllNotChecked();
+            Collections.reverse(submit_labs);
             model.addAttribute("submit_labs", submit_labs);
         } else {
             model.addAttribute("name", "guest");
