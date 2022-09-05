@@ -50,42 +50,49 @@
     <div th:insert="~{adminTemp/adminTemplateOfUpperPanel :: copy}"></div>
     <div class="wrapper wrapper-content animated fadeInRight">
       <div class="row">
-
+        <span class="user_profile_title" th:text="${lab_info.getName()}"></span>
         <div class="col-lg-12">
-          <span class="user_profile_title" th:text="${lab_info.getName()}"></span>
           <div class="text-center dashboard-header">
             <h1>Ungraded labs</h1>
           </div>
           <div class="columns-name">
             <p>Student</p>
+            <p style="flex: 0.6">Group</p>
             <p>Upload date</p>
-            <p>Add mark</p>
+            <p style="flex:0.4">Mark</p>
           </div>
           <div class="lab-space" th:each="submit_lab : ${submit_labs}">
-            <div class="lab-name">
-              <h2><a class="h2-lab-name" th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/> <h2 class="h2-lab-name" th:text="'(' + ${submit_lab.getUser().getGroupp().getName()} + ')'" /></h2>
+            <div class="student-name">
+              <a th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/>
             </div>
-            <h2 class="lab-course" th:text="${submit_lab.getSendDate()}"/>
+            <div class="student-group" th:text="${submit_lab.getUser().getGroupp().getName()}" style="flex: 0.6;"/>
+            <div class="student-send-date" th:text="${submit_lab.getSendDate()}"/>
+            <div style="margin: auto; flex:0.38;">
             <a th:href="'/admin/check_lab_id' + ${submit_lab.getLabInfo().getId()} + 'user_id' + ${submit_lab.getUser().getId()}">
-              <h2 class="h2-lab-name"  th:text="'Add your mark'"/>
+              <h2 class="h2-lab-name"  th:text="'Add mark'"/>
             </a>
+            </div>
           </div>
+        </div>
+
         <div class="col-lg-12">
           <div class="text-center dashboard-header">
             <h1>Graded labs</h1>
           </div>
           <div class="columns-name">
             <p>Student</p>
+            <p style="flex: 0.6">Group</p>
             <p>Upload date</p>
-            <p>Mark</p>
+            <p style="flex: 0.4">Mark</p>
           </div>
           <div class="lab-space" th:each="submit_lab : ${submit_labs_graded}">
-            <div class="lab-name">
-              <h2><a class="h2-lab-name" th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/> <h2 class="h2-lab-name" th:text="'(' + ${submit_lab.getUser().getGroupp().getName()} + ')'" /></h2>
+            <div class="student-name">
+              <a class="h2-lab-name" th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/main/profile_read_only' + ${submit_lab.getUser().getId()}"/>
             </div>
-            <h2 class="lab-course" th:text="${submit_lab.getSendDate()}"/>
-            <div class="lab-marks">
-              <h2 class="lab-marks-mark"  th:text="${submit_lab.mark} + ' point(-s)'" />
+            <div class="student-group" th:text="${submit_lab.getUser().getGroupp().getName()}" style="flex: 0.6;"/>
+            <h2 class="student-send-date" th:text="${submit_lab.getSendDate()}"/>
+            <div style="margin: auto; flex:0.38;">
+              <h2 class="h2-lab-name"  th:text="${submit_lab.mark}" />
             </div>
           </div>
         </div>
