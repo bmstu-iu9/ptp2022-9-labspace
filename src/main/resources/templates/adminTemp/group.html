@@ -42,8 +42,8 @@
             <h1 th:text="${group.getName()}"/>
         </div>
 
-        <div th:each="student : ${students}" class="list-group list-group-numbered">
-            <a class="list-group-item" th:text="${student.getLastName()} + ' ' + ${student.getFirstName()}" th:href="'/admin/profile_read_only' + ${student.getId()}"> </a>
+        <div th:each="student,state : ${students}" class="list-group list-group-numbered">
+            <a class="list-group-item" th:text="${state.index + 1} + '. ' + ${student.getLastName()} + ' ' + ${student.getFirstName()}" th:href="'/admin/profile_read_only' + ${student.getId()}"> </a>
                 <span th:if="${group.getGrouppLeader()} and ${group.getGrouppLeader().getId()} == ${student.getId()}">❃</span>
         </div>
 

@@ -69,15 +69,17 @@
                         <h2 class="lab-course admin" th:text="${lab.getCourse().name}" />
                         <div class="lab-groups">
                             <div class="lab-groups-group" th:each="group : ${lab.getGroupps()}" style="word-break: break-all">
-                                <h3 th:text="${group.getName()}" style="word-break: break-all; margin: 5px 5px; font-weight: 400;"/>
+                                <a th:href="'/admin/group' + ${group.getId()}">
+                                    <h3 th:text="${group.getName()}" style="word-break: break-all; margin: 5px 5px; font-weight: 400;"/>
+                                </a>
                             </div>
                         </div>
-
                      <form th:switch="${lab.getIsVisible()}" method="post"  name="changeVisibility" class="visible">
                          <button th:case="false" type="submit" name = "Do"  th:value="'t' + ${lab.id}"
                                  class="btn btn-primary" >Publish</button>
                          <button th:case="true" type="submit" name = "Do"  th:value="'f' + ${lab.id}"
                                  class="btn btn-info" >Hide</button>
+
                      </form>
 
                 </div>
@@ -85,6 +87,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 

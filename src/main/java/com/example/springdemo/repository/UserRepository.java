@@ -26,5 +26,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByGrouppOrderByLastName(Groupp groupp);
 
+    List<User> findAllByGroupp(Groupp groupp);
+
 
 }
