@@ -60,7 +60,7 @@
                         </div>
                         <div class="student-send-date" th:text="${submit_lab.getSendDate()}"/>
                         <div class="student-name"><a th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/admin/profile_read_only' + ${submit_lab.getUser().getId()}"/></div>
-                            <div class="student-group" th:text="${submit_lab.getUser().getGroupp().getName()}" />
+                        <div class="student-group"><a th:text="${submit_lab.getUser().getGroupp().getName()}" th:href="'/admin/group' + ${submit_lab.getUser().getGroupp().getId()}"></a></div>
                     </div>
                 </div>
             </div>

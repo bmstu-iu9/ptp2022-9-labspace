@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface GrouppRepository extends JpaRepository<Groupp, Long> {
     Optional<Groupp> findByName(String name);
 
-    @Query("select sl from Groupp sl where sl.id <> 11")
+    @Query("select sl from Groupp sl where sl.id <> 12")
     List<Groupp> findAllExpTeacher();
 
     @Override
