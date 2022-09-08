@@ -35,9 +35,7 @@ public class Groupp {
 
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToOne
     private User grouppLeader;
 
 
