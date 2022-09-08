@@ -43,7 +43,7 @@ public class VariantServiceImpl implements VariantService {
 
         int k = 0;
         for (Groupp groupp : groupps) {
-            for (User user : userRepository.findAllByGroupp(groupp)) {
+            for (User user : userRepository.findAllByGrouppOrderByLastName(groupp)) {
                 Variant variant = Variant.builder()
                         .variant(variants.get(k))
                         .student(user)
