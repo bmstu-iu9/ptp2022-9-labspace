@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
 <head>
-    <title th:text="'LS | ' + ${group.getName()}"></title>
+    <title>LS | Graded labs</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
@@ -38,15 +38,29 @@
     <div id="page-wrapper" class="gray-bg">
         <div th:insert="~{adminTemp/adminTemplateOfUpperPanel :: copy}"></div>
 
-        <div class="text-center dashboard-header">
-            <h1 th:text="${group.getName()}"/>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center dashboard-header">
+                        <h1>Groups</h1>
+                    </div>
+                    <div class="columns-name">
+                        <p style="flex: 1">Name</p>
+                        <p style="flex: 1">Faculty</p>
+                        <p style="flex: 1">Department</p>
+                    </div>
+                    <div class="lab-space" th:each="group : ${groups}">
+                        <div class="lab-name" >
+                            <a class="lab-name admin" th:href="'/admin/group' + ${group.getId()}" >
+                                <h2 class="h2-lab-name admin" th:text="${group.getName()}"/>
+                            </a>
+                        </div>
+                        <h2 class="student-group" th:text="${group.getFaculty()}" />
+                        <h2 class="student-group" th:text="${group.getDepartment()}" />
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div th:each="student : ${students}" class="list-group list-group-numbered">
-            <a class="list-group-item" th:text="${student.getLastName()} + ' ' + ${student.getFirstName()}" th:href="'/admin/profile_read_only' + ${student.getId()}"> </a>
-                <span th:if="${group.getGrouppLeader()} and ${group.getGrouppLeader().getId()} == ${student.getId()}">❃</span>
-        </div>
-
     </div>
 </div>
 </body>

@@ -44,5 +44,15 @@ public class GroupListController {
         return "adminTemp/group";
     }
 
+    @GetMapping(path = "/admin/groups")
+    public String groupsList(Model model) {
+        String username = authenticationService.getCurrentUsername();
+        User user = userService.getByEmail(username);
+        model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+        List<Groupp> groups = grouppRepository.findAllExpTeacher();
+        model.addAttribute("groups", groups);
+        return "adminTemp/groupList";
+    }
+
 
 }

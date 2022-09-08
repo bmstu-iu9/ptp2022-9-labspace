@@ -34,7 +34,7 @@
 <body>
 
 <div id="wrapper">
-    <div th:insert="~{adminTemp/adminSideMenu2 :: copy}"></div>
+    <div th:insert="~{adminTemp/adminSideMenu4 :: copy}"></div>
     <div id="page-wrapper" class="gray-bg">
         <div th:insert="~{adminTemp/adminTemplateOfUpperPanel :: copy}"></div>
 
@@ -44,7 +44,7 @@
 
         <div th:each="student : ${students}" class="list-group list-group-numbered">
             <a class="list-group-item" th:text="${student.getLastName()} + ' ' + ${student.getFirstName()}" th:href="'/admin/profile_read_only' + ${student.getId()}"> </a>
-                <span th:if="${group.getGrouppLeader().getId()} == ${student.getId()}">❃</span>
+                <span th:if="${group.getGrouppLeader()} and ${group.getGrouppLeader().getId()} == ${student.getId()}">❃</span>
         </div>
 
     </div>
