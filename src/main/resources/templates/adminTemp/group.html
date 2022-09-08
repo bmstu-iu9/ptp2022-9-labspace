@@ -38,11 +38,14 @@
     <div id="page-wrapper" class="gray-bg">
         <div th:insert="~{adminTemp/adminTemplateOfUpperPanel :: copy}"></div>
 
-        <ol th:each="student : ${students}" class="list-group list-group-numbered">
-            <li class="list-group-item" th:text="${student.getLastName()} + ' ' + ${student.getFirstName()}" th:href="'/admin/profile_read_only' + ${student.getId()}">
-                <span th:if="group."></span></li>
+        <div class="text-center dashboard-header">
+            <h1 th:text="${group.getName()}"/>
+        </div>
 
-        </ol>
+        <div th:each="student : ${students}" class="list-group list-group-numbered">
+            <a class="list-group-item" th:text="${student.getLastName()} + ' ' + ${student.getFirstName()}" th:href="'/admin/profile_read_only' + ${student.getId()}"> </a>
+                <span th:if="${group.getGrouppLeader().getId()} == ${student.getId()}">❃</span>
+        </div>
 
     </div>
 </div>
