@@ -44,10 +44,14 @@
                         <h1>Available labs</h1>
                     </div>
 
-                    <div class="columns-name">
+                    <div th:if="${labs.size() != 0}" class="columns-name">
                         <p>Name of lab</p>
                         <p>Course</p>
                         <p>Marks & Deadlines</p>
+                    </div>
+
+                    <div th:if="${labs.size() == 0}" style="text-align: center; color: darkgrey; font-size: 30px;">
+                        <p>There is nothing yet</p>
                     </div>
 
                     <div class="lab-space" th:each="lab : ${labs}">

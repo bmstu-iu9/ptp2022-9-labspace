@@ -8573,3 +8573,27 @@ h2.lab-course {
   margin: auto;
   flex: 2 2 0;
 }
+
+.group-styles {
+  font-size: 17px;
+  padding-bottom: 20px;
+}
+
+.group-item-styles {
+  list-style-type: none;
+  counter-increment: item;
+  margin-bottom: 10px;
+  border-radius: 15px;
+}
+
+.group-item-styles a {
+  color: dimgrey;
+}
+
+.group-item-styles a:hover {
+  color: #293846;
+}
+
+.group-item-styles:before {
+  content: counter(item) '. ';
+}

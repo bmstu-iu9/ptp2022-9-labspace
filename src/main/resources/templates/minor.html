@@ -44,12 +44,17 @@
           <div class="text-center dashboard-header">
             <h1>Completed labs</h1>
           </div>
-          <div class="columns-name">
+          <div th:if="${submit_labs.size() != 0}" class="columns-name">
             <p>Name of lab</p>
             <p>Course</p>
             <p>Upload date</p>
             <p>Mark</p>
           </div>
+
+          <div th:if="${submit_labs.size() == 0}" style="text-align: center; color: darkgrey; font-size: 30px;">
+            <p>There is nothing yet</p>
+          </div>
+
           <div class="lab-space" th:each="submit_lab : ${submit_labs}">
             <div class="lab-name"th:switch="${submit_lab.mark}">
               <a th:href="@{'/main/lab_id' + ${submit_lab.getLabInfo().getId()}}">

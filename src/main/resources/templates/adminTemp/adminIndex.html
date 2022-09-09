@@ -55,11 +55,15 @@
 <!--                        </select>-->
 <!--                    </div>-->
 
-                    <div class="columns-name">
+                    <div th:if="${labs.size() != 0}" class="columns-name">
                         <p style="flex: 5 5 0;">Name of lab</p>
                         <p style="flex: 5 5 0;">Course</p>
                         <p style="flex: 5 5 0;">Groups</p>
                         <p style="flex: 2 2 0;">Is Visible</p>
+                    </div>
+
+                    <div th:if="${labs.size() == 0}" style="text-align: center; color: darkgrey; font-size: 30px;">
+                        <p>There are no created labs yet</p>
                     </div>
 
                     <div class="lab-space admin" th:each="lab : ${labs}">
