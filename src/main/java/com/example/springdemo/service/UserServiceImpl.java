@@ -81,6 +81,8 @@ public class UserServiceImpl implements UserService {
         user.setActivationCode(UUID.randomUUID().toString());
         user.setFirstName(capitalize(user.getFirstName()));
         user.setLastName(capitalize(user.getLastName()));
+        user.setPhoneNumber("+" + user.getPhoneNumber());
+        user.setTgAccount("@" + user.getTgAccount());
 
         String message = String.format(
                 "Hello, %s!\n" +
