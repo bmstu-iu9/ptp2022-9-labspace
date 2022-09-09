@@ -47,12 +47,12 @@
       <div class="form-group">
           <input type="email" th:field="*{email}" placeholder="Email" class="form-control" required="" />
       </div>
-      <div class="input-group mb-3">
-        <span class="input-group-addon" id="addon-wrap">+</span>
+      <div class="input-group input-with-span">
+        <div class="input-group-addon" id="addon-wrap" style="padding: 6px 16px;">+</div>
         <input type="tel" th:field="*{phoneNumber}" placeholder="Phone Number" class="form-control" required="" aria-label="Phone Number" aria-describedby="addon-wrap"/>
       </div>
-      <div class="input-group mb-3">
-        <span class="input-group-addon" id="addon-wrapping">@</span>
+      <div class="input-group input-with-span">
+        <div class="input-group-addon" id="addon-wrapping">@</div>
         <input type="text" class="form-control" th:field="*{tgAccount}" placeholder="Telegram Account" aria-label="Telegram Account" required="" aria-describedby="addon-wrapping">
       </div>
       <div class="form-group">

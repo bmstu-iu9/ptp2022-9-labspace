@@ -8597,3 +8597,7 @@ h2.lab-course {
 .group-item-styles:before {
   content: counter(item) '. ';
 }
+
+.input-with-span {
+  margin-bottom: 15px;
+}

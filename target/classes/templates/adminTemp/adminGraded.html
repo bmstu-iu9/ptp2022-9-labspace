@@ -44,12 +44,19 @@
                     <div class="text-center dashboard-header">
                         <h1>Graded labs</h1>
                     </div>
-                    <div class="columns-name">
+                    <div th:if="${submit_labs.size() != 0}" class="columns-name">
                         <p style="flex: 1">Name of lab (course)</p>
                         <p style="flex: 1">Student</p>
                         <p style="flex: 1">Group</p>
                         <p style="flex: 0.45">Mark</p>
                     </div>
+
+
+                    <div th:if="${submit_labs.size() == 0}" style="text-align: center; color: darkgrey; font-size: 30px;">
+                        <p>There is nothing yet :(</p>
+                    </div>
+
+
                     <div class="lab-space" th:each="submit_lab : ${submit_labs}">
                         <div class="lab-name" style="flex: 1; padding: 0 10px;">
                             <h2 class="h2-lab-name" style="cursor: default; pointer-events: none; color: dimgrey;" th:text="${submit_lab.getLabInfo().getName()} + ' (' + ${submit_lab.getLabInfo().getCourse().getName()} + ')'" />
