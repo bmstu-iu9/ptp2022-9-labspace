@@ -1,25 +1,23 @@
 package com.example.springdemo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Set;
+import java.util.Objects;
 
 @JsonIgnoreProperties
 @Entity
 @Table(
         name = "groupp"
 )
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
+
 @Builder
 public class Groupp {
     @Id
@@ -34,12 +32,21 @@ public class Groupp {
     private String department;
 
     private String name;
-
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ToString.Exclude
     private User grouppLeader;
 
 
-    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Groupp groupp = (Groupp) o;
+        return id != null && Objects.equals(id, groupp.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

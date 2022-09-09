@@ -5,6 +5,7 @@ import com.example.springdemo.entity.Role;
 import com.example.springdemo.entity.User;
 import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByResetPasswordToken(String token);
 
     int countByGroupp(Groupp groupp);
+
+    List<User> findAllByGrouppOrderByLastName(Groupp groupp);
 
     List<User> findAllByGroupp(Groupp groupp);
 

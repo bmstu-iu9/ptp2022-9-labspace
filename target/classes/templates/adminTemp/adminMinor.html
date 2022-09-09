@@ -45,12 +45,18 @@
                     <div class="text-center dashboard-header">
                         <h1>Ungraded labs</h1>
                     </div>
-                    <div class="columns-name">
+                    <div th:if="${submit_labs.size() != 0}"  class="columns-name">
                         <p>Name of lab (course)</p>
                         <p>Upload date</p>
                         <p>Student</p>
                         <p>Group</p>
                     </div>
+
+                    <div th:if="${submit_labs.size() == 0}" style="text-align: center; color: darkgrey; font-size: 30px;">
+                        <p>No one has passed yet</p>
+                    </div>
+
+
                     <div class="lab-space" th:each="submit_lab : ${submit_labs}">
                         <div class="lab-name" th:switch="${submit_lab.mark}">
                             <a th:href="'/admin/check_lab_id' + ${submit_lab.getLabInfo().getId()} + '/user_id' + ${submit_lab.getUser().getId()}">
@@ -60,7 +66,7 @@
                         </div>
                         <div class="student-send-date" th:text="${submit_lab.getSendDate()}"/>
                         <div class="student-name"><a th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/admin/profile_read_only' + ${submit_lab.getUser().getId()}"/></div>
-                            <div class="student-group" th:text="${submit_lab.getUser().getGroupp().getName()}" />
+                        <div class="student-group"><a th:text="${submit_lab.getUser().getGroupp().getName()}" th:href="'/admin/group' + ${submit_lab.getUser().getGroupp().getId()}"></a></div>
                     </div>
                 </div>
             </div>
