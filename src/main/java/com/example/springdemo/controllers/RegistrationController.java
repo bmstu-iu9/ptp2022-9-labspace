@@ -68,12 +68,22 @@ public class RegistrationController {
                           HttpServletRequest request,
                           HttpServletResponse response) throws ServletException {
         List<Groupp> grouppList = grouppRepository.findAll();
+        user.setPhoneNumber("+" + user.getPhoneNumber());
+        user.setTgAccount("@" + user.getTgAccount());
         model.addAttribute("groupps", grouppList);
+        if (!user.getTgAccount().matches("@[a-zA-Z]\\w{4,}")){
+            bindingResult.rejectValue("tgAccount","user.tgAccount","Telegram username should be: @Username");
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("groupps", grouppList);
+            return "register";
+        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("groupps", grouppList);
             return "register";
         }
+
+
         try {
             Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(user.getPhoneNumber(), Phonenumber.PhoneNumber.CountryCodeSource.UNSPECIFIED.name());
             if (!phoneNumberUtil.isValidNumber(phoneNumber))
