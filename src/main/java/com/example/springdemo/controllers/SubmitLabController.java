@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 public class SubmitLabController {
@@ -56,7 +57,11 @@ public class SubmitLabController {
     @GetMapping(path = "main/lab_id{lab_info_id}")
     public String view(Model model, @PathVariable("lab_info_id") Long lab_id) {
         authenticationService.addNameAndGroupToModel(model);
-        model.addAttribute("lab_info", labInfoRepository.getReferenceById(lab_id));
+        Optional<LabInfo> lab_info = labInfoRepository.findById(lab_id);
+        if (!lab_info.isPresent() || lab_info.get().getGroupps().contains(authenticationService.getCurrentUser().getGroupp())){
+            return "redirect:/";
+        }
+        model.addAttribute("lab_info", lab_info);
         model.addAttribute("grade", gradesListService.getPointsByStudentAndLab(authenticationService.getCurrentUsername(), lab_id));
         model.addAttribute("deadlines", deadlineRepository.findAllByLabInfoId(lab_id));
         SimpleDateFormat formatdayMonth = new SimpleDateFormat("dd.MM");
