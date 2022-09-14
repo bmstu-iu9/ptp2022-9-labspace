@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
@@ -45,7 +46,7 @@ public class SubmitLabController {
     @PostMapping(path = "main/lab_id{lab_info_id}")
     public String uploadFile(
             @RequestParam(name = "filee", required = false) MultipartFile file,
-            @PathVariable("lab_info_id") Long labId, Model model) {
+            @PathVariable("lab_info_id") Long labId, Model model) throws IOException {
         String path = labInfoRepository.getReferenceById(labId).getCourse().getId() + "/labid" + labId + "/";
         model.addAttribute("id", labId);
         fileStorageService.storeFile(file, path, labId);
