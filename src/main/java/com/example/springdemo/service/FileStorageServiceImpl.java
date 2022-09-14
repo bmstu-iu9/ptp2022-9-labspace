@@ -12,7 +12,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,6 +20,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.Optional;
+import org.apache.poi.xwpf.converter.pdf.PdfConverter;
+import org.apache.poi.xwpf.converter.pdf.PdfOptions;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
@@ -57,9 +60,18 @@ public class FileStorageServiceImpl implements FileStorageService {
 
         return fileNameParts[fileNameParts.length - 1];
     }
-
+    private void ConvertToPDF(InputStream docx, String pdfPath) {
+        try {
+            XWPFDocument document = new XWPFDocument(docx);
+            PdfOptions options = PdfOptions.create();
+            OutputStream out = new FileOutputStream(pdfPath);
+            PdfConverter.getInstance().convert(document, out, options);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
     @Override
-    public void storeFile(MultipartFile file, String path, Long labId) {
+    public void storeFile(MultipartFile file, String path, Long labId) throws IOException {
         // Normalize file name
         String fileName =
                 new Date().getTime() + "-file." + getFileExtension(file.getOriginalFilename());
@@ -82,7 +94,17 @@ public class FileStorageServiceImpl implements FileStorageService {
             }
             Files.createDirectories(this.fileStorageLocation.resolve(path));
             Path targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            if (contentType.equals("application/msword")||contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
+                XWPFDocument document =new XWPFDocument( file.getInputStream());
+                PdfOptions options = PdfOptions.create();
+                fileName = new Date().getTime() + "-file.pdf";
+                targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
+                Path target = this.fileStorageLocation.resolve(path).resolve(fileName);
+                OutputStream out = new FileOutputStream(target.toFile());
+                PdfConverter.getInstance().convert(document, out, options);
+            }else {
+                Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            }
             User user = authenticationService.getCurrentUser();
             Optional<SubmitLab> submitLabOpt = submitLabRepository.findByUserIdAndLabInfoId(user.getId(),labId);
             if (submitLabOpt.isPresent()){
@@ -137,9 +159,17 @@ public class FileStorageServiceImpl implements FileStorageService {
             }
             Files.createDirectories(this.fileStorageLocation.resolve("labs/"));
             Path targetLocation = this.fileStorageLocation.resolve("labs/" + fileName);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
-                labInfo.setSource(targetLocation.toString());
+            if (contentType.equals("application/msword")||contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
+                XWPFDocument document =new XWPFDocument( file.getInputStream());
+                PdfOptions options = PdfOptions.create();
+                fileName =  new Date().getTime() + "-file.pdf";
+                targetLocation = this.fileStorageLocation.resolve("labs/" + fileName);
+                OutputStream out = new FileOutputStream(targetLocation.toFile());
+                PdfConverter.getInstance().convert(document, out, options);
+            }else {
+                Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            }
+            labInfo.setSource(targetLocation.toString());
 
             labInfoRepository.save(labInfo);
         } catch (IOException ex) {
