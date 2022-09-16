@@ -49,7 +49,6 @@ public class LabInfo {
     @Column(
             name = "name"
     )
-    @Length(max = 25, message = "Maximum title length 25 symbols.")
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
