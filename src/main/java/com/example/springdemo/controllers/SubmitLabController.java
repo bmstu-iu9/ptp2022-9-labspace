@@ -1,9 +1,11 @@
 package com.example.springdemo.controllers;
 
 import com.example.springdemo.entity.LabInfo;
+import com.example.springdemo.entity.SubmitLab;
 import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.DeadlineRepository;
 import com.example.springdemo.repository.LabInfoRepository;
+import com.example.springdemo.repository.SubmitLabRepository;
 import com.example.springdemo.repository.VariantRepository;
 import com.example.springdemo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -43,6 +43,8 @@ public class SubmitLabController {
 
     @Autowired
     private AuthenticationService authenticationService;
+    @Autowired
+    private SubmitLabRepository submitLabRepository;
 
     @PostMapping(path = "main/lab_id{lab_info_id}")
     public String uploadFile(
@@ -57,21 +59,28 @@ public class SubmitLabController {
     @GetMapping(path = "main/lab_id{lab_info_id}")
     public String view(Model model, @PathVariable("lab_info_id") Long lab_id) {
         authenticationService.addNameAndGroupToModel(model);
+
         Optional<LabInfo> lab_info = labInfoRepository.findById(lab_id);
-        if (!lab_info.isPresent() || lab_info.get().getGroupps().contains(authenticationService.getCurrentUser().getGroupp())){
+        User user = authenticationService.getCurrentUser();
+        if (!lab_info.isPresent() || !lab_info.get().getGroupps().contains(user.getGroupp())){
             return "redirect:/";
+        } else{
+            Optional<SubmitLab> submitLab = submitLabRepository.findByUserIdAndLabInfoId(user.getId(), lab_info.get().getId());
+            if (submitLab.isPresent() && !submitLab.get().isOnRevision()) {
+                return "redirect:/";
+            }
         }
-        model.addAttribute("lab_info", lab_info);
+        model.addAttribute("lab_info", lab_info.get());
         model.addAttribute("grade", gradesListService.getPointsByStudentAndLab(authenticationService.getCurrentUsername(), lab_id));
         model.addAttribute("deadlines", deadlineRepository.findAllByLabInfoId(lab_id));
         SimpleDateFormat formatdayMonth = new SimpleDateFormat("dd.MM");
         SimpleDateFormat formatYear = new SimpleDateFormat("yyyy");
+        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
         model.addAttribute("formatdayMonth", formatdayMonth);
         model.addAttribute("formatYear", formatYear);
+        model.addAttribute("formatTime", formatTime);
 
-        String username;
-        username = authenticationService.getCurrentUsername();
-        User user = userService.getByEmail(username);
+
 
         if (variantRepository.findByLabInfoIdAndStudentId(lab_id, user.getId()).isEmpty()){
             model.addAttribute("variant", "without");

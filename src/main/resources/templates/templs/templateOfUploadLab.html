@@ -54,7 +54,7 @@
                                                 <div class="teacher_dayMonth"
                                                       th:text="${formatdayMonth.format(deadline.getDeadlineDate())}"></div>
                                                 <div class="teacher_year" th:text="${formatYear.format(deadline.getDeadlineDate())}"></div>
-                                                <div class="teacher_time">00:00</div>
+                                                <div class="teacher_time" th:text="${formatTime.format(deadline.getDeadlineDate())}"></div>
                                             </div>
                                         </div>
                                     </div>
