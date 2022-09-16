@@ -62,7 +62,7 @@ public class SubmitLabController {
 
         Optional<LabInfo> lab_info = labInfoRepository.findById(lab_id);
         User user = authenticationService.getCurrentUser();
-        if (!lab_info.isPresent() || lab_info.get().getGroupps().contains(user.getGroupp())){
+        if (!lab_info.isPresent() || !lab_info.get().getGroupps().contains(user.getGroupp())){
             return "redirect:/";
         } else{
             Optional<SubmitLab> submitLab = submitLabRepository.findByUserIdAndLabInfoId(user.getId(), lab_info.get().getId());
@@ -70,13 +70,15 @@ public class SubmitLabController {
                 return "redirect:/";
             }
         }
-        model.addAttribute("lab_info", lab_info);
+        model.addAttribute("lab_info", lab_info.get());
         model.addAttribute("grade", gradesListService.getPointsByStudentAndLab(authenticationService.getCurrentUsername(), lab_id));
         model.addAttribute("deadlines", deadlineRepository.findAllByLabInfoId(lab_id));
         SimpleDateFormat formatdayMonth = new SimpleDateFormat("dd.MM");
         SimpleDateFormat formatYear = new SimpleDateFormat("yyyy");
+        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
         model.addAttribute("formatdayMonth", formatdayMonth);
         model.addAttribute("formatYear", formatYear);
+        model.addAttribute("formatTime", formatTime);
 
 
 
