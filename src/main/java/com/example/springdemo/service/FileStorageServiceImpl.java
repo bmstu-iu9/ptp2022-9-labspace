@@ -1,5 +1,8 @@
 package com.example.springdemo.service;
 
+import com.documents4j.api.DocumentType;
+import com.documents4j.api.IConverter;
+import com.documents4j.job.LocalConverter;
 import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.SubmitLab;
 import com.example.springdemo.entity.User;
@@ -20,9 +23,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.Optional;
-import org.apache.poi.xwpf.converter.pdf.PdfConverter;
-import org.apache.poi.xwpf.converter.pdf.PdfOptions;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
+
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
@@ -60,16 +61,6 @@ public class FileStorageServiceImpl implements FileStorageService {
 
         return fileNameParts[fileNameParts.length - 1];
     }
-    private void ConvertToPDF(InputStream docx, String pdfPath) {
-        try {
-            XWPFDocument document = new XWPFDocument(docx);
-            PdfOptions options = PdfOptions.create();
-            OutputStream out = new FileOutputStream(pdfPath);
-            PdfConverter.getInstance().convert(document, out, options);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
     @Override
     public void storeFile(MultipartFile file, String path, Long labId) throws IOException {
         // Normalize file name
@@ -95,13 +86,19 @@ public class FileStorageServiceImpl implements FileStorageService {
             Files.createDirectories(this.fileStorageLocation.resolve(path));
             Path targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
             if (contentType.equals("application/msword")||contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
-                XWPFDocument document =new XWPFDocument( file.getInputStream());
-                PdfOptions options = PdfOptions.create();
                 fileName = new Date().getTime() + "-file.pdf";
                 targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
                 Path target = this.fileStorageLocation.resolve(path).resolve(fileName);
-                OutputStream out = new FileOutputStream(target.toFile());
-                PdfConverter.getInstance().convert(document, out, options);
+                try (InputStream docxInputStream = file.getInputStream();
+                     OutputStream pdfOutputStream = new FileOutputStream(target.toFile())) {
+                    IConverter converter = LocalConverter.builder().build();
+                    converter.convert(docxInputStream).as(DocumentType.MS_WORD)
+                            .to(pdfOutputStream).as(DocumentType.PDF)
+                            .execute();
+                    converter.shutDown();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }else {
                 Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             }
@@ -160,12 +157,18 @@ public class FileStorageServiceImpl implements FileStorageService {
             Files.createDirectories(this.fileStorageLocation.resolve("labs/"));
             Path targetLocation = this.fileStorageLocation.resolve("labs/" + fileName);
             if (contentType.equals("application/msword")||contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
-                XWPFDocument document =new XWPFDocument( file.getInputStream());
-                PdfOptions options = PdfOptions.create();
                 fileName =  new Date().getTime() + "-file.pdf";
                 targetLocation = this.fileStorageLocation.resolve("labs/" + fileName);
-                OutputStream out = new FileOutputStream(targetLocation.toFile());
-                PdfConverter.getInstance().convert(document, out, options);
+                try (InputStream docxInputStream = file.getInputStream();
+                     OutputStream pdfOutputStream = new FileOutputStream(targetLocation.toFile())) {
+                    IConverter converter = LocalConverter.builder().build();
+                    converter.convert(docxInputStream).as(DocumentType.MS_WORD)
+                            .to(pdfOutputStream).as(DocumentType.PDF)
+                            .execute();
+                    converter.shutDown();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }else {
                 Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             }
