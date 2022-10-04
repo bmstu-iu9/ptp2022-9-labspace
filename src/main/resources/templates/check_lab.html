@@ -89,7 +89,7 @@
                                     <div class="check_lab_criteria" th:each="deadline : ${deadlines}">
                                         <div style="display: block">
                                             <span class="check_lab_title_text">Deadline</span>
-                                            <div class="check_lab_block check_lab_date">
+                                            <div class="check_lab_block check_lab_date" th:style="${submit_lab.getSendDate() <= deadline.getDeadlineDate() ? 'color: #1ab394;' : 'color: firebrick;'}">
                                                 <div style="display: block; text-align: center; margin-top: 5px;">
                                                     <div class="check_lab_dayMonth" th:text="${formatdayMonth.format(deadline.getDeadlineDate())}"></div>
                                                     <div class="check_lab_year" th:text="${formatYear.format(deadline.getDeadlineDate())}"></div>
