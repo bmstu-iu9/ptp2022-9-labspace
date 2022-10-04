@@ -156,6 +156,8 @@
 
 .final_mark_btn {
     cursor: pointer;
+    background-color: #1ab394;
+    color: #F3F3F4;
 }
 
 .send-revision {
