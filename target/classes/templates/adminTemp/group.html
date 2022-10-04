@@ -50,7 +50,7 @@
             <li class="list-group-item group-item-styles" th:each="student : ${students}">
                 <a th:text="${student.getLastName()} + ' ' + ${student.getFirstName()}"
                    th:href="'/admin/profile_read_only' + ${student.getId()}"
-                   th:style="${group.getGrouppLeader().getId() == student.getId() ? 'color: #1ab394;' : '' }">
+                   th:style="${group.getGrouppLeader().getId() == student.getId() ? 'color: #1ab394;' : ''}">
                 </a>
             </li>
         </ul>
