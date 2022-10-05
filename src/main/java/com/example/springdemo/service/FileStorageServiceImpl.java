@@ -43,8 +43,8 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Autowired
     public FileStorageServiceImpl(Environment env) {
-        this.fileStorageLocation = Paths.get(env.getProperty("app.file.upload-dir", "./main/files"))
-                .toAbsolutePath().normalize();
+        this.fileStorageLocation = Paths.get(System.getProperty("user.home")).resolve(env.getProperty("app.file.upload-dir", "/uploads/files"))
+                .normalize();
 
         try {
             Files.createDirectories(this.fileStorageLocation);
@@ -68,7 +68,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
         String[] fileNameParts = fileName.split("\\.");
         fileNameParts[fileNameParts.length - 1] =extension;
-        return Arrays.toString(fileNameParts);
+        return String.join(".",fileNameParts);
     }
     @Override
     public void storeFile(MultipartFile file, String path, Long labId) throws IOException {
@@ -117,7 +117,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                     Process process = Runtime.getRuntime().exec("lowriter --convert-to pdf " + targetLocation);
                     process.waitFor();
                     Files.delete(targetLocation);
-                    targetLocation=this.fileStorageLocation.resolve(path).resolve(changeFileExtension(fileName,".pdf"));
+                    targetLocation=this.fileStorageLocation.resolve(path).resolve(changeFileExtension(fileName,"pdf"));
                     Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
                }
             User user = authenticationService.getCurrentUser();
@@ -196,7 +196,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                 Process process = Runtime.getRuntime().exec("lowriter --convert-to pdf " + targetLocation);
                 process.waitFor();
                 Files.delete(targetLocation);
-                targetLocation=this.fileStorageLocation.resolve("labs/" + changeFileExtension(fileName,".pdf"));
+                targetLocation=this.fileStorageLocation.resolve("labs/" + changeFileExtension(fileName,"pdf"));
                 Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             }
             labInfo.setSource(targetLocation.toString());
