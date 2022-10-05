@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
 
@@ -61,6 +62,14 @@ public class FileStorageServiceImpl implements FileStorageService {
 
         return fileNameParts[fileNameParts.length - 1];
     }
+    private String changeFileExtension(String fileName, String extension){
+        if (fileName == null) {
+            return null;
+        }
+        String[] fileNameParts = fileName.split("\\.");
+        fileNameParts[fileNameParts.length - 1] =extension;
+        return Arrays.toString(fileNameParts);
+    }
     @Override
     public void storeFile(MultipartFile file, String path, Long labId) throws IOException {
         // Normalize file name
@@ -80,28 +89,37 @@ public class FileStorageServiceImpl implements FileStorageService {
             if (contentType == null ||
                     !(contentType.equals("application/msword") ||
                             contentType.equals("application/pdf") ||
-                            contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))) {
+                            contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")))
+            {
                 throw new RuntimeException("Allowed filetypes: doc, docx, pdf");
             }
+            //Runtime.getRuntime().exec()
             Files.createDirectories(this.fileStorageLocation.resolve(path));
             Path targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
-            if (contentType.equals("application/msword")||contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
-                fileName = new Date().getTime() + "-file.pdf";
-                targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
-                Path target = this.fileStorageLocation.resolve(path).resolve(fileName);
-                try (InputStream docxInputStream = file.getInputStream();
-                     OutputStream pdfOutputStream = new FileOutputStream(target.toFile())) {
-                    IConverter converter = LocalConverter.builder().build();
-                    converter.convert(docxInputStream).as(DocumentType.MS_WORD)
-                            .to(pdfOutputStream).as(DocumentType.PDF)
-                            .execute();
-                    converter.shutDown();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }else {
+//            if (contentType.equals("application/msword")||contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
+//                fileName = new Date().getTime() + "-file.pdf";
+//                targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
+//                Path target = this.fileStorageLocation.resolve(path).resolve(fileName);
+//                try (InputStream docxInputStream = file.getInputStream();
+//                     OutputStream pdfOutputStream = new FileOutputStream(target.toFile())) {
+//                    IConverter converter = LocalConverter.builder().build();
+//                    converter.convert(docxInputStream).as(DocumentType.MS_WORD)
+//                            .to(pdfOutputStream).as(DocumentType.PDF)
+//                            .execute();
+//                    converter.shutDown();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }else {
                 Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            }
+                if (contentType.equals("application/msword")||contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+                {
+                    Process process = Runtime.getRuntime().exec("lowriter --convert-to pdf " + targetLocation);
+                    process.waitFor();
+                    Files.delete(targetLocation);
+                    targetLocation=this.fileStorageLocation.resolve(path).resolve(changeFileExtension(fileName,".pdf"));
+                    Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+               }
             User user = authenticationService.getCurrentUser();
             Optional<SubmitLab> submitLabOpt = submitLabRepository.findByUserIdAndLabInfoId(user.getId(),labId);
             if (submitLabOpt.isPresent()){
@@ -129,6 +147,8 @@ public class FileStorageServiceImpl implements FileStorageService {
             }
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -156,20 +176,27 @@ public class FileStorageServiceImpl implements FileStorageService {
             }
             Files.createDirectories(this.fileStorageLocation.resolve("labs/"));
             Path targetLocation = this.fileStorageLocation.resolve("labs/" + fileName);
-            if (contentType.equals("application/msword")||contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
-                fileName =  new Date().getTime() + "-file.pdf";
-                targetLocation = this.fileStorageLocation.resolve("labs/" + fileName);
-                try (InputStream docxInputStream = file.getInputStream();
-                     OutputStream pdfOutputStream = new FileOutputStream(targetLocation.toFile())) {
-                    IConverter converter = LocalConverter.builder().build();
-                    converter.convert(docxInputStream).as(DocumentType.MS_WORD)
-                            .to(pdfOutputStream).as(DocumentType.PDF)
-                            .execute();
-                    converter.shutDown();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }else {
+//            if (contentType.equals("application/msword")||contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
+//                fileName =  new Date().getTime() + "-file.pdf";
+//                targetLocation = this.fileStorageLocation.resolve("labs/" + fileName);
+//                try (InputStream docxInputStream = file.getInputStream();
+//                     OutputStream pdfOutputStream = new FileOutputStream(targetLocation.toFile())) {
+//                    IConverter converter = LocalConverter.builder().build();
+//                    converter.convert(docxInputStream).as(DocumentType.MS_WORD)
+//                            .to(pdfOutputStream).as(DocumentType.PDF)
+//                            .execute();
+//                    converter.shutDown();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }else {
+                Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            if (contentType.equals("application/msword")||contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+            {
+                Process process = Runtime.getRuntime().exec("lowriter --convert-to pdf " + targetLocation);
+                process.waitFor();
+                Files.delete(targetLocation);
+                targetLocation=this.fileStorageLocation.resolve("labs/" + changeFileExtension(fileName,".pdf"));
                 Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             }
             labInfo.setSource(targetLocation.toString());
@@ -177,6 +204,8 @@ public class FileStorageServiceImpl implements FileStorageService {
             labInfoRepository.save(labInfo);
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 

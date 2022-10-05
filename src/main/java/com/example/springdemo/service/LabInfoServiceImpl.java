@@ -26,6 +26,8 @@ public class LabInfoServiceImpl implements LabInfoService {
     @Autowired
     private DeadlineService deadlineService;
     @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
     private CourseRepository courseRepository;
     @Autowired
     private GrouppRepository grouppRepository;
@@ -42,6 +44,7 @@ public class LabInfoServiceImpl implements LabInfoService {
                 .collect(Collectors.toSet());
         labInfo.setUploadDate(new Date(System.currentTimeMillis()));
         labInfo.setGroupps(groups);
+        labInfo.setAuthor(authenticationService.getCurrentUser());
         labInfo.setIsVisible(false);
         fileStorageService.storeFile(file, labInfo);
         deadlineService.saveDeadlines(request, labInfo);

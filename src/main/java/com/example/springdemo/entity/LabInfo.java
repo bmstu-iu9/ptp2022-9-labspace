@@ -63,4 +63,6 @@ public class LabInfo {
             name = "is_visible"
     )
     private Boolean isVisible;
+    @ManyToOne
+    private User author;
 }
