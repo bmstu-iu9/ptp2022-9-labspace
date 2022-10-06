@@ -3,13 +3,11 @@ package com.example.springdemo.controllers;
 import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.SubmitLab;
 import com.example.springdemo.entity.User;
-import com.example.springdemo.repository.DeadlineRepository;
-import com.example.springdemo.repository.LabInfoRepository;
-import com.example.springdemo.repository.SubmitLabRepository;
-import com.example.springdemo.repository.UserRepository;
+import com.example.springdemo.repository.*;
 import com.example.springdemo.service.AuthenticationService;
 import com.example.springdemo.service.DeadlineService;
 import com.example.springdemo.service.UserService;
+import com.example.springdemo.service.VariantService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,6 +37,10 @@ public class CheckLabController {
     AuthenticationService authenticationService;
     @Autowired
     UserService userService;
+    @Autowired
+    VariantRepository variantRepository;
+    @Autowired
+    VariantService variantService;
 
     @GetMapping("admin/check_lab_id{lab_id}/user_id{user_id}")
     public String checkLab(Model model, @PathVariable Long lab_id, @PathVariable Long user_id){
@@ -47,8 +49,9 @@ public class CheckLabController {
         if (!submitLab.isPresent()){
             return "redirect:admin/check_lab_id" + lab_id;
         }
+        User user = userRepository.findById(user_id).get();
         model.addAttribute("lab_info", labInfo);
-        model.addAttribute("user", userRepository.findById(user_id).get());
+        model.addAttribute("user", user);
         model.addAttribute("submit_lab", submitLab.get());
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         model.addAttribute("format", format);
@@ -60,6 +63,13 @@ public class CheckLabController {
         model.addAttribute("formatTime", formatTime);
         authenticationService.addNameAndGroupToModel(model);
         model.addAttribute("deadlines", deadlineRepository.findAllByLabInfoId(lab_id));
+        if (variantRepository.findByLabInfoIdAndStudentId(lab_id, user.getId()).isEmpty()){
+            model.addAttribute("variant", "without");
+        }
+        else{
+            int variant = variantService.getVariantByLabInfoIdAndStudentId(lab_id, user.getId());
+            model.addAttribute("variant", variant);
+        }
         return "check_lab";
     }
 

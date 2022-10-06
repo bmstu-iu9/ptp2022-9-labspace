@@ -44,7 +44,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Autowired
     public FileStorageServiceImpl(Environment env) {
         this.fileStorageLocation = Paths.get(System.getProperty("user.home")).resolve(env.getProperty("app.file.upload-dir", "/uploads/files"))
-                .normalize();
+            .normalize();
+
 
         try {
             Files.createDirectories(this.fileStorageLocation);
