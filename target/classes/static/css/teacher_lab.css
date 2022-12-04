@@ -25,6 +25,7 @@
     font-size: 70px;
     justify-content: center;
     margin-top: auto;
+    text-align: center;
 }
 
 .teacher_title {
@@ -113,8 +114,9 @@
     text-align: left;
     padding: 30px 40px;
     height: 230px;
-    font-size: 37px;
+    font-size: 24px;
     resize: none;
+    overflow: auto;
 }
 
 .teacher_file_import {
