@@ -9,9 +9,11 @@ import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.repository.SubmitLabRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,12 +23,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
+    @Autowired
+    private MailSenderImpl mailSender;
+
     @Autowired
     private AuthenticationService authenticationService;
 
@@ -99,7 +106,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }else {
+            } else {
                 Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             }
             User user = authenticationService.getCurrentUser();
@@ -113,10 +120,10 @@ public class FileStorageServiceImpl implements FileStorageService {
                     sb.setRevisionComment(null);
                     sb.setSendDate(new Date((System.currentTimeMillis())));
                     submitLabRepository.saveAndFlush(sb);
-                }else {
+                } else {
                     throw new RuntimeException("You have submitted this labwork already!");
                 }
-            }else {
+            } else {
                 SubmitLab submitLab = SubmitLab.builder()
                         .user(authenticationService.getCurrentUser())
                         .source(targetLocation.toString())
@@ -126,6 +133,12 @@ public class FileStorageServiceImpl implements FileStorageService {
                         .onRevision(false)
                         .build();
                 submitLabRepository.saveAndFlush(submitLab);
+                String message = "Hello,\n" + authenticationService.getCurrentUser().getFirstName() + " " +
+                        authenticationService.getCurrentUser().getLastName() + " submit" + " laboratory work " +
+                        labInfoRepository.getReferenceById(labId).getName() + " at " + new Date(System.currentTimeMillis());
+
+                // get teacher email
+                mailSender.send("alekseev.sasha0204@yandex.ru", "123", message);
             }
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
