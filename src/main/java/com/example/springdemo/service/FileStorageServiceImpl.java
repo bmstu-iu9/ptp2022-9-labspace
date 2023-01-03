@@ -133,12 +133,15 @@ public class FileStorageServiceImpl implements FileStorageService {
                         .onRevision(false)
                         .build();
                 submitLabRepository.saveAndFlush(submitLab);
-                String message = "Hello,\n" + authenticationService.getCurrentUser().getFirstName() + " " +
-                        authenticationService.getCurrentUser().getLastName() + " submit" + " laboratory work " +
+
+                String sender = authenticationService.getCurrentUser().getFirstName() + " " +
+                        authenticationService.getCurrentUser().getLastName();
+                User teacher = labInfoRepository.getReferenceById(labId).getTeahcer();
+                String receiver = teacher.getFirstName() + " " + teacher.getLastName();
+                String message = "Hello, " + receiver + ",\n\n" + sender + " submit laboratory work " +
                         labInfoRepository.getReferenceById(labId).getName() + " at " + new Date(System.currentTimeMillis());
 
-                // get teacher email
-                mailSender.send("alekseev.sasha0204@yandex.ru", "123", message);
+                mailSender.send(teacher.getEmail(), "New report from " + sender, message);
             }
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
