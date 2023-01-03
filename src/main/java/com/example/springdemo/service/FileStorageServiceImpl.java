@@ -17,6 +17,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -141,7 +142,12 @@ public class FileStorageServiceImpl implements FileStorageService {
                 String message = "Hello, " + receiver + ",\n\n" + sender + " submit laboratory work " +
                         labInfoRepository.getReferenceById(labId).getName() + " at " + new Date(System.currentTimeMillis());
 
-                mailSender.send(teacher.getEmail(), "New report from " + sender, message);
+                try {
+                    mailSender.sendWithAttachments(teacher.getEmail(), "New report from " + sender, message,
+                            sender +"_"+ labInfoRepository.getReferenceById(labId).getName() + ".pdf", file);
+                } catch (MessagingException e) {
+                    throw new RuntimeException("Could not sent mail to teacher.");
+                }
             }
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
