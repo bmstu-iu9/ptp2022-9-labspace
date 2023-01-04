@@ -63,4 +63,9 @@ public class LabInfo {
             name = "is_visible"
     )
     private Boolean isVisible;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User teahcer;
 }

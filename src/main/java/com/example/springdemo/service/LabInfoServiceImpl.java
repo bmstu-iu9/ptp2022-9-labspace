@@ -32,6 +32,9 @@ public class LabInfoServiceImpl implements LabInfoService {
     @Autowired
     private SubmitLabRepository submitLabRepository;
 
+    @Autowired
+    private AuthenticationService authenticationService;
+
 
     @Override
     public void uploadLab(LabInfo labInfo, MultipartFile file, HttpServletRequest request) throws ParseException {
@@ -43,6 +46,7 @@ public class LabInfoServiceImpl implements LabInfoService {
         labInfo.setUploadDate(new Date(System.currentTimeMillis()));
         labInfo.setGroupps(groups);
         labInfo.setIsVisible(false);
+        labInfo.setTeahcer(authenticationService.getCurrentUser());
         fileStorageService.storeFile(file, labInfo);
         deadlineService.saveDeadlines(request, labInfo);
     }

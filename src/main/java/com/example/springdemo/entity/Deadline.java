@@ -24,22 +24,22 @@ public class Deadline {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "deadline_id")
-    public Long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "lab_info_id"
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
-    public LabInfo labInfo;
+    private LabInfo labInfo;
 
     @Column(
             name = "max_mark"
     )
-    public Integer maxMark;
+    private Integer maxMark;
 
     @Column(
             name = "deadline_date"
     )
-    public Date deadlineDate;
+    private Date deadlineDate;
 }
