@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import com.example.springdemo.service.LabInfoService;
+import com.example.springdemo.repository.LabInfoRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -41,6 +43,11 @@ public class CheckLabController {
     VariantRepository variantRepository;
     @Autowired
     VariantService variantService;
+
+    @Autowired
+    LabInfoService labInfoService;
+
+
 
     @GetMapping("admin/check_lab_id{lab_id}/user_id{user_id}")
     public String checkLab(Model model, @PathVariable Long lab_id, @PathVariable Long user_id){
@@ -92,6 +99,7 @@ public class CheckLabController {
 
     @GetMapping("/admin/check_lab_id{lab_id}")
     public String allReportsLabPage(Model model, @PathVariable Long lab_id){
+
         String username = authenticationService.getCurrentUsername();
         User user = userService.getByEmail(username);
         model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
@@ -107,5 +115,15 @@ public class CheckLabController {
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         model.addAttribute("format", format);
         return "adminTemp/reports_page";
+    }
+
+    @PostMapping("/admin/check_lab_id{lab_id}")
+    public String DeleteProcess(HttpServletRequest request, @PathVariable Long lab_id) {
+        String val = request.getParameter("DeleteButton");
+        LabInfo labInfo = labInfoRepository.getById(lab_id);
+        if (Objects.equals(val, "del")) {
+            labInfoService.deleteLab(labInfo);
+        }
+        return "redirect:/admin/index";
     }
 }

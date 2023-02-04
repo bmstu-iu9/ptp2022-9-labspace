@@ -51,6 +51,10 @@ public class LabInfoServiceImpl implements LabInfoService {
         deadlineService.saveDeadlines(request, labInfo);
     }
 
+    public void deleteLab (LabInfo labInfo){
+        labInfoRepository.delete(labInfo);
+    }
+
     public Set<LabInfo> getAvalibleLabs(User user) {
         Set<Long> labid = submitLabRepository.findByUser_IdAndOnRevisionFalse(user.getId()).stream()
                 .map(a -> a.getLabInfo().getId())
