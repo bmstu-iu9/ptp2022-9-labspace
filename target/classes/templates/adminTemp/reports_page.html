@@ -50,8 +50,32 @@
     });
   </script>
 
+  <script type="text/javascript">
+    const openPopUp = document.getElementById('open_pop_up')
+    const closePopUp = document.getElementById('pop_up_close')
+    const popUp = document.getElementById('pop_up')
+
+    openPopUp.addEventListener('click', function (e) {
+      e.preventDefault();
+      popUp.classList.add('active');
+    })
+
+    closePopUp.addEventListener('click', ()=>{
+      popUp.classList.remove('active');
+    })
+  </script>
+
 </head>
 <body>
+<div class="pop_up" id="pop_up">
+  <div class="pop_up_container">
+    <div class="pop_up_body" id="pop_up_body">
+      <p>Будет удалена эта лабораторная работа и все её решения студентов. Продолжить?</p>
+      <button type="submit" name="DeleteButton" th:value="'del'" class="btn btn-primary yes_button">Да</button>
+      <button type="submit" name="BackDeleteButton" class="btn btn-primary no_button" id="pop_up_close">Нет</button>
+    </div>
+  </div>
+</div>
 <div id="wrapper">
   <div th:insert="~{adminTemp/adminSideMenu2:: copy}"></div>
   <div id="page-wrapper" class="gray-bg">
@@ -59,6 +83,16 @@
     <div class="wrapper wrapper-content animated fadeInRight">
       <div class="row">
         <span class="user_profile_title" th:text="${lab_info.getName()}"></span>
+
+        <form  method="post" name="DeleteProcess">
+          <div class="btn btn-primary button">
+            <a id="open_pop_up">Delete labwork</a>
+          </div>
+
+<!--          <button type="submit" name="DeleteButton"  th:value="'del'"-->
+<!--                  class="btn btn-primary">Delete labwork</button>-->
+        </form>
+
         <div class="col-lg-12">
           <div class="text-center dashboard-header">
             <h1>Ungraded labs</h1>
