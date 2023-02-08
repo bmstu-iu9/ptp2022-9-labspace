@@ -138,12 +138,22 @@ public class FileStorageServiceImpl implements FileStorageService {
                 String sender = authenticationService.getCurrentUser().getFirstName() + " " +
                         authenticationService.getCurrentUser().getLastName();
                 User teacher = labInfoRepository.getReferenceById(labId).getTeahcer();
-                String receiver = teacher.getFirstName() + " " + teacher.getLastName();
-                String message = "Hello, " + receiver + ",\n\n" + sender + " submit laboratory work " +
+                String receiver = teacher.getEmail();
+                String teacherName;
+                if (receiver.equals("root@root")) {
+                    teacherName = "Данила Павлович";
+                    receiver = "danila@posevin.com";
+                } else if (receiver.equals("av@root")) {
+                    teacherName = "Александр Владимирович";
+                    receiver = "avkonovalov@bmstu.ru";
+                } else {
+                    teacherName = teacher.getFirstName() + " " + teacher.getPatronymic();
+                }
+                String message = "Hello, " + teacherName + ",\n\n" + sender + " submit laboratory work " +
                         labInfoRepository.getReferenceById(labId).getName() + " at " + new Date(System.currentTimeMillis());
 
                 try {
-                    mailSender.sendWithAttachments(teacher.getEmail(), "New report from " + sender, message,
+                    mailSender.sendWithAttachments(receiver, "New report from " + sender, message,
                             sender +"_"+ labInfoRepository.getReferenceById(labId).getName() + ".pdf", file);
                 } catch (MessagingException e) {
                     throw new RuntimeException("Could not sent mail to teacher.");
