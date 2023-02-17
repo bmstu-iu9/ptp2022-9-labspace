@@ -117,7 +117,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                 if (sb.isOnRevision()){
                     Files.delete(Paths.get(sb.getSource()));
                     sb.setSource(targetLocation.toString());
-                    sb.setOnRevision(false);
+                    //sb.setOnRevision(false);
                     sb.setRevisionComment(null);
                     sb.setSendDate(new Date((System.currentTimeMillis())));
                     submitLabRepository.saveAndFlush(sb);

@@ -84,9 +84,11 @@ public class CheckLabController {
     public String writeMark(@NotNull HttpServletRequest request, @PathVariable Long lab_id, @PathVariable Long user_id){
       Optional <SubmitLab> submitLab1 = submitLabRepository.findByUserIdAndLabInfoId(user_id,lab_id);
       SubmitLab submitLab=submitLab1.get();
-       if (Objects.equals(request.getParameter("send-revision"), "1")){
+       if (Objects.equals(request.getParameter("send-revision"), "on")){
            submitLab.setRevisionComment( request.getParameter("comment"));
            submitLab.setOnRevision(true);
+       }else {
+           submitLab.setOnRevision(false);
        }
       try {
           submitLab.setMark(Integer.parseInt(request.getParameter("final_mark")));
@@ -104,12 +106,12 @@ public class CheckLabController {
         User user = userService.getByEmail(username);
         model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
         model.addAttribute("groupp", user.getGroupp().getName());
-        List<SubmitLab> submit_labs = submitLabRepository.findAllByLabInfoIdAndMark(lab_id, -1);
+        List<SubmitLab> submit_labs = submitLabRepository.findByLabInfo_IdAndMarkOrLabInfo_IdAndOnRevisionTrue(lab_id, -1,lab_id);
         Optional<LabInfo> lab_info = labInfoRepository.findById(lab_id);
         model.addAttribute("lab_info", lab_info.get());
         Collections.reverse(submit_labs);
         model.addAttribute("submit_labs", submit_labs);
-        List<SubmitLab> submit_labs_graded = submitLabRepository.findAllByLabInfoIdAndMarkGreaterThan(lab_id, -1);
+        List<SubmitLab> submit_labs_graded = submitLabRepository.findAllByUserIdAndMarkGreaterThanAndOnRevisionFalse(lab_id, -1);
         Collections.reverse(submit_labs_graded);
         model.addAttribute("submit_labs_graded", submit_labs_graded);
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
