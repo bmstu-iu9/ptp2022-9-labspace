@@ -83,6 +83,7 @@
           <div class="lab-space" th:each="submit_lab : ${submit_labs}">
             <div class="student-name">
               <a th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/admin/profile_read_only' + ${submit_lab.getUser().getId()}"/>
+              <h2 style="display:inline-block" th:if="${submit_lab.getOnRevision()}"  th:text="'(review)'"/>
             </div>
             <div class="student-group" th:text="${submit_lab.getUser().getGroupp().getName()}" style="flex: 0.6;"/>
             <div class="student-send-date" th:text="${submit_lab.getSendDate()}"/>
@@ -113,7 +114,6 @@
           <div class="lab-space" th:each="submit_lab : ${submit_labs_graded}">
             <div class="student-name">
               <a class="h2-lab-name" th:text="${submit_lab.getUser().getFirstName()} + ' ' + ${submit_lab.getUser().getLastName()}" th:href="'/admin/profile_read_only' + ${submit_lab.getUser().getId()}"/>
-              <h2 style="display:inline-block"  >(review)</h2>
             </div>
             <div class="student-group" th:text="${submit_lab.getUser().getGroupp().getName()}" style="flex: 0.6;"/>
             <h2 class="student-send-date" th:text="${submit_lab.getSendDate()}"/>
