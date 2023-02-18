@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ProfilePageController {
@@ -66,6 +67,10 @@ public class ProfilePageController {
 
         User curUser = authenticationService.getCurrentUser();
         List<SubmitLab> submit_labs = submitLabRepository.findAllByUserIdAndNotChecked(user_id);
+
+        //Удалить все сданные отчеты, не принадлежащие лабам данного препода.
+        submit_labs.removeIf(elem -> elem.getLabInfo().getTeahcer() != null && !Objects.equals(elem.getLabInfo().getTeahcer().getId(), curUser.getId()));
+
         Collections.reverse(submit_labs);
         model.addAttribute("submit_labs", submit_labs);
         model.addAttribute("name", curUser.getFirstName() + " " + curUser.getLastName());

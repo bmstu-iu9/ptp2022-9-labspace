@@ -1,6 +1,7 @@
 package com.example.springdemo.repository;
 
 import com.example.springdemo.entity.LabInfo;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,8 @@ public interface LabInfoRepository extends JpaRepository<LabInfo, Long> {
     Set<LabInfo> findByGroupps_Id(Long id);
 
     List<LabInfo> findAllOrderedById(Long id);
+
+    @NotNull LabInfo getById (Long id);
 
 
 }

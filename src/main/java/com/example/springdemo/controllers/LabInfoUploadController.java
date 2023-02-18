@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.ParseException;
+import java.util.Objects;
 
 @Controller
 public class LabInfoUploadController {
@@ -54,11 +55,14 @@ public class LabInfoUploadController {
     @PostMapping(value = "/admin/upload_lab")
     public String uploadLab(@Valid LabInfo labInfo,
                           @RequestParam(name = "filee") MultipartFile file,
-                          @RequestParam(name = "variants") int count,
+                          @RequestParam(name = "variants") String count,
                           HttpServletRequest request) throws ParseException {
 
         labInfoService.uploadLab(labInfo, file, request);
-        variantService.randomizeVariants(count, labInfo);
-        return "redirect:/";
+        if (!Objects.equals(count, "")){
+            variantService.randomizeVariants(Integer.parseInt(count), labInfo);
+        }
+
+        return "redirect:/admin/index";
     }
 }

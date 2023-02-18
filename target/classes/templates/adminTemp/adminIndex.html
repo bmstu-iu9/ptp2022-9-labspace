@@ -79,9 +79,9 @@
                             </div>
                         </div>
                      <form th:switch="${lab.getIsVisible()}" method="post"  name="changeVisibility" class="visible">
-                         <button th:case="false" type="submit" name = "Do"  th:value="'t' + ${lab.id}"
+                         <button th:case="false" type="submit" name = "Visibility"  th:value="'t' + ${lab.id}"
                                  class="btn btn-primary" >Publish</button>
-                         <button th:case="true" type="submit" name = "Do"  th:value="'f' + ${lab.id}"
+                         <button th:case="true" type="submit" name = "Visibility"  th:value="'f' + ${lab.id}"
                                  class="btn btn-info" >Hide</button>
 
                      </form>

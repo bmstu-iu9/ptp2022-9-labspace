@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import com.example.springdemo.service.LabInfoService;
+import com.example.springdemo.repository.LabInfoRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -41,6 +43,11 @@ public class CheckLabController {
     VariantRepository variantRepository;
     @Autowired
     VariantService variantService;
+
+    @Autowired
+    LabInfoService labInfoService;
+
+
 
     @GetMapping("admin/check_lab_id{lab_id}/user_id{user_id}")
     public String checkLab(Model model, @PathVariable Long lab_id, @PathVariable Long user_id){
@@ -77,9 +84,11 @@ public class CheckLabController {
     public String writeMark(@NotNull HttpServletRequest request, @PathVariable Long lab_id, @PathVariable Long user_id){
       Optional <SubmitLab> submitLab1 = submitLabRepository.findByUserIdAndLabInfoId(user_id,lab_id);
       SubmitLab submitLab=submitLab1.get();
-       if (Objects.equals(request.getParameter("send-revision"), "1")){
+       if (Objects.equals(request.getParameter("send-revision"), "on")){
            submitLab.setRevisionComment( request.getParameter("comment"));
            submitLab.setOnRevision(true);
+       }else {
+           submitLab.setOnRevision(false);
        }
       try {
           submitLab.setMark(Integer.parseInt(request.getParameter("final_mark")));
@@ -92,20 +101,31 @@ public class CheckLabController {
 
     @GetMapping("/admin/check_lab_id{lab_id}")
     public String allReportsLabPage(Model model, @PathVariable Long lab_id){
+
         String username = authenticationService.getCurrentUsername();
         User user = userService.getByEmail(username);
         model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
         model.addAttribute("groupp", user.getGroupp().getName());
-        List<SubmitLab> submit_labs = submitLabRepository.findAllByLabInfoIdAndMark(lab_id, -1);
+        List<SubmitLab> submit_labs = submitLabRepository.findByLabInfo_IdAndMarkOrLabInfo_IdAndOnRevisionTrue(lab_id, -1,lab_id);
         Optional<LabInfo> lab_info = labInfoRepository.findById(lab_id);
         model.addAttribute("lab_info", lab_info.get());
         Collections.reverse(submit_labs);
         model.addAttribute("submit_labs", submit_labs);
-        List<SubmitLab> submit_labs_graded = submitLabRepository.findAllByLabInfoIdAndMarkGreaterThan(lab_id, -1);
+        List<SubmitLab> submit_labs_graded = submitLabRepository.findAllByUserIdAndMarkGreaterThanAndOnRevisionFalse(lab_id, -1);
         Collections.reverse(submit_labs_graded);
         model.addAttribute("submit_labs_graded", submit_labs_graded);
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         model.addAttribute("format", format);
         return "adminTemp/reports_page";
+    }
+
+    @PostMapping("/admin/check_lab_id{lab_id}")
+    public String DeleteProcess(HttpServletRequest request, @PathVariable Long lab_id) {
+        String val = request.getParameter("DeleteButton");
+        LabInfo labInfo = labInfoRepository.getById(lab_id);
+        if (Objects.equals(val, "del")) {
+            labInfoService.deleteLab(labInfo);
+        }
+        return "redirect:/admin/index";
     }
 }

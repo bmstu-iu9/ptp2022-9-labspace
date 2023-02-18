@@ -55,6 +55,10 @@ public class AdminMainController {
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
             List<LabInfo> labs = labInfoRepository.findAll();
+
+            //удаление лаб, не принадлежащих текущему учителю
+            labs.removeIf(lab -> lab.getTeahcer() != null && !Objects.equals(lab.getTeahcer().getId(), authenticationService.getCurrentUser().getId()));
+
             Collections.reverse(labs);
             model.addAttribute("labs", labs);
             Iterable<Groupp> groupList = grouppRepository.findAll();
@@ -70,9 +74,10 @@ public class AdminMainController {
 
     @PostMapping("/admin/index")
     public String changeVisibility(HttpServletRequest request) {
-        String val = request.getParameter("Do");
+        String val = request.getParameter("Visibility");
         Long id = Long.valueOf(val.substring(1));
         LabInfo lab = labInfoRepository.findById(id).get();
+
         if (val.charAt(0) == 't'){
             logger.trace("Set visibitity of lab id " + val.substring(1) + " true");
             lab.setIsVisible(true);
@@ -96,6 +101,10 @@ public class AdminMainController {
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
             List<SubmitLab> submit_labs = submitLabRepository.findAllNotChecked();
+
+            //удалить сданные работы, не принадлежащие лабам этого учителя
+            submit_labs.removeIf(elem -> elem.getLabInfo().getTeahcer() != null && !Objects.equals(elem.getLabInfo().getTeahcer().getId(), user.getId()));
+
             Collections.reverse(submit_labs);
             model.addAttribute("submit_labs", submit_labs);
         } else {
@@ -113,6 +122,10 @@ public class AdminMainController {
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
             List<SubmitLab> submit_labs = submitLabRepository.findAllChecked();
+
+            //удалить проверенные работы, не принадлежащие лабам этого учителя
+            submit_labs.removeIf(elem -> elem.getLabInfo().getTeahcer() != null && !Objects.equals(elem.getLabInfo().getTeahcer().getId(), user.getId()));
+
             Collections.reverse(submit_labs);
             model.addAttribute("submit_labs", submit_labs);
         } else {
