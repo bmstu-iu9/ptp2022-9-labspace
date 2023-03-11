@@ -101,6 +101,10 @@ public class AdminMainController {
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
             List<SubmitLab> submit_labs = submitLabRepository.findAllNotChecked();
+
+            //удалить сданные работы, не принадлежащие лабам этого учителя
+            submit_labs.removeIf(elem -> elem.getLabInfo().getTeahcer() != null && !Objects.equals(elem.getLabInfo().getTeahcer().getId(), user.getId()));
+
             Collections.reverse(submit_labs);
             model.addAttribute("submit_labs", submit_labs);
         } else {
@@ -118,6 +122,10 @@ public class AdminMainController {
             model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
             model.addAttribute("groupp", user.getGroupp().getName());
             List<SubmitLab> submit_labs = submitLabRepository.findAllChecked();
+
+            //удалить проверенные работы, не принадлежащие лабам этого учителя
+            submit_labs.removeIf(elem -> elem.getLabInfo().getTeahcer() != null && !Objects.equals(elem.getLabInfo().getTeahcer().getId(), user.getId()));
+
             Collections.reverse(submit_labs);
             model.addAttribute("submit_labs", submit_labs);
         } else {

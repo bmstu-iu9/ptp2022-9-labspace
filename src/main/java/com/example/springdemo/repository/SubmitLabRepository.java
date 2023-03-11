@@ -25,20 +25,21 @@ public interface SubmitLabRepository extends JpaRepository<SubmitLab, Long> {
     List<SubmitLab> findAll();
 
     List<SubmitLab> findAllByUserIdAndMarkGreaterThan(Long user_id, int mark);
+    List<SubmitLab> findAllByUserIdAndMarkGreaterThanAndOnRevisionFalse(Long user_id, int mark);
 
     @Query("select sl from SubmitLab sl where sl.mark=-1 and sl.user.id=?1")
     List<SubmitLab> findAllByUserIdAndNotChecked(Long user_id);
 
-    @Query("select sl from SubmitLab sl where sl.mark=-1")
+    @Query("select sl from SubmitLab sl where sl.mark=-1 or sl.onRevision = true")
     List<SubmitLab> findAllNotChecked();
 
-    @Query("select sl from SubmitLab sl where sl.mark <> -1")
+    @Query("select sl from SubmitLab sl where sl.mark <> -1 and sl.onRevision <> true ")
     List<SubmitLab> findAllChecked();
 
     List<SubmitLab> findByLabInfoId(Long lab_info_id);
 
     List<SubmitLab> findAllByLabInfoIdAndMarkGreaterThan(Long lab_info_id, int mark);
 
-    List<SubmitLab> findAllByLabInfoIdAndMark (Long lab_info_id, int mark);
+    List<SubmitLab> findByLabInfo_IdAndMarkOrLabInfo_IdAndOnRevisionTrue(Long id, int mark, Long id1);
 
 }
