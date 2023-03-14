@@ -20,7 +20,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Deadline {
+public class Deadline implements Comparable<Deadline> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "deadline_id")
@@ -42,4 +42,9 @@ public class Deadline {
             name = "deadline_date"
     )
     private Date deadlineDate;
+
+    @Override
+    public int compareTo(Deadline o) {
+        return this.getDeadlineDate().compareTo(o.getDeadlineDate());
+    }
 }

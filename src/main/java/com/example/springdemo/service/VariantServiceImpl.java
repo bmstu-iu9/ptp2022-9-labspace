@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -58,6 +59,7 @@ public class VariantServiceImpl implements VariantService {
 
     @Override
     public int getVariantByLabInfoIdAndStudentId(Long lab_info_id, Long student_id) {
-        return variantRepository.findByLabInfoIdAndStudentId(lab_info_id, student_id).get().getVariant();
+        Optional<Variant> var = variantRepository.findByLabInfoIdAndStudentId(lab_info_id, student_id);
+        return var.isPresent() ? var.get().getVariant() : -1;
     }
 }
