@@ -59,4 +59,20 @@ public class DeadLineServiceImpl implements DeadlineService {
         }
         return mark;
     }
+
+    @Override
+    public int getDeadlineNumber(LabInfo lab, Date date) {
+        List<Deadline> deadlines = deadlineRepository.findAllByLabInfoId(lab.getId());
+        Collections.sort(deadlines);
+        int number = 1;
+        for (Deadline d : deadlines) {
+            if (d.getDeadlineDate().after(date)) break;
+            else number++;
+        }
+        if (number > deadlines.size()) {
+            return -1;
+        } else {
+            return number;
+        }
+    }
 }

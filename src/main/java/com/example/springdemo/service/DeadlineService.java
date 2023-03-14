@@ -12,4 +12,6 @@ public interface DeadlineService {
     void saveDeadlines(HttpServletRequest request, LabInfo labInfo) throws ParseException;
 
     int getMarkByDate(LabInfo lab, Date date);
+
+    int getDeadlineNumber(LabInfo lab, Date date);
 }

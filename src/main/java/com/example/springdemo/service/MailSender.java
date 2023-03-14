@@ -1,16 +1,21 @@
 package com.example.springdemo.service;
 
+import com.example.springdemo.entity.SubmitLab;
+import com.example.springdemo.entity.User;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
+import java.io.IOException;
 
 public interface MailSender {
 
-    public void send(String emailTo, String subject, String message);
+    void send(String emailTo, String subject, String message);
 
-    public void sendWithAttachments(String emailTo, String subject, String message, String filename, MultipartFile file)
+    void sendWithAttachments(String emailTo, String subject, String message, String filename, InputStreamSource file)
             throws MessagingException;
 
+    void sendAssessedWork(SubmitLab submitLab, User user);
 }
