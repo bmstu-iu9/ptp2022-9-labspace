@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class DeadLineServiceImpl implements DeadlineService {
@@ -40,6 +43,36 @@ public class DeadLineServiceImpl implements DeadlineService {
             dl3.setMaxMark(Integer.valueOf(request.getParameter("mark3")));
             deadlineRepository.save(dl3);
         } catch (ParseException ignored) {
+        }
+    }
+
+    @Override
+    public int getMarkByDate(LabInfo lab, Date date) {
+        List<Deadline> deadlines = deadlineRepository.findAllByLabInfoId(lab.getId());
+        Collections.sort(deadlines);
+        int mark = 0;
+        for (Deadline d : deadlines) {
+            if (d.getDeadlineDate().after(date)) {
+                mark = d.getMaxMark();
+                break;
+            }
+        }
+        return mark;
+    }
+
+    @Override
+    public int getDeadlineNumber(LabInfo lab, Date date) {
+        List<Deadline> deadlines = deadlineRepository.findAllByLabInfoId(lab.getId());
+        Collections.sort(deadlines);
+        int number = 1;
+        for (Deadline d : deadlines) {
+            if (d.getDeadlineDate().after(date)) break;
+            else number++;
+        }
+        if (number > deadlines.size()) {
+            return -1;
+        } else {
+            return number;
         }
     }
 }

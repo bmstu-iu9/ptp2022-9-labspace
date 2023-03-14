@@ -45,6 +45,10 @@ public class FileStorageServiceImpl implements FileStorageService {
     private SubmitLabRepository submitLabRepository;
     @Autowired
     Environment env;
+    @Autowired
+    private VariantService variantService;
+    @Autowired
+    private DeadlineService deadlineService;
 
     private final Path fileStorageLocation;
 
@@ -135,8 +139,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                         .build();
                 submitLabRepository.saveAndFlush(submitLab);
 
-                String sender = authenticationService.getCurrentUser().getFirstName() + " " +
-                        authenticationService.getCurrentUser().getLastName();
+                User student = authenticationService.getCurrentUser();
                 User teacher = labInfoRepository.getReferenceById(labId).getTeahcer();
                 String receiver = teacher.getEmail();
                 String teacherName;
@@ -149,12 +152,18 @@ public class FileStorageServiceImpl implements FileStorageService {
                 } else {
                     teacherName = teacher.getFirstName() + " " + teacher.getPatronymic();
                 }
-                String message = "Hello, " + teacherName + ",\n\n" + sender + " submit laboratory work " +
-                        labInfoRepository.getReferenceById(labId).getName() + " at " + new Date(System.currentTimeMillis());
-
+                LabInfo lab = labInfoRepository.getReferenceById(labId);
+                String studentName = student.getFirstName() + " " + student.getLastName() + " " + student.getPatronymic();
+                int mark = deadlineService.getMarkByDate(lab, new Date());
+                String urlToCheckLab = "https://iu9.yss.su/admin/check_lab_id" + labId + "/user_id" + student.getId();
+                String message = "Hello, " + teacherName + ",\n\n" + studentName + " submit laboratory work " +
+                        lab.getName() + " at " + new Date(System.currentTimeMillis()) + "\n\n" + urlToCheckLab;
+                String subject = studentName + " " + student.getGroupp().getName() + " " + lab.getCourse().getName() + " " +
+                        lab.getName() + " Вариант №" + variantService.getVariantByLabInfoIdAndStudentId(labId, student.getId()) +
+                        " Автооценка " + mark;
                 try {
-                    mailSender.sendWithAttachments(receiver, "New report from " + sender, message,
-                            sender +"_"+ labInfoRepository.getReferenceById(labId).getName() + ".pdf", file);
+                    mailSender.sendWithAttachments(receiver, subject, message,
+                            studentName +"_"+ lab.getName() + ".pdf", file);
                 } catch (MessagingException e) {
                     throw new RuntimeException("Could not sent mail to teacher.");
                 }

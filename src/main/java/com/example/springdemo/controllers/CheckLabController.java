@@ -4,10 +4,7 @@ import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.SubmitLab;
 import com.example.springdemo.entity.User;
 import com.example.springdemo.repository.*;
-import com.example.springdemo.service.AuthenticationService;
-import com.example.springdemo.service.DeadlineService;
-import com.example.springdemo.service.UserService;
-import com.example.springdemo.service.VariantService;
+import com.example.springdemo.service.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import com.example.springdemo.service.LabInfoService;
 import com.example.springdemo.repository.LabInfoRepository;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
@@ -43,6 +41,8 @@ public class CheckLabController {
     VariantRepository variantRepository;
     @Autowired
     VariantService variantService;
+    @Autowired
+    MailSender mailSender;
 
     @Autowired
     LabInfoService labInfoService;
@@ -82,21 +82,22 @@ public class CheckLabController {
 
     @PostMapping("/admin/check_lab_id" + "{lab_id}" + "/user_id" + "{user_id}")
     public String writeMark(@NotNull HttpServletRequest request, @PathVariable Long lab_id, @PathVariable Long user_id){
-      Optional <SubmitLab> submitLab1 = submitLabRepository.findByUserIdAndLabInfoId(user_id,lab_id);
-      SubmitLab submitLab=submitLab1.get();
-       if (Objects.equals(request.getParameter("send-revision"), "on")){
+        Optional <SubmitLab> submitLab1 = submitLabRepository.findByUserIdAndLabInfoId(user_id,lab_id);
+        SubmitLab submitLab=submitLab1.get();
+        if (Objects.equals(request.getParameter("send-revision"), "on")){
            submitLab.setRevisionComment( request.getParameter("comment"));
            submitLab.setOnRevision(true);
-       }else {
+        }else {
            submitLab.setOnRevision(false);
-       }
-      try {
+        }
+        try {
           submitLab.setMark(Integer.parseInt(request.getParameter("final_mark")));
-      } catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
           submitLab.setMark(0);
-      }
-       submitLabRepository.save(submitLab);
-       return "redirect:/admin/check_lab_id" + lab_id;
+        }
+        submitLabRepository.save(submitLab);
+        mailSender.sendAssessedWork(submitLab, userService.getById(user_id));
+        return "redirect:/admin/check_lab_id" + lab_id;
     }
 
     @GetMapping("/admin/check_lab_id{lab_id}")
