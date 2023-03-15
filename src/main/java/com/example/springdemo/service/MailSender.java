@@ -1,5 +1,6 @@
 package com.example.springdemo.service;
 
+import com.example.springdemo.entity.LabInfo;
 import com.example.springdemo.entity.SubmitLab;
 import com.example.springdemo.entity.User;
 import org.springframework.context.annotation.Bean;
@@ -18,4 +19,8 @@ public interface MailSender {
             throws MessagingException;
 
     void sendAssessedWork(SubmitLab submitLab, User user);
+
+    void sendMailSubmitLab(LabInfo lab, MultipartFile file);
+
+    void sendActivationCode(User user);
 }

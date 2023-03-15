@@ -45,6 +45,8 @@ public class SubmitLabController {
     private AuthenticationService authenticationService;
     @Autowired
     private SubmitLabRepository submitLabRepository;
+    @Autowired
+    private MailSender mailSender;
 
     @PostMapping(path = "main/lab_id{lab_info_id}")
     public String uploadFile(
@@ -53,6 +55,7 @@ public class SubmitLabController {
         String path = labInfoRepository.getReferenceById(labId).getCourse().getId() + "/labid" + labId + "/";
         model.addAttribute("id", labId);
         fileStorageService.storeFile(file, path, labId);
+        mailSender.sendMailSubmitLab(labInfoRepository.getReferenceById(labId), file);
         return "redirect:/";
     }
 

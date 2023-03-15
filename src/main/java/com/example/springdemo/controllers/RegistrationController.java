@@ -117,6 +117,7 @@ public class RegistrationController {
         } else {
             grouppRepository.findById(Long.valueOf(request.getParameter("groupp_name"))).ifPresent(user::setGroupp);
             userService.registerUser(user);
+            mailSender.sendActivationCode(user);
             redirectAttributes.addAttribute("activationEmail", user.getEmail());
             return "redirect:/auth/login";
         }
