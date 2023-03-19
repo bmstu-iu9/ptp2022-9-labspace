@@ -68,11 +68,9 @@ public class RegistrationController {
                           HttpServletRequest request,
                           HttpServletResponse response) throws ServletException {
         List<Groupp> grouppList = grouppRepository.findAll();
-        user.setPhoneNumber("+" + user.getPhoneNumber());
-        user.setTgAccount("@" + user.getTgAccount());
         model.addAttribute("groupps", grouppList);
-        if (!user.getTgAccount().matches("@[a-zA-Z]\\w{4,}")){
-            bindingResult.rejectValue("tgAccount","user.tgAccount","Telegram username should be: @Username");
+        if (!user.getTgAccount().matches("[a-zA-Z]\\w{4,}")){
+            bindingResult.rejectValue("tgAccount","user.tgAccount","Telegram username is incorrect");
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("groupps", grouppList);
             return "register";
@@ -85,7 +83,7 @@ public class RegistrationController {
 
 
         try {
-            Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(user.getPhoneNumber(), Phonenumber.PhoneNumber.CountryCodeSource.UNSPECIFIED.name());
+            Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse("+" + user.getPhoneNumber(), Phonenumber.PhoneNumber.CountryCodeSource.UNSPECIFIED.name());
             if (!phoneNumberUtil.isValidNumber(phoneNumber))
                 throw new NumberParseException(NumberParseException.ErrorType.NOT_A_NUMBER, "Not a number");
         } catch (NumberParseException e) {
@@ -116,6 +114,8 @@ public class RegistrationController {
             return "register";
         } else {
             grouppRepository.findById(Long.valueOf(request.getParameter("groupp_name"))).ifPresent(user::setGroupp);
+            user.setPhoneNumber("+" + user.getPhoneNumber());
+            user.setTgAccount("@" + user.getTgAccount());
             userService.registerUser(user);
             mailSender.sendActivationCode(user);
             redirectAttributes.addAttribute("activationEmail", user.getEmail());
