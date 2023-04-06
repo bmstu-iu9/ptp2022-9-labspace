@@ -20,8 +20,6 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private BCryptPasswordEncoder encoder;
-    @Autowired
-    private MailSender mailSender;
 
     @Override
     public List<User> getUsers() {
@@ -81,17 +79,6 @@ public class UserServiceImpl implements UserService {
         user.setActivationCode(UUID.randomUUID().toString());
         user.setFirstName(capitalize(user.getFirstName()));
         user.setLastName(capitalize(user.getLastName()));
-        String message = String.format(
-                "Hello, %s!\n" +
-                        "\n" +
-                        "We are glad to welcome you to the LabSpace!\n" +
-                        "\n" +
-                        "Please, follow the link to verify your profile:\n" +
-                        "http://iu9.yss.su/auth/activate/%s",
-                user.getFirstName(),
-                user.getActivationCode()
-        );
-        mailSender.send(user.getEmail(), "Activation code", message);
 
         userRepository.save(user);
     }

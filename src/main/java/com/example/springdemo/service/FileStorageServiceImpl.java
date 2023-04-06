@@ -32,23 +32,15 @@ import java.util.Optional;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
-    @Autowired
-    private MailSenderImpl mailSender;
 
     @Autowired
     private AuthenticationService authenticationService;
-
     @Autowired
     private LabInfoRepository labInfoRepository;
-
     @Autowired
     private SubmitLabRepository submitLabRepository;
     @Autowired
     Environment env;
-    @Autowired
-    private VariantService variantService;
-    @Autowired
-    private DeadlineService deadlineService;
 
     private final Path fileStorageLocation;
 
@@ -138,35 +130,6 @@ public class FileStorageServiceImpl implements FileStorageService {
                         .onRevision(false)
                         .build();
                 submitLabRepository.saveAndFlush(submitLab);
-
-                User student = authenticationService.getCurrentUser();
-                User teacher = labInfoRepository.getReferenceById(labId).getTeahcer();
-                String receiver = teacher.getEmail();
-                String teacherName;
-                if (receiver.equals("root@root")) {
-                    teacherName = "Данила Павлович";
-                    receiver = "danila@posevin.com";
-                } else if (receiver.equals("av@root")) {
-                    teacherName = "Александр Владимирович";
-                    receiver = "avkonovalov@bmstu.ru";
-                } else {
-                    teacherName = teacher.getFirstName() + " " + teacher.getPatronymic();
-                }
-                LabInfo lab = labInfoRepository.getReferenceById(labId);
-                String studentName = student.getFirstName() + " " + student.getLastName() + " " + student.getPatronymic();
-                int mark = deadlineService.getMarkByDate(lab, new Date());
-                String urlToCheckLab = "https://iu9.yss.su/admin/check_lab_id" + labId + "/user_id" + student.getId();
-                String message = "Hello, " + teacherName + ",\n\n" + studentName + " submit laboratory work " +
-                        lab.getName() + " at " + new Date(System.currentTimeMillis()) + "\n\n" + urlToCheckLab;
-                String subject = studentName + " " + student.getGroupp().getName() + " " + lab.getCourse().getName() + " " +
-                        lab.getName() + " Вариант №" + variantService.getVariantByLabInfoIdAndStudentId(labId, student.getId()) +
-                        " Автооценка " + mark;
-                try {
-                    mailSender.sendWithAttachments(receiver, subject, message,
-                            studentName +"_"+ lab.getName() + ".pdf", file);
-                } catch (MessagingException e) {
-                    throw new RuntimeException("Could not sent mail to teacher.");
-                }
             }
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
