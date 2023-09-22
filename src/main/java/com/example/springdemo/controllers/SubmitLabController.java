@@ -45,19 +45,19 @@ public class SubmitLabController {
     private AuthenticationService authenticationService;
     @Autowired
     private SubmitLabRepository submitLabRepository;
-    @Autowired
-    private MailSender mailSender;
 
     @PostMapping(path = "main/lab_id{lab_info_id}")
     public String uploadFile(
             @RequestParam(name = "filee", required = false) MultipartFile file,
+            @RequestParam(name = "src", required = false) MultipartFile src_code,
             @PathVariable("lab_info_id") Long labId, Model model) throws IOException {
         String path = labInfoRepository.getReferenceById(labId).getCourse().getId() + "/labid" + labId + "/";
         model.addAttribute("id", labId);
-        fileStorageService.storeFile(file, path, labId);
-        mailSender.sendMailSubmitLab(labInfoRepository.getReferenceById(labId), file);
+        fileStorageService.storeFile(file,src_code, path, labId);
         return "redirect:/";
     }
+
+
 
     @GetMapping(path = "main/lab_id{lab_info_id}")
     public String view(Model model, @PathVariable("lab_info_id") Long lab_id) {

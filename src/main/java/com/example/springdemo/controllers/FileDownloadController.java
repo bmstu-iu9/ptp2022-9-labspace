@@ -37,4 +37,19 @@ public class FileDownloadController {
                     "attachment; filename=\"" + file.getFilename() + "\"").body(file);
         }
     }
+    @GetMapping("admin/check_lab_id{labId}/download/user_id{userId}/src")
+    @ResponseBody
+    public ResponseEntity<Resource> serveSrc(@PathVariable Long labId, @PathVariable Long userId) {
+
+        Resource file = fileStorageService.loadAsResourceCode(labId, userId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("content-disposition", "attachment;filename=" + file.getFilename());
+        String fileName = file.getFilename();
+        if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0){
+            return new ResponseEntity<>(file,headers, HttpStatus.OK);
+        }else {
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        }
+    }
 }
