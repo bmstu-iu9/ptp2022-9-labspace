@@ -52,7 +52,7 @@
                                         <div class="teacher_block teacher_date">
                                             <div style="display: block; text-align: center; margin-top: 5px;">
                                                 <div class="teacher_dayMonth"
-                                                     th:text="${formatdayMonth.format(deadline.getDeadlineDate())}"></div>
+                                                      th:text="${formatdayMonth.format(deadline.getDeadlineDate())}"></div>
                                                 <div class="teacher_year" th:text="${formatYear.format(deadline.getDeadlineDate())}"></div>
                                                 <div class="teacher_time" th:text="${formatTime.format(deadline.getDeadlineDate())}"></div>
                                             </div>
@@ -68,46 +68,46 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div style="margin-top: 35px">
-                            <span class="teacher_title_text">General information</span>
-                            <label class="teacher_input teacher_input_inf" rows="5" cols="1" th:text="${lab_info.getDescription()}"></label>
-                        </div>
-
-                        <div class="teacher_row">
-                            <div class="student_left_form">
-                                <span class="teacher_title_text">Useful files</span>
-                                <a th:href="@{'lab_id' + ${lab_info.getId()} + '/download'}">
-                                    <div class="student_upload" id="btn" >Download</div>
-                                </a>
-                            </div>
-                            <div class="student_right_form">
-                                <span class="teacher_title_text">Report<span style="color: mediumvioletred">*</span></span>
-                                <div class="teacher_file_import">
-                                    <span class="teacher_text_import" id="filename">No file chosen</span>
-                                    <input type="file" name="filee" class="input_file" id="file"  th:required="required" th:accept=".pdf"/>
-                                    <label for="file" class="teacher_button_import">Upload</label>
                                 </div>
                             </div>
-                            <div class="student_right_form">
-                                <span class="teacher_title_text">Source code<span style="color: mediumvioletred">*</span></span>
-                                <div class="teacher_file_import">
-                                    <span class="teacher_text_import" id="filename2">No file chosen</span>
-                                    <input type="file" name="src" class="input_file" id="file2"/>
-                                    <label for="file2" class="teacher_button_import">Upload</label>
+
+                            <div style="margin-top: 35px">
+                                <span class="teacher_title_text">General information</span>
+                                <label class="teacher_input teacher_input_inf" rows="5" cols="1" th:text="${lab_info.getDescription()}"></label>
+                            </div>
+
+                            <div class="teacher_row">
+                                <div class="student_left_form">
+                                    <span class="teacher_title_text">Useful files</span>
+                                    <a th:href="@{'lab_id' + ${lab_info.getId()} + '/download'}">
+                                        <div class="student_upload" id="btn" >Download</div>
+                                    </a>
+                                </div>
+                                <div class="student_right_form">
+                                    <span class="teacher_title_text">Your labwork<span style="color: mediumvioletred">*</span></span>
+                                        <div class="teacher_file_import">
+                                            <span class="teacher_text_import" id="filename">No file chosen</span>
+                                            <input type="file" name="filee" class="input_file" id="file"  th:required="required" th:accept=".pdf"/>
+                                            <label for="file" class="teacher_button_import">Upload</label>
+                                        </div>
+                                </div>
+                                <div class="student_right_form">
+                                    <span class="teacher_title_text">Source code<span style="color: mediumvioletred">*</span></span>
+                                    <div class="teacher_file_import">
+                                        <span class="teacher_text_import" id="filename2">No file chosen</span>
+                                        <input type="file" name="src" class="input_file" id="file2"/>
+                                        <label for="file2" class="teacher_button_import">Upload</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <button class="student_submit_button">Submit</button>
+                            <button class="student_submit_button">Submit</button>
                         <!--/form-->
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 <script src="../static/js/teacher_lab/dateChange.js"></script>
 <script src="../static/js/teacher_lab/customButton.js"></script>

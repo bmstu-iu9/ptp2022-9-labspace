@@ -7,13 +7,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 public interface FileStorageService {
-    void storeFile(MultipartFile file,MultipartFile src_code, String path, Long labId) throws IOException;
+    void storeFile(MultipartFile file,MultipartFile src_code, MultipartFile image, String path, Long labId) throws IOException;
 
     void storeFile(MultipartFile file, LabInfo labInfo);
 
     Resource loadAsResource(Long userId, Long labId);
 
     Resource loadAsResourceCode(Long userId, Long labId);
+
+    Resource loadAsResourceImg(Long userId, Long labId);
 
     Resource loadAsResource(Long labId);
 }

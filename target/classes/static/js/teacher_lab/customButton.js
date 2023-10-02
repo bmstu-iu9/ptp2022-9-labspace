@@ -2,7 +2,7 @@ const file = document.getElementById('file');
 const fileChosen = document.getElementById('filename');
 file.addEventListener('change',
     function (){
-        fileChosen.textContent = this.files[0].name
+    fileChosen.textContent = this.files[0].name
     })
 
 const file2 = document.getElementById('file2');

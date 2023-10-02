@@ -1,6 +1,5 @@
 package com.example.springdemo.controllers;
 
-import com.example.springdemo.repository.LabInfoRepository;
 import com.example.springdemo.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -37,11 +36,7 @@ public class FileDownloadController {
                     "attachment; filename=\"" + file.getFilename() + "\"").body(file);
         }
     }
-    @GetMapping("admin/check_lab_id{labId}/download/user_id{userId}/src")
-    @ResponseBody
-    public ResponseEntity<Resource> serveSrc(@PathVariable Long labId, @PathVariable Long userId) {
-
-        Resource file = fileStorageService.loadAsResourceCode(labId, userId);
+    ResponseEntity<Resource> attach(Resource file){
         HttpHeaders headers = new HttpHeaders();
         headers.add("content-disposition", "attachment;filename=" + file.getFilename());
         String fileName = file.getFilename();
@@ -51,5 +46,20 @@ public class FileDownloadController {
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                     "attachment; filename=\"" + file.getFilename() + "\"").body(file);
         }
+    }
+    @GetMapping("admin/check_lab_id{labId}/download/user_id{userId}/src")
+    @ResponseBody
+    public ResponseEntity<Resource> serveSrc(@PathVariable Long labId, @PathVariable Long userId) {
+
+        Resource file = fileStorageService.loadAsResourceCode(labId, userId);
+        return attach(file);
+    }
+
+    @GetMapping("admin/check_lab_id{labId}/download/user_id{userId}/img")
+    @ResponseBody
+    public ResponseEntity<Resource> serveImg(@PathVariable Long labId, @PathVariable Long userId) {
+
+        Resource file = fileStorageService.loadAsResourceImg(labId, userId);
+        return attach(file);
     }
 }
