@@ -22,5 +22,12 @@
       <jdbc-url>jdbc:mysql://students.yss.su/labspace-tests</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="labspace@193.168.227.68" uuid="bb80f367-ce15-4ed1-9706-082678da9974">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://193.168.227.68:3306/labspace</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
