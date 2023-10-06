@@ -52,7 +52,11 @@ public class SubmitLabController {
             @RequestParam(name = "src", required = false) MultipartFile src_code,
             @RequestParam(name = "image", required = false) MultipartFile image,
             @PathVariable("lab_info_id") Long labId, Model model) throws IOException {
-        String path = labInfoRepository.getReferenceById(labId).getCourse().getId() + "/labid" + labId + "/slid" + submitLabRepository.getMaxId() + "/";
+        int id =0;
+        if(submitLabRepository.getMaxId().isPresent()){
+            id = submitLabRepository.getMaxId().get();
+        }
+        String path = labInfoRepository.getReferenceById(labId).getCourse().getId() + "/labid" + labId + "/slid" + id + "/";
         model.addAttribute("id", labId);
         fileStorageService.storeFile(file, src_code, image, path, labId);
         return "redirect:/";
