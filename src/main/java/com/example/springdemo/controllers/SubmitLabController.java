@@ -45,19 +45,23 @@ public class SubmitLabController {
     private AuthenticationService authenticationService;
     @Autowired
     private SubmitLabRepository submitLabRepository;
-    @Autowired
-    private MailSender mailSender;
 
     @PostMapping(path = "main/lab_id{lab_info_id}")
     public String uploadFile(
             @RequestParam(name = "filee", required = false) MultipartFile file,
+            @RequestParam(name = "src", required = false) MultipartFile src_code,
+            @RequestParam(name = "image", required = false) MultipartFile image,
             @PathVariable("lab_info_id") Long labId, Model model) throws IOException {
-        String path = labInfoRepository.getReferenceById(labId).getCourse().getId() + "/labid" + labId + "/";
+        int id =0;
+        if(submitLabRepository.getMaxId().isPresent()){
+            id = submitLabRepository.getMaxId().get();
+        }
+        String path = labInfoRepository.getReferenceById(labId).getCourse().getId() + "/labid" + labId + "/slid" + id + "/";
         model.addAttribute("id", labId);
-        fileStorageService.storeFile(file, path, labId);
-        mailSender.sendMailSubmitLab(labInfoRepository.getReferenceById(labId), file);
+        fileStorageService.storeFile(file, src_code, image, path, labId);
         return "redirect:/";
     }
+
 
     @GetMapping(path = "main/lab_id{lab_info_id}")
     public String view(Model model, @PathVariable("lab_info_id") Long lab_id) {
@@ -65,9 +69,9 @@ public class SubmitLabController {
 
         Optional<LabInfo> lab_info = labInfoRepository.findById(lab_id);
         User user = authenticationService.getCurrentUser();
-        if (!lab_info.isPresent() || !lab_info.get().getGroupps().contains(user.getGroupp())){
+        if (!lab_info.isPresent() || !lab_info.get().getGroupps().contains(user.getGroupp())) {
             return "redirect:/";
-        } else{
+        } else {
             Optional<SubmitLab> submitLab = submitLabRepository.findByUserIdAndLabInfoId(user.getId(), lab_info.get().getId());
             if (submitLab.isPresent() && !submitLab.get().isOnRevision()) {
                 return "redirect:/";
@@ -84,16 +88,15 @@ public class SubmitLabController {
         model.addAttribute("formatTime", formatTime);
 
 
-
-        if (variantRepository.findByLabInfoIdAndStudentId(lab_id, user.getId()).isEmpty()){
+        if (variantRepository.findByLabInfoIdAndStudentId(lab_id, user.getId()).isEmpty()) {
             model.addAttribute("variant", "without");
-        }
-        else{
+        } else {
             int variant = variantService.getVariantByLabInfoIdAndStudentId(lab_id, user.getId());
             model.addAttribute("variant", variant);
         }
         return "templs/templateOfUploadLab";
     }
+
     @GetMapping(path = "main/lab_id{lab_info_id}/download")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable Long lab_info_id) {
@@ -104,9 +107,9 @@ public class SubmitLabController {
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         String fileName = file.getFilename();
         if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0
-                && (fileName.substring(fileName.lastIndexOf(".") + 1).equals("pdf"))){
-            return new ResponseEntity<>(file,headers, HttpStatus.OK);
-        }else {
+                && (fileName.substring(fileName.lastIndexOf(".") + 1).equals("pdf"))) {
+            return new ResponseEntity<>(file, headers, HttpStatus.OK);
+        } else {
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                     "attachment; filename=\"" + file.getFilename() + "\"").body(file);
         }

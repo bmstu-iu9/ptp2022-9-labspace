@@ -34,6 +34,19 @@ public class SubmitLab {
     private String source;
 
     @Column(
+            name = "src_code"
+    )
+    @NotNull(message = "Please choose the file.")
+    private String src_code;
+
+    @Column(
+            name = "image"
+    )
+    @NotNull(message = "Please choose the file.")
+    private String image;
+
+
+    @Column(
             name = "send_date"
     )
     private Date sendDate;

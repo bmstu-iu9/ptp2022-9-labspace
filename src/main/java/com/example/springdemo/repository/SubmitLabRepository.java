@@ -36,6 +36,8 @@ public interface SubmitLabRepository extends JpaRepository<SubmitLab, Long> {
     @Query("select sl from SubmitLab sl where sl.mark <> -1 and sl.onRevision <> true ")
     List<SubmitLab> findAllChecked();
 
+    @Query("select max(sl.id) from SubmitLab sl")
+    Optional<Integer> getMaxId();
     List<SubmitLab> findByLabInfoId(Long lab_info_id);
 
     List<SubmitLab> findAllByLabInfoIdAndMarkGreaterThan(Long lab_info_id, int mark);

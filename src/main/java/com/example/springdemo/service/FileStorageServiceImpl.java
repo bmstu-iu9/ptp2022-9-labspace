@@ -32,11 +32,15 @@ import java.util.Optional;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
+    @Autowired
+    private MailSenderImpl mailSender;
 
     @Autowired
     private AuthenticationService authenticationService;
+
     @Autowired
     private LabInfoRepository labInfoRepository;
+
     @Autowired
     private SubmitLabRepository submitLabRepository;
     @Autowired
@@ -66,10 +70,16 @@ public class FileStorageServiceImpl implements FileStorageService {
         return fileNameParts[fileNameParts.length - 1];
     }
     @Override
-    public void storeFile(MultipartFile file, String path, Long labId) throws IOException {
+    public void storeFile(MultipartFile file, MultipartFile scr_code,MultipartFile image, String path, Long labId) throws IOException {
         // Normalize file name
         String fileName =
-                new Date().getTime() + "-file." + getFileExtension(file.getOriginalFilename());
+                new Date().getTime() + "-doc." + getFileExtension(file.getOriginalFilename());
+
+        String fileNameForCode =
+                new Date().getTime() + "-code." + getFileExtension(scr_code.getOriginalFilename());
+
+        String fileNameForImg =
+                new Date().getTime() + "-output." + getFileExtension(image.getOriginalFilename());
 
         try {
             // Check if the filename contains invalid characters
@@ -78,6 +88,15 @@ public class FileStorageServiceImpl implements FileStorageService {
                         "Sorry! Filename contains invalid path sequence " + fileName);
             }
 
+            if (fileNameForCode.contains("..")) {
+                throw new RuntimeException(
+                        "Sorry! Filename contains invalid path sequence " + fileNameForCode);
+            }
+
+            if (fileNameForImg.contains("..")) {
+                throw new RuntimeException(
+                        "Sorry! Filename contains invalid path sequence " + fileNameForImg);
+            }
             String contentType = file.getContentType();
 
             // Check if the filetype is not correct
@@ -89,6 +108,8 @@ public class FileStorageServiceImpl implements FileStorageService {
             }
             Files.createDirectories(this.fileStorageLocation.resolve(path));
             Path targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
+            Path targetLocationForCode = this.fileStorageLocation.resolve(path).resolve(fileNameForCode);
+            Path targetLocationForImg = this.fileStorageLocation.resolve(path).resolve(fileNameForImg);
             if (contentType.equals("application/msword")||contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
                 fileName = new Date().getTime() + "-file.pdf";
                 targetLocation = this.fileStorageLocation.resolve(path).resolve(fileName);
@@ -106,13 +127,19 @@ public class FileStorageServiceImpl implements FileStorageService {
             } else {
                 Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             }
+            Files.copy(scr_code.getInputStream(), targetLocationForCode, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(image.getInputStream(), targetLocationForImg, StandardCopyOption.REPLACE_EXISTING);
             User user = authenticationService.getCurrentUser();
             Optional<SubmitLab> submitLabOpt = submitLabRepository.findByUserIdAndLabInfoId(user.getId(),labId);
             if (submitLabOpt.isPresent()){
                 SubmitLab sb = submitLabOpt.get();
                 if (sb.isOnRevision()){
                     Files.delete(Paths.get(sb.getSource()));
+                    Files.delete(Paths.get(sb.getSrc_code()));
+                    Files.delete(Paths.get(sb.getImage()));
                     sb.setSource(targetLocation.toString());
+                    sb.setSrc_code(targetLocationForCode.toString());
+                    sb.setImage(targetLocationForImg.toString());
                     //sb.setOnRevision(false);
                     sb.setRevisionComment(null);
                     sb.setSendDate(new Date((System.currentTimeMillis())));
@@ -124,12 +151,38 @@ public class FileStorageServiceImpl implements FileStorageService {
                 SubmitLab submitLab = SubmitLab.builder()
                         .user(authenticationService.getCurrentUser())
                         .source(targetLocation.toString())
+                        .src_code(targetLocationForCode.toString())
+                        .image(targetLocationForImg.toString())
                         .labInfo(labInfoRepository.getReferenceById(labId))
                         .sendDate(new Date(System.currentTimeMillis()))
                         .mark(-1)
                         .onRevision(false)
                         .build();
                 submitLabRepository.saveAndFlush(submitLab);
+
+                String sender = authenticationService.getCurrentUser().getFirstName() + " " +
+                        authenticationService.getCurrentUser().getLastName();
+                User teacher = labInfoRepository.getReferenceById(labId).getTeahcer();
+                String receiver = teacher.getEmail();
+                String teacherName;
+                if (receiver.equals("root@root")) {
+                    teacherName = "Данила Павлович";
+                    receiver = "danila@posevin.com";
+                } else if (receiver.equals("av@root")) {
+                    teacherName = "Александр Владимирович";
+                    receiver = "avkonovalov@bmstu.ru";
+                } else {
+                    teacherName = teacher.getFirstName() + " " + teacher.getPatronymic();
+                }
+                String message = "Hello, " + teacherName + ",\n\n" + sender + " submit laboratory work " +
+                        labInfoRepository.getReferenceById(labId).getName() + " at " + new Date(System.currentTimeMillis());
+
+                try {
+                    mailSender.sendWithAttachments(receiver, "New report from " + sender, message,
+                            sender +"_"+ labInfoRepository.getReferenceById(labId).getName() + ".pdf", file);
+                } catch (MessagingException e) {
+                    throw new RuntimeException("Could not sent mail to teacher.");
+                }
             }
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
@@ -188,6 +241,42 @@ public class FileStorageServiceImpl implements FileStorageService {
     public Resource loadAsResource(Long labId, Long userId) {
         try {
             String path = submitLabRepository.findByUserIdAndLabInfoId(userId, labId).get().getSource();
+            Path file = Paths.get(path);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException(
+                        "Could not read file");
+
+            }
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Could not read file", e);
+        }
+    }
+
+    @Override
+    public Resource loadAsResourceCode(Long labId, Long userId) {
+        try {
+            String path = submitLabRepository.findByUserIdAndLabInfoId(userId, labId).get().getSrc_code();
+            Path file = Paths.get(path);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException(
+                        "Could not read file");
+
+            }
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Could not read file", e);
+        }
+    }
+
+    @Override
+    public Resource loadAsResourceImg(Long labId, Long userId) {
+        try {
+            String path = submitLabRepository.findByUserIdAndLabInfoId(userId, labId).get().getImage();
             Path file = Paths.get(path);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {

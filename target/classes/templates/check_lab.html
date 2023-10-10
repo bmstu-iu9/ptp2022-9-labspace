@@ -74,9 +74,21 @@
 
                                 <div class="check_lab_row">
                                     <div class="check_lab_left_half_form">
-                                        <span class="check_lab_title_text" >Loaded labwork</span>
+                                        <span class="check_lab_title_text" >Report</span>
                                         <a th:href="@{'/admin/check_lab_id' + ${lab_info.getId()} + '/download/user_id' + ${user.getId()}}">
-                                        <div class="check_lab_loaded_labwork">check it</div>
+                                            <div class="check_lab_loaded_labwork">check it</div>
+                                        </a>
+                                    </div>
+                                    <div class="check_lab_left_half_form">
+                                        <span class="check_lab_title_text" >Source</span>
+                                        <a th:href="@{'/admin/check_lab_id' + ${lab_info.getId()} + '/download/user_id' + ${user.getId()} + '/src'}">
+                                            <div class="check_lab_loaded_labwork">check it</div>
+                                        </a>
+                                    </div>
+                                    <div class="check_lab_left_half_form">
+                                        <span class="check_lab_title_text" >Image</span>
+                                        <a th:href="@{'/admin/check_lab_id' + ${lab_info.getId()} + '/download/user_id' + ${user.getId()} + '/img'}">
+                                            <div class="check_lab_loaded_labwork">check it</div>
                                         </a>
                                     </div>
 
